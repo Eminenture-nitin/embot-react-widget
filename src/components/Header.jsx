@@ -1,5 +1,4 @@
 import React from "react";
-import { ArrowDownIcon } from "@heroicons/react/20/solid";
 
 const Header = () => {
   return (
