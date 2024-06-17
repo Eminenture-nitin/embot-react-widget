@@ -2,14 +2,14 @@ import React from "react";
 
 const ChatForm = () => {
   return (
-    <div className="flex items-center pt-0 p-6">
-      <form className="flex items-center justify-center w-full space-x-2">
+    <div className="EMBOT-flex EMBOT-items-center EMBOT-pt-0 EMBOT-p-6">
+      <form className="EMBOT-flex EMBOT-items-center EMBOT-justify-center EMBOT-w-full EMBOT-space-x-2">
         <input
-          className="flex h-10 w-full rounded-md border border-[#e5e7eb] px-3 py-2 text-sm placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#9ca3af] disabled:cursor-not-allowed disabled:opacity-50 text-[#030712] focus-visible:ring-offset-2"
+          className="EMBOT-flex EMBOT-h-10 EMBOT-w-full EMBOT-rounded-md EMBOT-border EMBOT-border-[#e5e7eb] EMBOT-px-3 EMBOT-py-2 EMBOT-text-sm EMBOT-placeholder-[#6b7280] EMBOT-focus:outline-none EMBOT-focus:ring-2 EMBOT-focus:ring-[#9ca3af] EMBOT-disabled:cursor-not-allowed EMBOT-disabled:opacity-50 EMBOT-text-[#030712] EMBOT-focus-visible:ring-offset-2"
           placeholder="Type your message"
           defaultValue=""
         />
-        <button className="inline-flex items-center justify-center rounded-md text-sm font-medium text-[#f9fafb] disabled:pointer-events-none disabled:opacity-50 bg-black hover:bg-[#111827E6] h-10 px-4 py-2">
+        <button className="EMBOT-inline-flex EMBOT-items-center EMBOT-justify-center EMBOT-rounded-md EMBOT-text-sm EMBOT-font-medium EMBOT-text-[#f9fafb] EMBOT-disabled:pointer-events-none EMBOT-disabled:opacity-50 EMBOT-bg-black EMBOT-hover:bg-[#111827E6] EMBOT-h-10 EMBOT-px-4 EMBOT-py-2">
           Send
         </button>
       </form>

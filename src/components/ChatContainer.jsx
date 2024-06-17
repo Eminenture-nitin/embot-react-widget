@@ -3,13 +3,13 @@ import React from "react";
 const ChatContainer = () => {
   return (
     <div
-      className="pr-4 h-[474px] p-6"
+      className="EMBOT-pr-4 EMBOT-h-[474px] EMBOT-p-6"
       style={{ minWidth: "100%", display: "table" }}
     >
       {/* Chat Message AI */}
-      <div className="flex gap-3 my-4 text-gray-600 text-sm flex-1 flex-grow">
-        <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
-          <div className="rounded-full bg-gray-100 border p-1">
+      <div className="EMBOT-flex EMBOT-gap-3 EMBOT-my-4 EMBOT-text-gray-600 EMBOT-text-sm EMBOT-flex-1 EMBOT-flex-grow">
+        <span className="EMBOT-relative EMBOT-flex EMBOT-shrink-0 EMBOT-overflow-hidden EMBOT-rounded-full EMBOT-w-8 EMBOT-h-8">
+          <div className="EMBOT-rounded-full EMBOT-bg-gray-100 EMBOT-border EMBOT-p-1">
             <svg
               stroke="none"
               fill="black"
@@ -28,15 +28,17 @@ const ChatContainer = () => {
             </svg>
           </div>
         </span>
-        <p className="leading-relaxed">
-          <span className="block font-bold text-gray-700">EM Bot </span>Hi, how
-          can I help you today?
+        <p className="EMBOT-leading-relaxed">
+          <span className="EMBOT-block EMBOT-font-bold EMBOT-text-gray-700">
+            EM Bot
+          </span>
+          Hi, how can I help you today?
         </p>
       </div>
       {/*  User Chat Message */}
-      <div className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
-        <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
-          <div className="rounded-full bg-gray-100 border p-1">
+      <div className="EMBOT-flex EMBOT-gap-3 EMBOT-my-4 EMBOT-text-gray-600 EMBOT-text-sm EMBOT-flex-1">
+        <span className="EMBOT-relative EMBOT-flex EMBOT-shrink-0 EMBOT-overflow-hidden EMBOT-rounded-full EMBOT-w-8 EMBOT-h-8">
+          <div className="EMBOT-rounded-full EMBOT-bg-gray-100 EMBOT-border EMBOT-p-1">
             <svg
               stroke="none"
               fill="black"
@@ -50,15 +52,17 @@ const ChatContainer = () => {
             </svg>
           </div>
         </span>
-        <p className="leading-relaxed">
-          <span className="block font-bold text-gray-700">You </span>
+        <p className="EMBOT-leading-relaxed">
+          <span className="EMBOT-block EMBOT-font-bold EMBOT-text-gray-700">
+            You
+          </span>
           fewafef
         </p>
       </div>
       {/* Ai Chat Message  */}
-      <div className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
-        <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
-          <div className="rounded-full bg-gray-100 border p-1">
+      <div className="EMBOT-flex EMBOT-gap-3 EMBOT-my-4 EMBOT-text-gray-600 EMBOT-text-sm EMBOT-flex-1">
+        <span className="EMBOT-relative EMBOT-flex EMBOT-shrink-0 EMBOT-overflow-hidden EMBOT-rounded-full EMBOT-w-8 EMBOT-h-8">
+          <div className="EMBOT-rounded-full EMBOT-bg-gray-100 EMBOT-border EMBOT-p-1">
             <svg
               stroke="none"
               fill="black"
@@ -77,11 +81,13 @@ const ChatContainer = () => {
             </svg>
           </div>
         </span>
-        <p className="leading-relaxed">
-          <span className="block font-bold text-gray-700">EM Bot </span>Sorry, I
-          couldn't find any information in the documentation about that. Expect
-          answer to be less accurateI could not find the answer to this in the
-          verified sources.
+        <p className="EMBOT-leading-relaxed">
+          <span className="EMBOT-block EMBOT-font-bold EMBOT-text-gray-700">
+            EM Bot
+          </span>
+          Sorry, I couldn't find any information in the documentation about
+          that. Expect answer to be less accurateI could not find the answer to
+          this in the verified sources.
         </p>
       </div>
     </div>
