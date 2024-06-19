@@ -1,193 +1,145 @@
-// import axios from "axios";
-// import React, { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-// // TriggersContext context
-// const TriggersContext = createContext();
+// TriggersContext context
+const TriggersContext = createContext();
 
-// //custom hook to access the TriggersContext state
-// export function useTriggersContextData() {
-//   return useContext(TriggersContext);
-// }
+// Custom hook to access the TriggersContext state
+export function useTriggersContextData() {
+  return useContext(TriggersContext);
+}
 
-// // TriggersContext component
-// export function TriggersContextProvider({ children }) {
-//   const [triggersData, setTriggersData] = useState([]);
-//   const [chatMessages, setChatMessages] = useState([]);
+// TriggersContext component
+export function TriggersContextProvider({ children }) {
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [waitingForDecision, setWaitingForDecision] = useState(null);
 
-//   //getTriggersData function
-//   const getTriggersData = (adminId) => {
-//     axios
-//       .get(
-//         `http://localhost:8080/auth/getNodeAndEdgesWidget/650d432aa0570859518c23a1`
-//       )
-//       .then((res) => {
-//         console.log(res, "res context");
-//         setTriggersData(res);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
+  // Function to get trigger data
+  const getTriggersData = (adminId) => {
+    axios
+      .get(`http://localhost:8080/auth/getNodeAndEdgesWidget/${adminId}`)
+      .then((res) => {
+        console.log(res.data);
+        setNodes(res.data.nodes);
+        setEdges(res.data.edges);
+        startChatbot(res.data.nodes, res.data.edges);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-//   // Sample User ID Check Function
-//   function isFirstVisit(userId) {
-//     // Logic to check if user ID exists
-//     // Return true if it's the first visit, false otherwise
-//     // For example, let's assume a function checkUserId(userId) that returns a boolean
-//     return !checkUserId(userId);
-//   }
+  // Function to start the chatbot
+  const startChatbot = (nodes, edges) => {
+    const visitedNodes = new Set();
+    nodes.forEach((node) => {
+      if (
+        node.data.triggerType === "triggers" &&
+        node.data.trigger_Name === "First visit on site"
+      ) {
+        activateNode(node, nodes, edges, visitedNodes);
+      }
+    });
+  };
 
-//   // Function to Activate Node
-//   function activateNode(nodeId) {
-//     let node = getNodeById(nodeId); // Function to get node by ID
-//     if (!node) return;
+  // Function to activate a node
+  const activateNode = (node, nodes, edges, visitedNodes) => {
+    if (visitedNodes.has(node.id)) return;
+    visitedNodes.add(node.id);
+    console.log(`Activating node: ${node.data.trigger_Name}`);
+    handleNodeTrigger(node, nodes, edges, visitedNodes);
+  };
 
-//     switch (node.type) {
-//       case "triggerComponent":
-//         if (
-//           node.data.triggerType === "triggers" &&
-//           node.data.trigger_Name === "First visit on site"
-//         ) {
-//           handleFirstVisitTrigger(node);
-//         } else {
-//           handleTrigger(node);
-//         }
-//         break;
-//       case "actionComponent":
-//         if (
-//           node.data.triggerType === "actions" &&
-//           node.data.trigger_Name === "Send Message"
-//         ) {
-//           handleSendMessageAction(node);
-//         } else {
-//           handleAction(node);
-//         }
-//         break;
-//       case "decisionComponent":
-//         if (
-//           node.data.triggerType === "actions" &&
-//           node.data.trigger_Name === "Decision (Buttons)"
-//         ) {
-//           handleDecisionButtons(node);
-//         } else {
-//           handleDecision(node);
-//         }
-//         break;
-//       default:
-//         console.log("Unknown node type");
-//     }
-//   }
+  // Function to check if the next node should be activated
+  const checkActivationCondition = (node) => {
+    // Add your condition logic here
+    // Return true if the condition is met, otherwise return false
+    return true; // By default, all nodes can be activated
+  };
 
-//   // Handle First Visit Trigger Node
-//   function handleFirstVisitTrigger(node) {
-//     // Add message to chat
-//     chatMessages.push({ text: "First visit on site" });
+  // Function to handle node triggers
+  const handleNodeTrigger = (node, nodes, edges, visitedNodes) => {
+    switch (node.data.trigger_Name) {
+      case "First visit on site":
+        handleFirstVisit(node, nodes, edges, visitedNodes);
+        break;
+      case "Send a response":
+        handleSendResponse(node);
+        break;
+      case "Decision (Buttons)":
+        handleDecisionButtons(node, nodes, edges);
+        break;
+      // Add more cases for different trigger names
+      default:
+        console.log(`Unknown trigger: ${node.data.trigger_Name}`);
+    }
 
-//     // Activate connected node
-//     let nextNodeId = node.data.connections.leftSource;
-//     activateNode(nextNodeId);
-//   }
+    // Automatically activate connected nodes for all triggers except "Decision (Buttons)"
+    if (node.data.trigger_Name !== "Decision (Buttons)") {
+      const connectedNode = findConnectedNode(node, edges, nodes);
+      if (connectedNode && checkActivationCondition(connectedNode)) {
+        activateNode(connectedNode, nodes, edges, visitedNodes);
+      }
+    }
+  };
 
-//   // Handle Send Message Action Node
-//   function handleSendMessageAction(node) {
-//     if (node.data.message) {
-//       // Add response text to chat
-//       for (let key in node.data.message) {
-//         if (node.data.message[key].responseText) {
-//           chatMessages.push({ text: node.data.message[key].responseText });
-//         }
-//         if (node.data.message[key].imageURL) {
-//           chatMessages.push({ imageUrl: node.data.message[key].imageURL });
-//         }
-//         if (node.data.message[key].label && node.data.message[key].url) {
-//           chatMessages.push({
-//             label: node.data.message[key].label,
-//             url: node.data.message[key].url,
-//           });
-//         }
-//       }
-//     }
+  // Function to handle the "First visit on site" trigger
+  const handleFirstVisit = (node, nodes, edges, visitedNodes) => {
+    const connectedNode = findConnectedNode(node, edges, nodes);
+    if (connectedNode) activateNode(connectedNode, nodes, edges, visitedNodes);
+  };
 
-//     // Activate connected node
-//     let nextNodeId = node.data.connections.leftSource;
-//     activateNode(nextNodeId);
-//   }
+  // Function to handle the "Send a response" trigger
+  const handleSendResponse = (node) => {
+    const messages = Object.values(node.data.message).map((msg) => msg);
+    setChatMessages((prevMessages) => [...prevMessages, ...messages]);
+  };
 
-//   // Handle Decision Buttons Node
-//   function handleDecisionButtons(node) {
-//     // Add decision message to chat
-//     chatMessages.push({
-//       text: node.data.message.responseText,
-//       buttons: node.data.message.subTriggers,
-//     });
+  // Function to handle the "Decision (Buttons)" trigger
+  const handleDecisionButtons = (node, nodes, edges) => {
+    const decisionMessage = {
+      ...node.data.message,
+      connections: node.data.connections,
+      nodeId: node.id,
+    };
+    setChatMessages((prevMessages) => [...prevMessages, decisionMessage]);
+    setWaitingForDecision(node);
 
-//     // Based on user input, activate next node
-//     let userResponse = getUserResponse(); // Assume function to get user response
-//     if (userResponse === "Yes please, connect") {
-//       let nextNodeId = node.data.connections.rightSource;
-//       activateNode(nextNodeId);
-//     } else {
-//       let nextNodeId = node.data.connections.leftSource;
-//       activateNode(nextNodeId);
-//     }
-//   }
+    // In this function, we do not activate connected nodes automatically
+    // Instead, they are activated based on user decision
+  };
+  const handleUserDecision = ({ value, source, parentNode }) => {
+    // Find the connected node using the source ID
+    const connectedNode = nodes.find((n) => n.id === source);
+    if (!connectedNode) {
+      console.error(`Node with ID "${source}" not found in nodes.`);
+      return;
+    }
+    console.log(connectedNode);
 
-//   // Handle Other Trigger Nodes
-//   function handleTrigger(node) {
-//     // Logic for other trigger nodes
-//   }
+    // Activate the connected node
+    activateNode(connectedNode, nodes, edges, new Set());
+  };
 
-//   // Handle Other Action Nodes
-//   function handleAction(node) {
-//     // Logic for other action nodes
-//   }
+  // Function to find a connected node
+  const findConnectedNode = (node, edges, nodes) => {
+    const edge = edges.find((e) => e.source === node.id);
+    return edge ? nodes.find((n) => n.id === edge.target) : null;
+  };
 
-//   // Handle Other Decision Nodes
-//   function handleDecision(node) {
-//     // Logic for other decision nodes
-//   }
+  useEffect(() => {
+    getTriggersData("650d432aa0570859518c23a1");
+  }, []);
 
-//   // Sample Function to Get Node by ID
-//   function getNodeById(nodeId) {
-//     // Logic to get node by ID from the data structure
-//     return nodes.find((node) => node.id === nodeId);
-//   }
+  useEffect(() => {
+    console.log("chatMessages", chatMessages);
+  }, [chatMessages]);
 
-//   // Sample Function to Check User ID
-//   function checkUserId(userId) {
-//     // Logic to check if user ID exists
-//     // For this example, assume it returns false (i.e., user is visiting for the first time)
-//     return false;
-//   }
-
-//   // Sample Function to Get User Response (Simulated)
-//   function getUserResponse() {
-//     // Simulated user response for the example
-//     return "Yes please, connect"; // or 'Not Yet'
-//   }
-
-//   // Initial Node Activation Function
-//   function startChatbot(userId, nodesArray, edgesArray) {
-//     // Set global nodes and edges
-//     nodes = nodesArray;
-//     edges = edgesArray;
-
-//     // Check if it's the first visit
-//     if (isFirstVisit(userId)) {
-//       activateNode("06787fc5-7a23-4811-be5b-cae72a1c2c4c"); // ID of the first trigger node
-//     }
-//   }
-
-//   // Example usage of startChatbot function
-//   let userId = "someUserId"; // Assume this is provided
-//   startChatbot(userId, nodes, edges);
-
-//   useEffect(() => {
-//     getTriggersData();
-//   }, []);
-//   return (
-//     <TriggersContext.Provider value={{ triggersData }}>
-//       {children}
-//     </TriggersContext.Provider>
-//   );
-// }
+  return (
+    <TriggersContext.Provider value={{ chatMessages, handleUserDecision }}>
+      {children}
+    </TriggersContext.Provider>
+  );
+}

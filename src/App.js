@@ -29,9 +29,9 @@ function App() {
           className="EMBOT-w-9 EMBOT-h-9 EMBOT-text-white EMBOT-block EMBOT-border-gray-200 EMBOT-align-middle"
         />
       </button>
-      {/* <TriggersContextProvider> */}
+      <TriggersContextProvider>
         {showWidget && <ChatBotWidget adminId={adminId} />}
-      {/* </TriggersContextProvider> */}
+      </TriggersContextProvider>
     </div>
   );
 }
