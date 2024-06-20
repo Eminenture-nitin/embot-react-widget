@@ -1,6 +1,8 @@
 import React from "react";
+import { useAdminCredentials } from "../context/AdminCredentialsContext";
 
 const ChatForm = () => {
+  const { theme } = useAdminCredentials();
   return (
     <div className="EMBOT-p-6 EMBOT-absolute EMBOT-bottom-0 EMBOT-w-full EMBOT-bg-white EMBOT-pt-5 EMBOT-border EMBOT-border-t-gray-500">
       <form className="EMBOT-flex EMBOT-items-center EMBOT-justify-center EMBOT-w-full EMBOT-space-x-2 ">
@@ -9,7 +11,14 @@ const ChatForm = () => {
           placeholder="Type your message"
           defaultValue=""
         />
-        <button className="EMBOT-inline-flex EMBOT-items-center EMBOT-justify-center EMBOT-rounded-md EMBOT-text-sm EMBOT-font-medium EMBOT-text-[#f9fafb] EMBOT-disabled:pointer-events-none EMBOT-disabled:opacity-50 EMBOT-bg-black EMBOT-hover:bg-[#111827E6] EMBOT-h-10 EMBOT-px-4 EMBOT-py-2">
+        <button
+          style={{
+            backgroundImage: theme
+              ? theme
+              : "linear-gradient(135deg, rgb(42, 39, 218) 0%, rgb(0, 204, 255) 100%)",
+          }}
+          className="EMBOT-inline-flex EMBOT-items-center EMBOT-justify-center EMBOT-rounded-md EMBOT-text-sm EMBOT-font-medium EMBOT-text-[#f9fafb] EMBOT-disabled:pointer-events-none EMBOT-disabled:opacity-50 EMBOT-bg-black EMBOT-hover:bg-[#111827E6] EMBOT-h-10 EMBOT-px-4 EMBOT-py-2"
+        >
           Send
         </button>
       </form>

@@ -44,39 +44,22 @@ const Response = ({ response, index }) => {
                   );
                   handleUserDecision(targetNodeId);
                 }}
-                className="EMBOT-w-full EMBOT-mt-1 EMBOT-relative EMBOT-inline-flex EMBOT-items-center EMBOT-justify-center EMBOT-p-0.5 EMBOT-me-2 EMBOT-overflow-hidden EMBOT-text-sm EMBOT-font-medium EMBOT-text-gray-900 EMBOT-rounded-lg EMBOT-group EMBOT-bg-gradient-to-br EMBOT-from-blue-500 EMBOT-to-blue-500 group-hover:EMBOT-from-blue-500 group-hover:EMBOT-to-blue-500 hover:EMBOT-text-white dark:EMBOT-text-white focus:EMBOT-ring-4 focus:EMBOT-outline-none focus:EMBOT-ring-blue-200 dark:EMBOT-focus:ring-blue-800"
+                style={{ boxShadow: "0 2px 6px rgba(0,0,0,.12)" }}
+                className="EMBOT-border EMBOT-text-[#006ae1] hover:EMBOT-bg-[#006ae1] hover:EMBOT-text-white EMBOT-w-full EMBOT-mt-2 EMBOT-border-[#006ae1] EMBOT-outline-none EMBOT-px-3 EMBOT-group EMBOT-py-2 EMBOT-rounded-md EMBOT-cursor-pointer EMBOT-leading-5 EMBOT-text-sm"
               >
-                <span className="EMBOT-relative EMBOT-w-full EMBOT-px-5 EMBOT-py-2.5 EMBOT-transition-all EMBOT-ease-in EMBOT-duration-75 EMBOT-bg-white dark:EMBOT-bg-gray-900 EMBOT-rounded-md group-hover:EMBOT-bg-opacity-0">
+               
                   {item.value}
-                </span>
+             
               </button>
             ) : (
-            //   .drift-widget-button--list-item {
-            //     margin: 4px;
-            //     outline: none;
-            //     cursor: pointer;
-            //     -webkit-border-radius: 6px;
-            //     -moz-border-radius: 6px;
-            //     border-radius: 6px;
-            //     color: #fff;
-            //     font-size: 14px;
-            //     text-align: left;
-            //     min-height: 36px;
-            //     font-weight: 400;
-            //     -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
-            //     -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
-            //     box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
-            //     -webkit-transition: all .2s ease;
-            //     -o-transition: all .2s ease;
-            //     -moz-transition: all .2s ease;
-            //     transition: all .2s ease;
-            // }
-              <button  
+              <button
+                key={index}
                 title={item.url}
                 onClick={() => window.open(item.url, "_blank")}
-                className="EMBOT-font-semibold EMBOT-"
+                style={{ boxShadow: "0 2px 6px rgba(0,0,0,.12)" }}
+                className="EMBOT-border EMBOT-w-full EMBOT-mt-2 EMBOT-border-[#006ae1] EMBOT-outline-none EMBOT-px-3 EMBOT-group EMBOT-py-2 EMBOT-rounded-md EMBOT-cursor-pointer EMBOT-leading-5 EMBOT-text-sm"
               >
-                <span className="">
+                <span className="EMBOT-text-[#006ae1] EMBOT-bg-[#ffffff] EMBOT-border-[#006ae1] group-hover:EMBOT-underline">
                   {item.label}
                 </span>
               </button>
@@ -97,9 +80,10 @@ const Response = ({ response, index }) => {
         <button
           title={response.url}
           onClick={() => window.open(response.url, "_blank")}
-          className="EMBOT-w-full EMBOT-border-2 EMBOT-group EMBOT-border-blue-500 EMBOT-relative EMBOT-inline-flex EMBOT-items-center EMBOT-justify-center EMBOT-p-0.5 EMBOT-me-2 EMBOT-overflow-hidden EMBOT-text-sm EMBOT-font-medium EMBOT-text-gray-900 EMBOT-rounded-lg"
+          style={{ boxShadow: "0 2px 6px rgba(0,0,0,.12)" }}
+          className="EMBOT-border EMBOT-w-full EMBOT-mb-2  EMBOT-border-[#006ae1] EMBOT-outline-none EMBOT-px-3 EMBOT-group EMBOT-py-2 EMBOT-rounded-md EMBOT-cursor-pointer EMBOT-leading-5 EMBOT-text-sm"
         >
-          <span className="EMBOT-relative EMBOT-text-blue-500 group-hover:EMBOT-underline  EMBOT-w-full EMBOT-px-5 EMBOT-py-2.5 EMBOT-transition-all EMBOT-ease-in EMBOT-duration-75 EMBOT-bg-white dark:EMBOT-bg-gray-900 EMBOT-rounded-md group-hover:EMBOT-bg-opacity-0">
+          <span className="EMBOT-text-[#006ae1] EMBOT-bg-[#ffffff] EMBOT-border-[#006ae1] group-hover:EMBOT-underline">
             {response.label}
           </span>
         </button>

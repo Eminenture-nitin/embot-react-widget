@@ -19,7 +19,9 @@ export function TriggersContextProvider({ children }) {
   // Function to get trigger data
   const getTriggersData = (adminId) => {
     axios
-      .get(`http://localhost:8080/auth/getNodeAndEdgesWidget/${adminId}`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/auth/getNodeAndEdgesWidget/${adminId}`
+      )
       .then((res) => {
         console.log(res.data);
         setNodes(res.data.nodes);
