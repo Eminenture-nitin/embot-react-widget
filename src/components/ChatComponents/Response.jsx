@@ -3,7 +3,21 @@ import React from "react";
 import { useTriggersContextData } from "../../context/TriggersDataContext";
 
 const Response = ({ response, index }) => {
-  const { handleUserDecision } = useTriggersContextData();
+  const { handleUserDecision, edges, setChatMessages } =
+    useTriggersContextData();
+
+  const findSubtriggerNode = (parentNodeId, triggerValue) => {
+    console.log(parentNodeId, triggerValue);
+    const matchingEdge = edges.find(
+      (edge) => edge.source == parentNodeId && edge.label == triggerValue
+    );
+    console.log("matchingEdge", matchingEdge);
+    if (matchingEdge) {
+      return matchingEdge.target;
+    }
+
+    return null;
+  };
   const renderContent = () => {
     if (response.responseText) {
       return (
@@ -20,22 +34,15 @@ const Response = ({ response, index }) => {
               <button
                 key={index}
                 onClick={() => {
-                  let newConnection = {};
-                  if (index === 0) {
-                    newConnection = {
-                      value: response.subTriggers[0].value,
-                      source: response.connections.leftSource,
-                      parentNode: response.nodeId,
-                    };
-                  } else {
-                    newConnection = {
-                      value: response.subTriggers[index].value,
-                      source: response.connections.rightSource,
-                      parentNode: response.nodeId,
-                    };
-                  }
-
-                  handleUserDecision(newConnection);
+                  setChatMessages((prevMsgs) => [
+                    ...prevMsgs,
+                    { userTrigger: item.value, myself: false },
+                  ]);
+                  const targetNodeId = findSubtriggerNode(
+                    response.nodeId,
+                    item.value
+                  );
+                  handleUserDecision(targetNodeId);
                 }}
                 className="EMBOT-w-full EMBOT-mt-1 EMBOT-relative EMBOT-inline-flex EMBOT-items-center EMBOT-justify-center EMBOT-p-0.5 EMBOT-me-2 EMBOT-overflow-hidden EMBOT-text-sm EMBOT-font-medium EMBOT-text-gray-900 EMBOT-rounded-lg EMBOT-group EMBOT-bg-gradient-to-br EMBOT-from-blue-500 EMBOT-to-blue-500 group-hover:EMBOT-from-blue-500 group-hover:EMBOT-to-blue-500 hover:EMBOT-text-white dark:EMBOT-text-white focus:EMBOT-ring-4 focus:EMBOT-outline-none focus:EMBOT-ring-blue-200 dark:EMBOT-focus:ring-blue-800"
               >
@@ -44,22 +51,35 @@ const Response = ({ response, index }) => {
                 </span>
               </button>
             ) : (
-              <a
-                key={index}
-                href={item.url}
-                target="_blank"
-                className="EMBOT-inline-flex EMBOT-w-full EMBOT-group"
+            //   .drift-widget-button--list-item {
+            //     margin: 4px;
+            //     outline: none;
+            //     cursor: pointer;
+            //     -webkit-border-radius: 6px;
+            //     -moz-border-radius: 6px;
+            //     border-radius: 6px;
+            //     color: #fff;
+            //     font-size: 14px;
+            //     text-align: left;
+            //     min-height: 36px;
+            //     font-weight: 400;
+            //     -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
+            //     -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
+            //     box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
+            //     -webkit-transition: all .2s ease;
+            //     -o-transition: all .2s ease;
+            //     -moz-transition: all .2s ease;
+            //     transition: all .2s ease;
+            // }
+              <button  
+                title={item.url}
+                onClick={() => window.open(item.url, "_blank")}
+                className="EMBOT-font-semibold EMBOT-"
               >
-                <span className="EMBOT-h-10 EMBOT-underline EMBOT-rounded-l-md EMBOT-w-full EMBOT-text-blue-600 EMBOT-text-sm EMBOT-flex EMBOT-items-center EMBOT-justify-center EMBOT-uppercase EMBOT-font-semibold EMBOT-px-8 EMBOT-border EMBOT-border-blue-500 EMBOT-transition EMBOT-duration-500 EMBOT-ease-in-out">
+                <span className="">
                   {item.label}
                 </span>
-                <span className="EMBOT-h-10 EMBOT-rounded-r-md EMBOT-text-blue-600 EMBOT-w-12 EMBOT-flex-shrink-0 EMBOT-flex EMBOT-items-center EMBOT-justify-center EMBOT-border EMBOT-border-l-0 EMBOT-border-blue-500 group-hover:EMBOT-bg-blue-500 group-hover:EMBOT-text-white EMBOT-transition EMBOT-duration-500 EMBOT-ease-in-out">
-                  <Icon
-                    icon="mdi:keyboard-arrow-right"
-                    className="EMBOT-h-5 EMBOT-w-5"
-                  />
-                </span>
-              </a>
+              </button>
             )
           )}
         </div>

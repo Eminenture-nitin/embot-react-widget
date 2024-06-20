@@ -101,7 +101,6 @@ export function TriggersContextProvider({ children }) {
   const handleDecisionButtons = (node, nodes, edges) => {
     const decisionMessage = {
       ...node.data.message,
-      connections: node.data.connections,
       nodeId: node.id,
     };
     setChatMessages((prevMessages) => [...prevMessages, decisionMessage]);
@@ -110,15 +109,15 @@ export function TriggersContextProvider({ children }) {
     // In this function, we do not activate connected nodes automatically
     // Instead, they are activated based on user decision
   };
-  const handleUserDecision = ({ value, source, parentNode }) => {
+  const handleUserDecision = (nextNodeId) => {
+    console.log(nextNodeId);
     // Find the connected node using the source ID
-    const connectedNode = nodes.find((n) => n.id === source);
+    const connectedNode = nodes.find((n) => n.id === nextNodeId);
     if (!connectedNode) {
-      console.error(`Node with ID "${source}" not found in nodes.`);
+      console.error(`Node with ID "${nextNodeId}" not found in nodes.`);
       return;
     }
     console.log(connectedNode);
-
     // Activate the connected node
     activateNode(connectedNode, nodes, edges, new Set());
   };
@@ -138,7 +137,15 @@ export function TriggersContextProvider({ children }) {
   }, [chatMessages]);
 
   return (
-    <TriggersContext.Provider value={{ chatMessages, handleUserDecision }}>
+    <TriggersContext.Provider
+      value={{
+        chatMessages,
+        setChatMessages,
+        handleUserDecision,
+        nodes,
+        edges,
+      }}
+    >
       {children}
     </TriggersContext.Provider>
   );
