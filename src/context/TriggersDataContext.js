@@ -90,7 +90,9 @@ export function TriggersContextProvider({ children }) {
   // Function to handle the "First visit on site" trigger
   const handleFirstVisit = (node, nodes, edges, visitedNodes) => {
     const connectedNode = findConnectedNode(node, edges, nodes);
-    if (connectedNode) activateNode(connectedNode, nodes, edges, visitedNodes);
+    if (connectedNode) {
+      activateNode(connectedNode, nodes, edges, visitedNodes);
+    }
   };
 
   // Function to handle the "Send a response" trigger
