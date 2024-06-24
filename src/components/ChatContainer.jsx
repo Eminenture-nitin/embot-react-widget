@@ -24,7 +24,6 @@ const ChatContainer = () => {
     >
       {chatMessages?.map((msgData, index) => (
         <div key={index} className="EMBOT-w-full EMBOT-min-h-fit">
-          {console.log(msgData?.myself)}
           {msgData?.myself !== false ? (
             <Response response={msgData} index={index} />
           ) : (

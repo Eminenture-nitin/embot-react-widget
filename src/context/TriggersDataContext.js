@@ -1,5 +1,10 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import {
+  isValidEmail,
+  isValidName,
+  isValidPhoneNumber,
+} from "../utils/validations";
 
 // TriggersContext context
 const TriggersContext = createContext();
@@ -15,6 +20,13 @@ export function TriggersContextProvider({ children }) {
   const [edges, setEdges] = useState([]);
   const [chatMessages, setChatMessages] = useState([]);
   const [waitingForDecision, setWaitingForDecision] = useState(null);
+  const [inputTagConfig, setInputTagConfig] = useState({
+    status: true,
+    type: "text",
+    placeholder: "Type your message",
+    trigger_Name: "",
+    validationType: "",
+  });
 
   // Function to get trigger data
   const getTriggersData = (adminId) => {
@@ -73,6 +85,9 @@ export function TriggersContextProvider({ children }) {
       case "Decision (Buttons)":
         handleDecisionButtons(node, nodes, edges);
         break;
+      case "Questionable Trigger":
+        handleQuestionableTrigger(node, nodes, edges);
+        break;
       // Add more cases for different trigger names
       default:
         console.log(`Unknown trigger: ${node.data.trigger_Name}`);
@@ -126,6 +141,50 @@ export function TriggersContextProvider({ children }) {
     activateNode(connectedNode, nodes, edges, new Set());
   };
 
+  // Function to handle "Questionable Trigger"
+  const handleQuestionableTrigger = (node, nodes, edges) => {
+    const questionableMessage = {
+      ...node.data.message,
+      nodeId: node.id,
+    };
+    setChatMessages((prevMessages) => [...prevMessages, questionableMessage]);
+    const validationType = node.data.message.validationType;
+    setInputTagConfig((prevConfig) => ({
+      ...prevConfig,
+      status: false,
+      type: validationType == "Phone Number" ? "number" : "text",
+      placeholder:
+        validationType == "Email"
+          ? "Enter Your Email Address"
+          : validationType == "Name"
+          ? "Enter Your Name"
+          : "Enter Your Phone Number",
+      trigger_Name: node?.data?.trigger_Name,
+      ...node.data.message,
+    }));
+    setWaitingForDecision(node);
+  };
+
+  const questionableTUserInteraction = (value) => {
+    if (inputTagConfig.validationType == "Email" && isValidEmail(value)) {
+      console.log("Please wait our assistant is joining");
+    } else if (inputTagConfig.validationType == "Name" && isValidName(value)) {
+      console.log("Name is correct");
+    } else if (
+      inputTagConfig.validationType == "Phone Number" &&
+      isValidPhoneNumber(value)
+    ) {
+      console.log("Phone number is valid");
+    } else {
+      console.log(inputTagConfig.errorMessage);
+      setChatMessages((prevMsgs) => [
+        ...prevMsgs,
+        { responseText: inputTagConfig.errorMessage },
+      ]);
+    }
+  };
+
+  // handle User
   // Function to find a connected node
   const findConnectedNode = (node, edges, nodes) => {
     const edge = edges.find((e) => e.source === node.id);
@@ -148,6 +207,9 @@ export function TriggersContextProvider({ children }) {
         handleUserDecision,
         nodes,
         edges,
+        inputTagConfig,
+        setInputTagConfig,
+        questionableTUserInteraction,
       }}
     >
       {children}

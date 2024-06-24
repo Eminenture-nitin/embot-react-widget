@@ -68,6 +68,7 @@ const Response = ({ response, index }) => {
     } else if (response.imageURL) {
       return (
         <img
+          loading="lazy"
           className="EMBOT-w-full EMBOT-h-auto EMBOT-border-gray-200 EMBOT-rounded-e-xl EMBOT-rounded-es-xl"
           src={response.imageURL}
           alt={response.imageId}
