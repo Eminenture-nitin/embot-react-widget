@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTriggersContextData } from "../../context/TriggersDataContext";
 
 const Response = ({ response, index }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { handleUserDecision, edges, setChatMessages } =
     useTriggersContextData();
 
@@ -34,15 +35,15 @@ const Response = ({ response, index }) => {
               <button
                 key={index}
                 onClick={() => {
-                  setChatMessages((prevMsgs) => [
-                    ...prevMsgs,
-                    { userTrigger: item.value, myself: false },
-                  ]);
+                  // setChatMessages((prevMsgs) => [
+                  //   ...prevMsgs,
+                  //   { userTrigger: item.value, myself: false },
+                  // ]);
                   const targetNodeId = findSubtriggerNode(
                     response.nodeId,
                     item.value
                   );
-                  handleUserDecision(targetNodeId);
+                  handleUserDecision(targetNodeId, item.value);
                 }}
                 style={{ boxShadow: "0 2px 6px rgba(0,0,0,.12)" }}
                 className="EMBOT-border EMBOT-text-[#006ae1] hover:EMBOT-bg-[#006ae1] hover:EMBOT-text-white EMBOT-w-full EMBOT-mt-2 EMBOT-border-[#006ae1] EMBOT-outline-none EMBOT-px-3 EMBOT-group EMBOT-py-2 EMBOT-rounded-md EMBOT-cursor-pointer EMBOT-leading-5 EMBOT-text-sm"
@@ -95,7 +96,7 @@ const Response = ({ response, index }) => {
   return (
     <div className="EMBOT-flex EMBOT-items-start EMBOT-gap-2.5 EMBOT-mb-1">
       <div className="EMBOT-flex EMBOT-flex-col EMBOT-w-full EMBOT-max-w-[70%] EMBOT-leading-1.5  EMBOT-dark:bg-gray-700">
-        {renderContent()}
+        {isLoading ? "loading..." : renderContent()}
       </div>
 
       {response.imageURL && (

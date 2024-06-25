@@ -19,13 +19,17 @@ export function TriggersContextProvider({ children }) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [chatMessages, setChatMessages] = useState([]);
-  const [waitingForDecision, setWaitingForDecision] = useState(null);
+  const [validationFailedAttempt, setValidationFailedAttempt] = useState({
+    status: false,
+    count: 0,
+  });
   const [inputTagConfig, setInputTagConfig] = useState({
-    status: true,
+    status: false,
     type: "text",
     placeholder: "Type your message",
     trigger_Name: "",
     validationType: "",
+    nextNodeId: "",
   });
 
   // Function to get trigger data
@@ -62,6 +66,28 @@ export function TriggersContextProvider({ children }) {
   const activateNode = (node, nodes, edges, visitedNodes) => {
     if (visitedNodes.has(node.id)) return;
     visitedNodes.add(node.id);
+    console.log("active", node);
+    if (node.data.trigger_Name == "Questionable Trigger") {
+      const validationType = node.data.message.validationType;
+      setInputTagConfig((prevConfig) => ({
+        ...prevConfig,
+        status: false,
+        type: validationType == "Phone Number" ? "number" : "text",
+        placeholder: `Enter Your ${validationType}`,
+        trigger_Name: node?.data?.trigger_Name,
+        ...node.data.message,
+        nextNodeId: node?.data?.connections?.leftSource,
+      }));
+    } else {
+      setInputTagConfig((prevConfig) => ({
+        ...prevConfig,
+        status: false,
+        type: "text",
+        placeholder: `Enter Your message here...`,
+        trigger_Name: node?.data?.trigger_Name,
+        ...node.data.message,
+      }));
+    }
     console.log(`Activating node: ${node.data.trigger_Name}`);
     handleNodeTrigger(node, nodes, edges, visitedNodes);
   };
@@ -88,13 +114,18 @@ export function TriggersContextProvider({ children }) {
       case "Questionable Trigger":
         handleQuestionableTrigger(node, nodes, edges);
         break;
+      case "Chat with Assistant":
+        hadleChatWithAssistantTrigger(node, nodes, edges);
+        break;
       // Add more cases for different trigger names
       default:
         console.log(`Unknown trigger: ${node.data.trigger_Name}`);
     }
 
-    // Automatically activate connected nodes for all triggers except "Decision (Buttons)"
-    if (node.data.trigger_Name !== "Decision (Buttons)") {
+    if (
+      node.data.trigger_Name !== "Decision (Buttons)" &&
+      node.data.trigger_Name !== "Questionable Trigger"
+    ) {
       const connectedNode = findConnectedNode(node, edges, nodes);
       if (connectedNode && checkActivationCondition(connectedNode)) {
         activateNode(connectedNode, nodes, edges, visitedNodes);
@@ -123,13 +154,18 @@ export function TriggersContextProvider({ children }) {
       nodeId: node.id,
     };
     setChatMessages((prevMessages) => [...prevMessages, decisionMessage]);
-    setWaitingForDecision(node);
 
     // In this function, we do not activate connected nodes automatically
     // Instead, they are activated based on user decision
   };
-  const handleUserDecision = (nextNodeId) => {
-    console.log(nextNodeId);
+
+  // this function is used for activate next node based of user inputs
+  const handleUserDecision = (nextNodeId, userInputValue) => {
+    setChatMessages((prevMsgs) => [
+      ...prevMsgs,
+      { userTrigger: userInputValue, myself: false },
+    ]);
+    console.log("nextNodeIdActivated", nextNodeId);
     // Find the connected node using the source ID
     const connectedNode = nodes.find((n) => n.id === nextNodeId);
     if (!connectedNode) {
@@ -148,40 +184,43 @@ export function TriggersContextProvider({ children }) {
       nodeId: node.id,
     };
     setChatMessages((prevMessages) => [...prevMessages, questionableMessage]);
-    const validationType = node.data.message.validationType;
-    setInputTagConfig((prevConfig) => ({
-      ...prevConfig,
-      status: false,
-      type: validationType == "Phone Number" ? "number" : "text",
-      placeholder:
-        validationType == "Email"
-          ? "Enter Your Email Address"
-          : validationType == "Name"
-          ? "Enter Your Name"
-          : "Enter Your Phone Number",
-      trigger_Name: node?.data?.trigger_Name,
-      ...node.data.message,
-    }));
-    setWaitingForDecision(node);
   };
 
   const questionableTUserInteraction = (value) => {
+    
     if (inputTagConfig.validationType == "Email" && isValidEmail(value)) {
-      console.log("Please wait our assistant is joining");
+      console.log("email is verify");
+      handleUserDecision(inputTagConfig.nextNodeId, value);
     } else if (inputTagConfig.validationType == "Name" && isValidName(value)) {
       console.log("Name is correct");
+      handleUserDecision(inputTagConfig.nextNodeId, value);
     } else if (
       inputTagConfig.validationType == "Phone Number" &&
       isValidPhoneNumber(value)
     ) {
       console.log("Phone number is valid");
+      handleUserDecision(inputTagConfig.nextNodeId, value);
     } else {
+      setValidationFailedAttempt((prevVFA) => ({
+        ...prevVFA,
+        count: prevVFA.count + 1,
+        status:
+          prevVFA.count == inputTagConfig?.retryAttempts - 1 ? true : false,
+      }));
       console.log(inputTagConfig.errorMessage);
       setChatMessages((prevMsgs) => [
         ...prevMsgs,
         { responseText: inputTagConfig.errorMessage },
       ]);
     }
+  };
+
+  //hadle Chat With Assistant Trigger Logic
+  const hadleChatWithAssistantTrigger = (node, nodes, edges) => {
+    setChatMessages((prevMessages) => [
+      ...prevMessages,
+      { responseText: "Please wait, our assistant is joining the chat" },
+    ]);
   };
 
   // handle User
@@ -191,6 +230,20 @@ export function TriggersContextProvider({ children }) {
     return edge ? nodes.find((n) => n.id === edge.target) : null;
   };
 
+  const handleCloseForm = () => {
+    setInputTagConfig((prevITC) => ({
+      ...prevITC,
+      status: false,
+      type: "text",
+      placeholder: "Type your message",
+      trigger_Name: "",
+      validationType: "",
+    }));
+    setValidationFailedAttempt({
+      status: false,
+      count: 0,
+    });
+  };
   useEffect(() => {
     getTriggersData("650d432aa0570859518c23a1");
   }, []);
@@ -210,6 +263,9 @@ export function TriggersContextProvider({ children }) {
         inputTagConfig,
         setInputTagConfig,
         questionableTUserInteraction,
+        validationFailedAttempt,
+        setValidationFailedAttempt,
+        handleCloseForm,
       }}
     >
       {children}

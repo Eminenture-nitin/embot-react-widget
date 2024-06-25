@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
 import ChatContainer from "./ChatContainer";
 import ChatForm from "./ChatForm";
+import { useTriggersContextData } from "../context/TriggersDataContext";
+import FullViewValidationForm from "./FullViewValidationForm";
 
 const ChatBotWidget = () => {
+  const { validationFailedAttempt, inputTagConfig } = useTriggersContextData();
+  useEffect(() => {
+    console.log("validationFailedAttempt", validationFailedAttempt);
+  }, [validationFailedAttempt]);
   return (
     <div
       style={{
@@ -16,12 +22,15 @@ const ChatBotWidget = () => {
         className="flex flex-col EMBOT-justify-between"
         style={{ height: "100%" }}
       >
-        {/* Header */}
         <Header />
-        {/* Chat Container */}
-        <ChatContainer />
-        {/* Input box */}
-        <ChatForm />
+        {validationFailedAttempt?.status !== true ? (
+          <>
+            <ChatContainer />
+            <ChatForm />
+          </>
+        ) : (
+          <FullViewValidationForm />
+        )}
       </div>
     </div>
   );
