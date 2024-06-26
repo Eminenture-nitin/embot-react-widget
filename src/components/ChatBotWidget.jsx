@@ -6,7 +6,7 @@ import { useTriggersContextData } from "../context/TriggersDataContext";
 import FullViewValidationForm from "./FullViewValidationForm";
 
 const ChatBotWidget = () => {
-  const { validationFailedAttempt, inputTagConfig } = useTriggersContextData();
+  const { validationFailedAttempt, inputTagConfigm } = useTriggersContextData();
   useEffect(() => {
     console.log("validationFailedAttempt", validationFailedAttempt);
   }, [validationFailedAttempt]);

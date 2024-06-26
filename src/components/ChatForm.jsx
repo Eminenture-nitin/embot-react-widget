@@ -10,12 +10,13 @@ const ChatForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value?.length > 0) {
-      setChatMessages((prevMsgs) => [
-        ...prevMsgs,
-        { userTrigger: value, myself: false },
-      ]);
       if (inputTagConfig.trigger_Name == "Questionable Trigger") {
         questionableTUserInteraction(value);
+      } else {
+        setChatMessages((prevMsgs) => [
+          ...prevMsgs,
+          { userTrigger: value, myself: false },
+        ]);
       }
       setValue("");
     }

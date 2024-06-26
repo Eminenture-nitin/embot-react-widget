@@ -2,9 +2,10 @@ import React, { useEffect, useRef } from "react";
 import Response from "./ChatComponents/Response";
 import { useTriggersContextData } from "../context/TriggersDataContext";
 import UserTrigger from "./ChatComponents/UserTrigger";
+import CountdownTimer from "./CountdownTimer";
 
 const ChatContainer = () => {
-  const { chatMessages } = useTriggersContextData();
+  const { chatMessages, assitWaitingTimerData } = useTriggersContextData();
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
@@ -25,12 +26,21 @@ const ChatContainer = () => {
       {chatMessages?.map((msgData, index) => (
         <div key={index} className="EMBOT-w-full EMBOT-min-h-fit">
           {msgData?.myself !== false ? (
-            <Response response={msgData} index={index} />
+            <>
+              <Response response={msgData} index={index} />
+            </>
           ) : (
             <UserTrigger userTrigger={msgData} index={index} />
           )}
         </div>
       ))}
+      {assitWaitingTimerData?.status && (
+        <CountdownTimer
+          initialMinutes={assitWaitingTimerData?.time?.min}
+          initialSeconds={assitWaitingTimerData?.time?.sec}
+          assitWaitingTimerData={assitWaitingTimerData}
+        />
+      )}
     </div>
   );
 };

@@ -23,6 +23,10 @@ export function TriggersContextProvider({ children }) {
     status: false,
     count: 0,
   });
+  const [assitWaitingTimerData, setAssitWaitingTimerData] = useState({
+    time: {},
+    status: false,
+  });
   const [inputTagConfig, setInputTagConfig] = useState({
     status: false,
     type: "text",
@@ -87,6 +91,7 @@ export function TriggersContextProvider({ children }) {
         trigger_Name: node?.data?.trigger_Name,
         ...node.data.message,
       }));
+      setAssitWaitingTimerData({ time: {}, status: false });
     }
     console.log(`Activating node: ${node.data.trigger_Name}`);
     handleNodeTrigger(node, nodes, edges, visitedNodes);
@@ -187,7 +192,6 @@ export function TriggersContextProvider({ children }) {
   };
 
   const questionableTUserInteraction = (value) => {
-    
     if (inputTagConfig.validationType == "Email" && isValidEmail(value)) {
       console.log("email is verify");
       handleUserDecision(inputTagConfig.nextNodeId, value);
@@ -207,7 +211,11 @@ export function TriggersContextProvider({ children }) {
         status:
           prevVFA.count == inputTagConfig?.retryAttempts - 1 ? true : false,
       }));
-      console.log(inputTagConfig.errorMessage);
+      setChatMessages((prevMsgs) => [
+        ...prevMsgs,
+        { userTrigger: value, myself: false },
+      ]);
+
       setChatMessages((prevMsgs) => [
         ...prevMsgs,
         { responseText: inputTagConfig.errorMessage },
@@ -217,10 +225,11 @@ export function TriggersContextProvider({ children }) {
 
   //hadle Chat With Assistant Trigger Logic
   const hadleChatWithAssistantTrigger = (node, nodes, edges) => {
-    setChatMessages((prevMessages) => [
-      ...prevMessages,
-      { responseText: "Please wait, our assistant is joining the chat" },
-    ]);
+    setAssitWaitingTimerData((prevAWTD) => ({
+      ...prevAWTD,
+      time: node.data.message,
+      status: true,
+    }));
   };
 
   // handle User
@@ -266,6 +275,8 @@ export function TriggersContextProvider({ children }) {
         validationFailedAttempt,
         setValidationFailedAttempt,
         handleCloseForm,
+        assitWaitingTimerData,
+        setAssitWaitingTimerData,
       }}
     >
       {children}
