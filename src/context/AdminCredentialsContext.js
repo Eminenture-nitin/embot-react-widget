@@ -11,9 +11,10 @@ export const AdminCredentialsProvided = ({ children }) => {
   const [theme, setTheme] = useState("");
 
   const getAdminData = () => {
+    const adminId = "650d432aa0570859518c23a1";
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/auth/get-widegt-admin-data/650d432aa0570859518c23a1`
+        `${process.env.REACT_APP_API_URL}/auth/get-widegt-admin-data/${adminId}`
       )
       .then((res) => setTheme(res.data.data.theme))
       .catch((e) => console.log(e));

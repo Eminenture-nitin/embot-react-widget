@@ -4,8 +4,7 @@ import { useTriggersContextData } from "../../context/TriggersDataContext";
 
 const Response = ({ response, index }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { handleUserDecision, edges, setChatMessages } =
-    useTriggersContextData();
+  const { handleUserDecision, edges } = useTriggersContextData();
 
   const findSubtriggerNode = (parentNodeId, triggerValue) => {
     const matchingEdge = edges.find(

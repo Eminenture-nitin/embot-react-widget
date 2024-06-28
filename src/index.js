@@ -5,12 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { TriggersContextProvider } from "./context/TriggersDataContext";
 import { AdminCredentialsProvided } from "./context/AdminCredentialsContext";
+import { SocketProvider } from "./context/SocketContext";
+import { LiveChatProvider } from "./context/LiveChatContext";
 const root = ReactDOM.createRoot(document.getElementById("EMChatBotRoot"));
 root.render(
   <AdminCredentialsProvided>
-    <TriggersContextProvider>
-      <App />
-    </TriggersContextProvider>
+    <SocketProvider>
+      <LiveChatProvider>
+        <TriggersContextProvider>
+          <App />
+        </TriggersContextProvider>
+      </LiveChatProvider>
+    </SocketProvider>
   </AdminCredentialsProvided>
 );
 

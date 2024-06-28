@@ -1,17 +1,25 @@
 import React, { useState } from "react";
 import { useAdminCredentials } from "../context/AdminCredentialsContext";
 import { useTriggersContextData } from "../context/TriggersDataContext";
+import { useLiveChatContext } from "../context/LiveChatContext";
 
 const ChatForm = () => {
   const { theme } = useAdminCredentials();
   const [value, setValue] = useState("");
-  const { setChatMessages, inputTagConfig, questionableTUserInteraction } =
+  const { inputTagConfig, questionableTUserInteraction } =
     useTriggersContextData();
+  const { chatMode, addMsg, setChatMessages } = useLiveChatContext();
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value?.length > 0) {
       if (inputTagConfig.trigger_Name == "Questionable Trigger") {
         questionableTUserInteraction(value);
+      } else if (chatMode == "liveChat") {
+        setChatMessages((prevMsgs) => [
+          ...prevMsgs,
+          { userTrigger: value, myself: false },
+        ]);
+        addMsg(value);
       } else {
         setChatMessages((prevMsgs) => [
           ...prevMsgs,

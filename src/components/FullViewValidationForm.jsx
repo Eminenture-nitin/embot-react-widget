@@ -9,12 +9,8 @@ import {
 } from "../utils/validations";
 
 const FullViewValidationForm = () => {
-  const {
-    inputTagConfig,
-    handleCloseForm,
-    handleUserDecision,
-    setChatMessages,
-  } = useTriggersContextData();
+  const { inputTagConfig, handleCloseForm, handleUserDecision } =
+    useTriggersContextData();
   const { theme } = useAdminCredentials();
   const [inputValue, setInputValue] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -22,8 +18,8 @@ const FullViewValidationForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputTagConfig.validationType == "Email" && isValidEmail(inputValue)) {
+      localStorage.setItem("widget_user_email", inputValue);
       handleUserDecision(inputTagConfig.nextNodeId, inputValue);
-
       handleCloseForm();
     } else if (
       inputTagConfig.validationType == "Name" &&

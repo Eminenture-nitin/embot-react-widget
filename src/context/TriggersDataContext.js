@@ -5,6 +5,7 @@ import {
   isValidName,
   isValidPhoneNumber,
 } from "../utils/validations";
+import { useLiveChatContext } from "./LiveChatContext";
 
 // TriggersContext context
 const TriggersContext = createContext();
@@ -18,7 +19,7 @@ export function useTriggersContextData() {
 export function TriggersContextProvider({ children }) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
-  const [chatMessages, setChatMessages] = useState([]);
+
   const [validationFailedAttempt, setValidationFailedAttempt] = useState({
     status: false,
     count: 0,
@@ -35,7 +36,8 @@ export function TriggersContextProvider({ children }) {
     validationType: "",
     nextNodeId: "",
   });
-
+  const { getLocation, setChatMode, chatMessages, setChatMessages } =
+    useLiveChatContext();
   // Function to get trigger data
   const getTriggersData = (adminId) => {
     axios
@@ -70,7 +72,7 @@ export function TriggersContextProvider({ children }) {
   const activateNode = (node, nodes, edges, visitedNodes) => {
     if (visitedNodes.has(node.id)) return;
     visitedNodes.add(node.id);
-    console.log("active", node);
+    // console.log("active", node);
     if (node.data.trigger_Name == "Questionable Trigger") {
       const validationType = node.data.message.validationType;
       setInputTagConfig((prevConfig) => ({
@@ -92,6 +94,7 @@ export function TriggersContextProvider({ children }) {
         ...node.data.message,
       }));
       setAssitWaitingTimerData({ time: {}, status: false });
+      setChatMode("botChat");
     }
     console.log(`Activating node: ${node.data.trigger_Name}`);
     handleNodeTrigger(node, nodes, edges, visitedNodes);
@@ -194,6 +197,7 @@ export function TriggersContextProvider({ children }) {
   const questionableTUserInteraction = (value) => {
     if (inputTagConfig.validationType == "Email" && isValidEmail(value)) {
       console.log("email is verify");
+      localStorage.setItem("widget_user_email", value);
       handleUserDecision(inputTagConfig.nextNodeId, value);
     } else if (inputTagConfig.validationType == "Name" && isValidName(value)) {
       console.log("Name is correct");
@@ -230,6 +234,13 @@ export function TriggersContextProvider({ children }) {
       time: node.data.message,
       status: true,
     }));
+    setChatMode("liveChat");
+
+    const userEmailId = localStorage.getItem("widget_user_email");
+    if (userEmailId) {
+      //this function is initiate live chat process like get user location and check user is already there or not and then continue chat
+      getLocation(userEmailId);
+    }
   };
 
   // handle User
@@ -264,8 +275,6 @@ export function TriggersContextProvider({ children }) {
   return (
     <TriggersContext.Provider
       value={{
-        chatMessages,
-        setChatMessages,
         handleUserDecision,
         nodes,
         edges,
