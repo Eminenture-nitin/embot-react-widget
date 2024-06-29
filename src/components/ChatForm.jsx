@@ -3,6 +3,7 @@ import { useAdminCredentials } from "../context/AdminCredentialsContext";
 import { useTriggersContextData } from "../context/TriggersDataContext";
 import { useLiveChatContext } from "../context/LiveChatContext";
 import { useGlobalStatesContext } from "../context/GlobalStatesContext";
+import { handleNLPOutput } from "../utils/NLPLogic";
 
 const ChatForm = () => {
   const { theme } = useAdminCredentials();
@@ -22,9 +23,11 @@ const ChatForm = () => {
         ]);
         addMsg(value);
       } else {
+        const output = handleNLPOutput(value);
         setChatMessages((prevMsgs) => [
           ...prevMsgs,
           { userTrigger: value, myself: false },
+          { responseText: output, myself: true },
         ]);
       }
       setValue("");
