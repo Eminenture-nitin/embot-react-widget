@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useSocket } from "./SocketContext";
+import { useGlobalStatesContext } from "./GlobalStatesContext";
+import { useAdminCredentials } from "./AdminCredentialsContext";
 
 // Live Chat context
 const LiveChatContext = createContext();
@@ -12,10 +14,11 @@ export function useLiveChatContext() {
 
 // LiveChatProvider component
 export function LiveChatProvider({ children }) {
-  const adminId = "650d432aa0570859518c23a1";
   const { socket } = useSocket();
   const [chatMessages, setChatMessages] = useState([]);
   const [chatMode, setChatMode] = useState("botChat");
+  const { setAssitWaitingTimerData } = useGlobalStatesContext();
+  const { adminId } = useAdminCredentials();
 
   const getLocation = (email) => {
     axios
@@ -116,6 +119,7 @@ export function LiveChatProvider({ children }) {
               assiMsgData: data.data.joinedExecutive.executive,
             },
           ]);
+          setAssitWaitingTimerData({ time: {}, status: false });
           console.log("Live Chat Activated.....");
         }
       }, 1000);

@@ -7,16 +7,19 @@ import { TriggersContextProvider } from "./context/TriggersDataContext";
 import { AdminCredentialsProvided } from "./context/AdminCredentialsContext";
 import { SocketProvider } from "./context/SocketContext";
 import { LiveChatProvider } from "./context/LiveChatContext";
+import { GlobalStatesProvider } from "./context/GlobalStatesContext";
 const root = ReactDOM.createRoot(document.getElementById("EMChatBotRoot"));
 root.render(
   <AdminCredentialsProvided>
-    <SocketProvider>
-      <LiveChatProvider>
-        <TriggersContextProvider>
-          <App />
-        </TriggersContextProvider>
-      </LiveChatProvider>
-    </SocketProvider>
+    <GlobalStatesProvider>
+      <SocketProvider>
+        <LiveChatProvider>
+          <TriggersContextProvider>
+            <App />
+          </TriggersContextProvider>
+        </LiveChatProvider>
+      </SocketProvider>
+    </GlobalStatesProvider>
   </AdminCredentialsProvided>
 );
 

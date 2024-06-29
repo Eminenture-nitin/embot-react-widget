@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import Header from "./Header";
 import ChatContainer from "./ChatContainer";
 import ChatForm from "./ChatForm";
-import { useTriggersContextData } from "../context/TriggersDataContext";
-import FullViewValidationForm from "./FullViewValidationForm";
+import { useGlobalStatesContext } from "../context/GlobalStatesContext";
+import FVAssistantWaitingForm from "./fullViewForms/FVAssistantWaitingForm";
+import FVValidationForm from "./fullViewForms/FVValidationForm";
 
 const ChatBotWidget = () => {
-  const { validationFailedAttempt, inputTagConfigm } = useTriggersContextData();
-  useEffect(() => {
-    console.log("validationFailedAttempt", validationFailedAttempt);
-  }, [validationFailedAttempt]);
+  const { fullViewActiveEntity } = useGlobalStatesContext();
+
   return (
     <div
       style={{
@@ -19,17 +18,20 @@ const ChatBotWidget = () => {
       className="EMBOT-fixed EMBOT-bottom-[calc(4rem+1.5rem)] EMBOT-right-0 EMBOT-mr-4 EMBOT-bg-white EMBOT-rounded-lg EMBOT-border EMBOT-border-[#e5e7eb] EMBOT-w-[400px] EMBOT-overflow-hidden"
     >
       <div
-        className="flex flex-col EMBOT-justify-between"
+        className="flex EMBOT-h-full flex-col EMBOT-justify-between"
         style={{ height: "100%" }}
       >
         <Header />
-        {validationFailedAttempt?.status !== true ? (
+
+        {fullViewActiveEntity == "assistantWaitingForm" ? (
+          <FVAssistantWaitingForm />
+        ) : fullViewActiveEntity == "validationForm" ? (
+          <FVValidationForm />
+        ) : (
           <>
             <ChatContainer />
             <ChatForm />
           </>
-        ) : (
-          <FullViewValidationForm />
         )}
       </div>
     </div>

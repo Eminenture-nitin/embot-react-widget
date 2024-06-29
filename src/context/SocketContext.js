@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
+import { useAdminCredentials } from "./AdminCredentialsContext";
 
 // Live Chat Socket context
 const SocketContext = createContext();
@@ -12,7 +13,7 @@ export function useSocket() {
 // SocketProvider component
 export function SocketProvider({ children }) {
   const socket = useRef(null);
-  const adminId = "650d432aa0570859518c23a1";
+  const { adminId } = useAdminCredentials();
 
   useEffect(() => {
     // Initialize socket connection with reconnection options

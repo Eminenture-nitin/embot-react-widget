@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useAdminCredentials } from "../context/AdminCredentialsContext";
 import { useTriggersContextData } from "../context/TriggersDataContext";
 import { useLiveChatContext } from "../context/LiveChatContext";
+import { useGlobalStatesContext } from "../context/GlobalStatesContext";
 
 const ChatForm = () => {
   const { theme } = useAdminCredentials();
   const [value, setValue] = useState("");
-  const { inputTagConfig, questionableTUserInteraction } =
-    useTriggersContextData();
+  const { questionableTUserInteraction } = useTriggersContextData();
+  const { inputTagConfig } = useGlobalStatesContext();
   const { chatMode, addMsg, setChatMessages } = useLiveChatContext();
   const handleSubmit = (e) => {
     e.preventDefault();

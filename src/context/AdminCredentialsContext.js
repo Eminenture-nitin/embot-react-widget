@@ -9,9 +9,8 @@ export function useAdminCredentials() {
 
 export const AdminCredentialsProvided = ({ children }) => {
   const [theme, setTheme] = useState("");
-
+  const adminId = "650d432aa0570859518c23a1";
   const getAdminData = () => {
-    const adminId = "650d432aa0570859518c23a1";
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/auth/get-widegt-admin-data/${adminId}`
@@ -23,7 +22,7 @@ export const AdminCredentialsProvided = ({ children }) => {
     getAdminData();
   }, []);
   return (
-    <AdminCredentialsContext.Provider value={{ theme }}>
+    <AdminCredentialsContext.Provider value={{ theme, adminId }}>
       {children}
     </AdminCredentialsContext.Provider>
   );

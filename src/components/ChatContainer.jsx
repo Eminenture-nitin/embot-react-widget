@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Response from "./ChatComponents/Response";
-import { useTriggersContextData } from "../context/TriggersDataContext";
 import UserTrigger from "./ChatComponents/UserTrigger";
 import CountdownTimer from "./CountdownTimer";
 import { useSocket } from "../context/SocketContext";
 import { useLiveChatContext } from "../context/LiveChatContext";
+import { useGlobalStatesContext } from "../context/GlobalStatesContext";
 
 const ChatContainer = () => {
-  const { assitWaitingTimerData } = useTriggersContextData();
+  const { assitWaitingTimerData } = useGlobalStatesContext();
   const { chatMessages, setChatMessages } = useLiveChatContext();
   const { socket } = useSocket();
   const chatContainerRef = useRef(null);

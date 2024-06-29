@@ -40,3 +40,8 @@ body #EMChatBotRoot {
 .EMBOT-chat-container:hover::-webkit-scrollbar {
   display: block;
 }
+.EMBOT-mainForImageProperty {
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}

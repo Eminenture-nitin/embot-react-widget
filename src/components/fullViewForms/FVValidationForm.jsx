@@ -1,16 +1,17 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import React, { useState } from "react";
-import { useTriggersContextData } from "../context/TriggersDataContext";
-import { useAdminCredentials } from "../context/AdminCredentialsContext";
+import { useTriggersContextData } from "../../context/TriggersDataContext";
+import { useAdminCredentials } from "../../context/AdminCredentialsContext";
 import {
   isValidEmail,
   isValidName,
   isValidPhoneNumber,
-} from "../utils/validations";
+} from "../../utils/validations";
+import { useGlobalStatesContext } from "../../context/GlobalStatesContext";
 
-const FullViewValidationForm = () => {
-  const { inputTagConfig, handleCloseForm, handleUserDecision } =
-    useTriggersContextData();
+const FVValidationForm = () => {
+  const { handleCloseForm, handleUserDecision } = useTriggersContextData();
+  const { inputTagConfig } = useGlobalStatesContext();
   const { theme } = useAdminCredentials();
   const [inputValue, setInputValue] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -127,4 +128,4 @@ const FullViewValidationForm = () => {
   );
 };
 
-export default FullViewValidationForm;
+export default FVValidationForm;

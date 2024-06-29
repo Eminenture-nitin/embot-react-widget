@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useTriggersContextData } from "../context/TriggersDataContext";
+import { useGlobalStatesContext } from "../context/GlobalStatesContext";
 
 const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
   const [minutes, setMinutes] = useState(initialMinutes);
   const [seconds, setSeconds] = useState(initialSeconds);
-  const { assitWaitingTimerData, setAssitWaitingTimerData } =
-    useTriggersContextData();
+  const {
+    assitWaitingTimerData,
+    setAssitWaitingTimerData,
+    setFullViewActiveEntity,
+  } = useGlobalStatesContext();
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -18,7 +21,7 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
       } else if (assitWaitingTimerData?.status == false) {
         clearInterval(countdown);
       } else {
-        alert("done countdown");
+        setFullViewActiveEntity("assistantWaitingForm");
         clearInterval(countdown);
         setAssitWaitingTimerData({ time: {}, status: false });
       }

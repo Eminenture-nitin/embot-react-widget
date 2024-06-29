@@ -6,6 +6,7 @@ import {
   isValidPhoneNumber,
 } from "../utils/validations";
 import { useLiveChatContext } from "./LiveChatContext";
+import { useGlobalStatesContext } from "./GlobalStatesContext";
 
 // TriggersContext context
 const TriggersContext = createContext();
@@ -19,23 +20,14 @@ export function useTriggersContextData() {
 export function TriggersContextProvider({ children }) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
+  const [validationFailedAttempt, setValidationFailedAttempt] = useState(0);
+  const {
+    setInputTagConfig,
+    setAssitWaitingTimerData,
+    inputTagConfig,
+    setFullViewActiveEntity,
+  } = useGlobalStatesContext();
 
-  const [validationFailedAttempt, setValidationFailedAttempt] = useState({
-    status: false,
-    count: 0,
-  });
-  const [assitWaitingTimerData, setAssitWaitingTimerData] = useState({
-    time: {},
-    status: false,
-  });
-  const [inputTagConfig, setInputTagConfig] = useState({
-    status: false,
-    type: "text",
-    placeholder: "Type your message",
-    trigger_Name: "",
-    validationType: "",
-    nextNodeId: "",
-  });
   const { getLocation, setChatMode, chatMessages, setChatMessages } =
     useLiveChatContext();
   // Function to get trigger data
@@ -209,12 +201,10 @@ export function TriggersContextProvider({ children }) {
       console.log("Phone number is valid");
       handleUserDecision(inputTagConfig.nextNodeId, value);
     } else {
-      setValidationFailedAttempt((prevVFA) => ({
-        ...prevVFA,
-        count: prevVFA.count + 1,
-        status:
-          prevVFA.count == inputTagConfig?.retryAttempts - 1 ? true : false,
-      }));
+      if (validationFailedAttempt == inputTagConfig?.retryAttempts - 1) {
+        setFullViewActiveEntity("validationForm");
+      }
+      setValidationFailedAttempt((prevVFA) => prevVFA + 1);
       setChatMessages((prevMsgs) => [
         ...prevMsgs,
         { userTrigger: value, myself: false },
@@ -259,11 +249,21 @@ export function TriggersContextProvider({ children }) {
       trigger_Name: "",
       validationType: "",
     }));
-    setValidationFailedAttempt({
-      status: false,
-      count: 0,
-    });
+    setValidationFailedAttempt(0);
+    setFullViewActiveEntity("chatsAndForm");
+    setChatMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        myself: false,
+        userTrigger: "Form submission canceled.",
+      },
+      {
+        responseText:
+          "Thank you for your interest! 🌟 Feel free to continue the conversation.",
+      },
+    ]);
   };
+
   useEffect(() => {
     getTriggersData("650d432aa0570859518c23a1");
   }, []);
@@ -278,14 +278,8 @@ export function TriggersContextProvider({ children }) {
         handleUserDecision,
         nodes,
         edges,
-        inputTagConfig,
-        setInputTagConfig,
         questionableTUserInteraction,
-        validationFailedAttempt,
-        setValidationFailedAttempt,
         handleCloseForm,
-        assitWaitingTimerData,
-        setAssitWaitingTimerData,
       }}
     >
       {children}
