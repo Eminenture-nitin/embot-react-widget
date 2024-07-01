@@ -174,10 +174,29 @@ export function LiveChatProvider({ children }) {
 
     //   mainChatData.push({ replaytext: TextMsgdata });
   }
-  useEffect(() => {
-    console.log("socket", socket.current);
 
-    //   getLocation("nitin@gmail.com");
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      socket.current.on(
+        "AssistantLogoutSuccessfully",
+        (data) => {
+          setChatMessages((prevMsgs) => [
+            ...prevMsgs,
+            {
+              responseText: `${data?.Assi_userName} is left live chat`,
+              myself: true,
+            },
+          ]);
+          localStorage.removeItem("joinedAssistantId");
+          localStorage.removeItem("joinedAssistantEmail");
+          //  chatTranscriptFunc();
+        },
+        5000
+      );
+    });
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [socket]);
 
   return (

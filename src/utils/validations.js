@@ -16,3 +16,14 @@ export function isValidPhoneNumber(value) {
   const phoneNumberPattern = /^(?:\+91|0)?[1-9]\d{9,13}$/;
   return phoneNumberPattern.test(value);
 }
+export function isValueInLocalStorage(key) {
+  // Retrieve the item from local storage
+  let storedValue = localStorage.getItem(key);
+
+  // Check if the stored value matches the input value
+  if (storedValue.length > 0) {
+    return true;
+  } else {
+    return false;
+  }
+}

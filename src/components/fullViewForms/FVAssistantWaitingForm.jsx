@@ -35,7 +35,7 @@ const FVAssistantWaitingForm = () => {
           "Thank you for your interest! 🌟 We appreciate your input and will get back to you soon.",
       },
     ]);
-    handleCloseForm();
+    handleCloseForm(false);
     console.log("Form Data:", formData);
   };
 
@@ -120,7 +120,7 @@ const FVAssistantWaitingForm = () => {
       </form>
       <br />
       <div
-        onClick={handleCloseForm}
+        onClick={() => handleCloseForm(true)}
         className="EMBOT-w-full EMBOT-grid EMBOT-justify-center"
       >
         <span className="EMBOT-inline-flex EMBOT-items-center EMBOT-px-2 EMBOT-py-1 EMBOT-me-2 EMBOT-text-sm EMBOT-font-medium EMBOT-text-red-800 EMBOT-bg-red-100 EMBOT-rounded EMBOT-dark:bg-red-900 EMBOT-dark:text-red-300">

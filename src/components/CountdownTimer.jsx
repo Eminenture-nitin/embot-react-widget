@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useGlobalStatesContext } from "../context/GlobalStatesContext";
+import { useSocket } from "../context/SocketContext";
 
 const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
   const [minutes, setMinutes] = useState(initialMinutes);
   const [seconds, setSeconds] = useState(initialSeconds);
+  const { socket } = useSocket();
   const {
     assitWaitingTimerData,
     setAssitWaitingTimerData,
@@ -21,6 +23,7 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
       } else if (assitWaitingTimerData?.status == false) {
         clearInterval(countdown);
       } else {
+        socket.current.off("checkAssitJoinedStatus");
         setFullViewActiveEntity("assistantWaitingForm");
         clearInterval(countdown);
         setAssitWaitingTimerData({ time: {}, status: false });
@@ -32,6 +35,9 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
 
   return (
     <div className="EMBOT-w-full EMBOT-p-4 EMBOT-text-center EMBOT-bg-white EMBOT-border EMBOT-border-gray-200 EMBOT-rounded-lg EMBOT-shadow sm:EMBOT-p-8 dark:EMBOT-bg-gray-800 dark:EMBOT-border-gray-700">
+      <div>
+        <Icon />
+      </div>
       <p className="EMBOT-mb-5 EMBOT-text-base EMBOT-text-gray-500 sm:EMBOT-text-lg dark:EMBOT-text-gray-400">
         Please wait, our assistant is joining the chat
       </p>

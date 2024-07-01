@@ -4,9 +4,11 @@ import {
   isValidEmail,
   isValidName,
   isValidPhoneNumber,
+  isValueInLocalStorage,
 } from "../utils/validations";
 import { useLiveChatContext } from "./LiveChatContext";
 import { useGlobalStatesContext } from "./GlobalStatesContext";
+import { useSocket } from "./SocketContext";
 
 // TriggersContext context
 const TriggersContext = createContext();
@@ -20,6 +22,7 @@ export function useTriggersContextData() {
 export function TriggersContextProvider({ children }) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
+  const { socket } = useSocket();
   const [validationFailedAttempt, setValidationFailedAttempt] = useState(0);
   const {
     setInputTagConfig,
@@ -87,6 +90,7 @@ export function TriggersContextProvider({ children }) {
       }));
       setAssitWaitingTimerData({ time: {}, status: false });
       setChatMode("botChat");
+      socket.current.off("checkAssitJoinedStatus");
     }
     console.log(`Activating node: ${node.data.trigger_Name}`);
     handleNodeTrigger(node, nodes, edges, visitedNodes);
@@ -179,13 +183,31 @@ export function TriggersContextProvider({ children }) {
 
   // Function to handle "Questionable Trigger"
   const handleQuestionableTrigger = (node, nodes, edges) => {
-    const questionableMessage = {
-      ...node.data.message,
-      nodeId: node.id,
-    };
-    setChatMessages((prevMessages) => [...prevMessages, questionableMessage]);
-  };
+    console.log(node.data.message.validationType);
+    if (
+      node.data.message.validationType == "Email" &&
+      isValueInLocalStorage("widget_user_email")
+    ) {
+      const email = localStorage.getItem("widget_user_email");
+      setChatMessages((prevMsgs) => [
+        ...prevMsgs,
+        {
+          responseText:
+            "📧 We have your email on file. Connecting you now. Please wait",
+          myself: true,
+        },
+      ]);
+      handleUserDecision(node?.data?.connections?.leftSource, email);
+    } else {
+      const questionableMessage = {
+        ...node.data.message,
+        nodeId: node.id,
+      };
 
+      console.log("questionableMessage", questionableMessage);
+      setChatMessages((prevMessages) => [...prevMessages, questionableMessage]);
+    }
+  };
   const questionableTUserInteraction = (value) => {
     if (inputTagConfig.validationType == "Email" && isValidEmail(value)) {
       console.log("email is verify");
@@ -240,7 +262,7 @@ export function TriggersContextProvider({ children }) {
     return edge ? nodes.find((n) => n.id === edge.target) : null;
   };
 
-  const handleCloseForm = () => {
+  const handleCloseForm = (closeBtn) => {
     setInputTagConfig((prevITC) => ({
       ...prevITC,
       status: false,
@@ -251,17 +273,19 @@ export function TriggersContextProvider({ children }) {
     }));
     setValidationFailedAttempt(0);
     setFullViewActiveEntity("chatsAndForm");
-    setChatMessages((prevMessages) => [
-      ...prevMessages,
-      {
-        myself: false,
-        userTrigger: "Form submission canceled.",
-      },
-      {
-        responseText:
-          "Thank you for your interest! 🌟 Feel free to continue the conversation.",
-      },
-    ]);
+
+    closeBtn &&
+      setChatMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          myself: false,
+          userTrigger: "Form submission canceled.",
+        },
+        {
+          responseText:
+            "Thank you for your interest! 🌟 Feel free to continue the conversation.",
+        },
+      ]);
   };
 
   useEffect(() => {
