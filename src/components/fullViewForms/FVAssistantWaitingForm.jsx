@@ -8,13 +8,28 @@ import { useLiveChatContext } from "../../context/LiveChatContext";
 const FVAssistantWaitingForm = () => {
   const { handleCloseForm } = useTriggersContextData();
   const { theme } = useAdminCredentials();
-  const { setChatMessages } = useLiveChatContext();
+  const { setChatMessages, addBotMsgs, addMsg } = useLiveChatContext();
   const [errorMsg, setErrorMsg] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     phone: "",
     message: "",
   });
+
+  const handleMultipleActionsCall = async () => {
+    try {
+      await Promise.all([
+        handleCloseForm(false),
+        addMsg("", formData),
+        addBotMsgs(
+          "Thank you for your interest! 🌟 We appreciate your input and will get back to you soon."
+        ),
+      ]);
+      console.log("All functions completed successfully");
+    } catch (error) {
+      console.error("Error in one of the functions:", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +50,8 @@ const FVAssistantWaitingForm = () => {
           "Thank you for your interest! 🌟 We appreciate your input and will get back to you soon.",
       },
     ]);
-    handleCloseForm(false);
+    handleMultipleActionsCall();
+
     console.log("Form Data:", formData);
   };
 

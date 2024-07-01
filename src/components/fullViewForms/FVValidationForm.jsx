@@ -2,6 +2,8 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import React, { useState } from "react";
 import { useTriggersContextData } from "../../context/TriggersDataContext";
 import { useAdminCredentials } from "../../context/AdminCredentialsContext";
+import Cookies from "js-cookie";
+
 import {
   isValidEmail,
   isValidName,
@@ -19,7 +21,7 @@ const FVValidationForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputTagConfig.validationType == "Email" && isValidEmail(inputValue)) {
-      localStorage.setItem("widget_user_email", inputValue);
+      Cookies.set("widget_user_email", inputValue, { expires: 3 });
       handleUserDecision(inputTagConfig.nextNodeId, inputValue);
       handleCloseForm();
     } else if (

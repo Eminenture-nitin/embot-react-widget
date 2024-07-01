@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 // Function to validate email
 export function isValidEmail(value) {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -16,12 +18,12 @@ export function isValidPhoneNumber(value) {
   const phoneNumberPattern = /^(?:\+91|0)?[1-9]\d{9,13}$/;
   return phoneNumberPattern.test(value);
 }
-export function isValueInLocalStorage(key) {
+export function isValueInCookies(key) {
   // Retrieve the item from local storage
-  let storedValue = localStorage.getItem(key);
+  let storedValue = Cookies.get(key);
 
   // Check if the stored value matches the input value
-  if (storedValue.length > 0) {
+  if (storedValue?.length > 0) {
     return true;
   } else {
     return false;

@@ -4,12 +4,12 @@ import {
   isValidEmail,
   isValidName,
   isValidPhoneNumber,
-  isValueInLocalStorage,
+  isValueInCookies,
 } from "../utils/validations";
 import { useLiveChatContext } from "./LiveChatContext";
 import { useGlobalStatesContext } from "./GlobalStatesContext";
 import { useSocket } from "./SocketContext";
-
+import Cookies from "js-cookie";
 // TriggersContext context
 const TriggersContext = createContext();
 
@@ -31,8 +31,14 @@ export function TriggersContextProvider({ children }) {
     setFullViewActiveEntity,
   } = useGlobalStatesContext();
 
-  const { getLocation, setChatMode, chatMessages, setChatMessages } =
-    useLiveChatContext();
+  const {
+    getLocation,
+    setChatMode,
+    chatMessages,
+    setChatMessages,
+    addMsg,
+    addBotMsgs,
+  } = useLiveChatContext();
   // Function to get trigger data
   const getTriggersData = (adminId) => {
     axios
@@ -169,6 +175,9 @@ export function TriggersContextProvider({ children }) {
       ...prevMsgs,
       { userTrigger: userInputValue, myself: false },
     ]);
+    setTimeout(() => {
+      addMsg(userInputValue);
+    }, 500);
     console.log("nextNodeIdActivated", nextNodeId);
     // Find the connected node using the source ID
     const connectedNode = nodes.find((n) => n.id === nextNodeId);
@@ -186,9 +195,9 @@ export function TriggersContextProvider({ children }) {
     console.log(node.data.message.validationType);
     if (
       node.data.message.validationType == "Email" &&
-      isValueInLocalStorage("widget_user_email")
+      isValueInCookies("widget_user_email")
     ) {
-      const email = localStorage.getItem("widget_user_email");
+      const email = Cookies.get("widget_user_email");
       setChatMessages((prevMsgs) => [
         ...prevMsgs,
         {
@@ -197,6 +206,11 @@ export function TriggersContextProvider({ children }) {
           myself: true,
         },
       ]);
+      setTimeout(() => {
+        addBotMsgs(
+          "📧 We have your email on file. Connecting you now. Please wait"
+        );
+      }, 500);
       handleUserDecision(node?.data?.connections?.leftSource, email);
     } else {
       const questionableMessage = {
@@ -211,7 +225,7 @@ export function TriggersContextProvider({ children }) {
   const questionableTUserInteraction = (value) => {
     if (inputTagConfig.validationType == "Email" && isValidEmail(value)) {
       console.log("email is verify");
-      localStorage.setItem("widget_user_email", value);
+      Cookies.set("widget_user_email", value, { expires: 3 });
       handleUserDecision(inputTagConfig.nextNodeId, value);
     } else if (inputTagConfig.validationType == "Name" && isValidName(value)) {
       console.log("Name is correct");
@@ -248,7 +262,7 @@ export function TriggersContextProvider({ children }) {
     }));
     setChatMode("liveChat");
 
-    const userEmailId = localStorage.getItem("widget_user_email");
+    const userEmailId = Cookies.get("widget_user_email");
     if (userEmailId) {
       //this function is initiate live chat process like get user location and check user is already there or not and then continue chat
       getLocation(userEmailId);
@@ -273,8 +287,8 @@ export function TriggersContextProvider({ children }) {
     }));
     setValidationFailedAttempt(0);
     setFullViewActiveEntity("chatsAndForm");
-
-    closeBtn &&
+    setChatMode("botChat");
+    if (closeBtn) {
       setChatMessages((prevMessages) => [
         ...prevMessages,
         {
@@ -286,6 +300,13 @@ export function TriggersContextProvider({ children }) {
             "Thank you for your interest! 🌟 Feel free to continue the conversation.",
         },
       ]);
+      setTimeout(() => {
+        addMsg("Form submission canceled.");
+        addBotMsgs(
+          "Thank you for your interest! 🌟 Feel free to continue the conversation."
+        );
+      }, 500);
+    }
   };
 
   useEffect(() => {

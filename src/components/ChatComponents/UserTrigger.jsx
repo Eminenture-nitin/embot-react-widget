@@ -3,6 +3,7 @@ import { useAdminCredentials } from "../../context/AdminCredentialsContext";
 
 const UserTrigger = (props) => {
   const { theme } = useAdminCredentials();
+
   return (
     <div className="EMBOT-flex EMBOT-my-2 EMBOT-items-end EMBOT-just-end EMBOT-flex-col EMBOT-w-full EMBOT-leading-1.5">
       {props.userTrigger.userTrigger && (

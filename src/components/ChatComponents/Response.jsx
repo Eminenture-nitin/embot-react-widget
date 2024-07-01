@@ -8,6 +8,26 @@ const Response = ({ response, index }) => {
   const { handleUserDecision, edges } = useTriggersContextData();
   const { theme } = useAdminCredentials();
 
+  function isImageFileName(filename) {
+    // List of common image file extensions
+    const imageExtensions = [
+      "jpg",
+      "jpeg",
+      "png",
+      "gif",
+      "bmp",
+      "svg",
+      "webp",
+      "avif",
+    ];
+
+    // Extract the file extension from the filename
+    const parts = filename.split(".");
+    const extension = parts[parts.length - 1].toLowerCase();
+
+    // Check if the extension is in the list of image extensions
+    return imageExtensions.includes(extension);
+  }
   const findSubtriggerNode = (parentNodeId, triggerValue) => {
     const matchingEdge = edges.find(
       (edge) => edge.source == parentNodeId && edge.label == triggerValue
@@ -107,13 +127,25 @@ const Response = ({ response, index }) => {
         </div>
       );
     } else if (response.imageURL) {
-      return (
-        <img
-          className="EMBOT-w-[80%] EMBOT-grid EMBOT-justify-end EMBOT-h-auto EMBOT-border-gray-200 EMBOT-rounded-e-xl EMBOT-rounded-es-xl"
-          src={response.imageURL}
-          alt={response.imageId}
-        />
-      );
+      if (isImageFileName(response.imageURL)) {
+        return (
+          <img
+            className="EMBOT-w-[80%] EMBOT-grid EMBOT-justify-end EMBOT-h-auto EMBOT-border-gray-200 EMBOT-rounded-e-xl EMBOT-rounded-es-xl"
+            src={response.imageURL}
+            alt={response.imageId}
+          />
+        );
+      } else {
+        return (
+          <iframe
+            src={response.imageURL}
+            className="EMBOT-w-[80%] EMBOT-h-auto"
+            width="125px"
+            height="125px"
+            style={{ overflow: "hidden" }}
+          ></iframe>
+        );
+      }
     } else if (response.label && response.url) {
       return (
         <button
