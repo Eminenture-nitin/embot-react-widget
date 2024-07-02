@@ -22,6 +22,7 @@ export function useTriggersContextData() {
 export function TriggersContextProvider({ children }) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
+
   const { socket } = useSocket();
   const [validationFailedAttempt, setValidationFailedAttempt] = useState(0);
   const {
@@ -64,6 +65,8 @@ export function TriggersContextProvider({ children }) {
         node.data.triggerType === "triggers" &&
         node.data.trigger_Name === "First visit on site"
       ) {
+        Cookies.set("FirstVisitNodeID", node.id, { expires: 3 });
+
         activateNode(node, nodes, edges, visitedNodes);
       }
     });
@@ -74,6 +77,9 @@ export function TriggersContextProvider({ children }) {
     if (visitedNodes.has(node.id)) return;
     visitedNodes.add(node.id);
     // console.log("active", node);
+    if (node.data.trigger_Name == "First visit on site") {
+      // console.log("First visit on site", node.id);
+    }
     if (node.data.trigger_Name == "Questionable Trigger") {
       const validationType = node.data.message.validationType;
       setInputTagConfig((prevConfig) => ({
@@ -98,6 +104,7 @@ export function TriggersContextProvider({ children }) {
       setChatMode("botChat");
       socket.current.off("checkAssitJoinedStatus");
     }
+
     console.log(`Activating node: ${node.data.trigger_Name}`);
     handleNodeTrigger(node, nodes, edges, visitedNodes);
   };
@@ -153,8 +160,17 @@ export function TriggersContextProvider({ children }) {
 
   // Function to handle the "Send a response" trigger
   const handleSendResponse = (node) => {
-    const messages = Object.values(node.data.message).map((msg) => msg);
-    setChatMessages((prevMessages) => [...prevMessages, ...messages]);
+    Object.values(node.data.message).map((msg) => {
+      setChatMessages((prevMessages) => [...prevMessages, msg]);
+      // if (
+      //   node.data.connections.leftTarget != Cookies.get("FirstVisitNodeID") &&
+      //   msg.responseText
+      // ) {
+      //   // addBotMsgs(msg.responseText);
+      // } else {
+      //   Cookies.set("SecondInitialNode", node.id, { expires: 3 });
+      // }
+    });
   };
 
   // Function to handle the "Decision (Buttons)" trigger
@@ -163,6 +179,9 @@ export function TriggersContextProvider({ children }) {
       ...node.data.message,
       nodeId: node.id,
     };
+    // if (node.data.connections.leftTarget != Cookies.get("SecondInitialNode")) {
+    //  addBotMsgs(node.data.message.responseText);
+    // }
     setChatMessages((prevMessages) => [...prevMessages, decisionMessage]);
 
     // In this function, we do not activate connected nodes automatically
@@ -175,9 +194,9 @@ export function TriggersContextProvider({ children }) {
       ...prevMsgs,
       { userTrigger: userInputValue, myself: false },
     ]);
-    setTimeout(() => {
-      addMsg(userInputValue);
-    }, 500);
+    // setTimeout(() => {
+    //   addMsg(userInputValue);
+    // }, 500);
     console.log("nextNodeIdActivated", nextNodeId);
     // Find the connected node using the source ID
     const connectedNode = nodes.find((n) => n.id === nextNodeId);
@@ -206,11 +225,11 @@ export function TriggersContextProvider({ children }) {
           myself: true,
         },
       ]);
-      setTimeout(() => {
-        addBotMsgs(
-          "📧 We have your email on file. Connecting you now. Please wait"
-        );
-      }, 500);
+      // setTimeout(() => {
+      //   addBotMsgs(
+      //     "📧 We have your email on file. Connecting you now. Please wait"
+      //   );
+      // }, 500);
       handleUserDecision(node?.data?.connections?.leftSource, email);
     } else {
       const questionableMessage = {
@@ -244,10 +263,6 @@ export function TriggersContextProvider({ children }) {
       setChatMessages((prevMsgs) => [
         ...prevMsgs,
         { userTrigger: value, myself: false },
-      ]);
-
-      setChatMessages((prevMsgs) => [
-        ...prevMsgs,
         { responseText: inputTagConfig.errorMessage },
       ]);
     }
@@ -296,10 +311,12 @@ export function TriggersContextProvider({ children }) {
           userTrigger: "Form submission canceled.",
         },
         {
+          myself: true,
           responseText:
             "Thank you for your interest! 🌟 Feel free to continue the conversation.",
         },
       ]);
+
       setTimeout(() => {
         addMsg("Form submission canceled.");
         addBotMsgs(

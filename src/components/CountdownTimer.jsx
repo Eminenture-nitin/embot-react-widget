@@ -42,7 +42,7 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
         Please wait, our assistant is joining the chat
       </p>
 
-      <div className="EMBOT-items-center EMBOT-justify-center EMBOT-space-y-4 sm:EMBOT-flex sm:EMBOT-space-y-0 sm:EMBOT-space-x-4 rtl:EMBOT-space-x-reverse">
+      <div className="EMBOT-flex EMBOT-items-center EMBOT-justify-center EMBOT-space-y-4 sm:EMBOT-flex sm:EMBOT-space-y-0 sm:EMBOT-space-x-4 rtl:EMBOT-space-x-reverse">
         <div className="EMBOT-w-full sm:EMBOT-w-auto EMBOT-bg-gray-800 hover:EMBOT-bg-gray-700 focus:EMBOT-ring-4 focus:EMBOT-outline-none focus:EMBOT-ring-gray-300 EMBOT-text-white EMBOT-rounded-lg EMBOT-grid EMBOT-items-center EMBOT-justify-center EMBOT-px-4 EMBOT-py-2.5 dark:EMBOT-bg-gray-700 dark:EMBOT-hover:bg-gray-600 dark:EMBOT-focus:ring-gray-700">
           <div className="EMBOT-text-left rtl:EMBOT-text-right">
             <div className="EMBOT-font-sans EMBOT-text-sm EMBOT-font-semibold EMBOT-text-center">

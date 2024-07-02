@@ -8,9 +8,25 @@ import { handleNLPOutput } from "../utils/NLPLogic";
 const ChatForm = () => {
   const { theme } = useAdminCredentials();
   const [value, setValue] = useState("");
-  const { questionableTUserInteraction } = useTriggersContextData();
+  const { questionableTUserInteraction, handleUserInput } =
+    useTriggersContextData();
   const { inputTagConfig } = useGlobalStatesContext();
-  const { chatMode, addMsg, setChatMessages } = useLiveChatContext();
+  const { chatMode, addMsg, setChatMessages, addBotMsgs } =
+    useLiveChatContext();
+
+  const handleMultipleActionsCall = async (input, output) => {
+    try {
+      await Promise.all([
+        // handleUserInput(input),
+        // addMsg(input),
+        // addBotMsgs(output),
+      ]);
+      console.log("All functions completed successfully");
+    } catch (error) {
+      console.error("Error in one of the functions:", error);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value?.length > 0) {
@@ -27,8 +43,12 @@ const ChatForm = () => {
         setChatMessages((prevMsgs) => [
           ...prevMsgs,
           { userTrigger: value, myself: false },
+        ]);
+        setChatMessages((prevMsgs) => [
+          ...prevMsgs,
           { responseText: output, myself: true },
         ]);
+        handleMultipleActionsCall(value, output);
       }
       setValue("");
     }

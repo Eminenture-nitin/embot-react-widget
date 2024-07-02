@@ -9,20 +9,25 @@ export function useAdminCredentials() {
 
 export const AdminCredentialsProvided = ({ children }) => {
   const [theme, setTheme] = useState("");
+  const [adminEmail, setAdminEmail] = useState("");
   const adminId = "650d432aa0570859518c23a1";
   const getAdminData = () => {
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/auth/get-widegt-admin-data/${adminId}`
       )
-      .then((res) => setTheme(res.data.data.theme))
+      .then((res) => {
+        setTheme(res.data.data.theme);
+        setAdminEmail(res.data.data.email);
+        // console.log(res);
+      })
       .catch((e) => console.log(e));
   };
   useEffect(() => {
     getAdminData();
   }, []);
   return (
-    <AdminCredentialsContext.Provider value={{ theme, adminId }}>
+    <AdminCredentialsContext.Provider value={{ theme, adminId, adminEmail }}>
       {children}
     </AdminCredentialsContext.Provider>
   );

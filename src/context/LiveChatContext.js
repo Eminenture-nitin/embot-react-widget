@@ -20,7 +20,7 @@ export function LiveChatProvider({ children }) {
   const [chatMessages, setChatMessages] = useState([]);
   const [chatMode, setChatMode] = useState("botChat");
   const { setAssitWaitingTimerData } = useGlobalStatesContext();
-  const { adminId } = useAdminCredentials();
+  const { adminId, adminEmail } = useAdminCredentials();
 
   const getLocation = (email) => {
     axios
@@ -132,52 +132,6 @@ export function LiveChatProvider({ children }) {
     }
   }
 
-  //send msg
-  // async function addMsg(
-  //   TextMsgdata,
-  //   assiUnavailableFromData,
-  //   quickInquiryFromData
-  // ) {
-  //   // console.log(TextMsgdata, "TextMsgdata");
-  //   setTimeout(() => {
-  //     socket.current.emit("sendMsg", {
-  //       to: Cookies.get("joinedAssistantId") || adminId,
-  //       from: Cookies.get("widget_user_id"),
-  //       message: TextMsgdata,
-  //       assiUnavailableFromData: assiUnavailableFromData
-  //         ? assiUnavailableFromData
-  //         : null,
-  //       quickInquiryFromData: quickInquiryFromData
-  //         ? quickInquiryFromData
-  //         : null,
-  //     });
-  //   }, 1000);
-  //   axios({
-  //     url: `${process.env.REACT_APP_API_URL}/live/addmsg`,
-  //     method: "POST",
-  //     data: JSON.stringify({
-  //       to: Cookies.get("joinedAssistantId") || adminId,
-  //       from: Cookies.get("widget_user_id"),
-  //       message: TextMsgdata,
-  //       type: Cookies.get("joinedAssistantId") ? "livechat" : "bot",
-  //       assiUnavailableFromData: assiUnavailableFromData
-  //         ? assiUnavailableFromData
-  //         : null,
-  //       quickInquiryFromData: quickInquiryFromData
-  //         ? quickInquiryFromData
-  //         : null,
-  //     }),
-  //     headers: { "Content-Type": "application/json" },
-  //   })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     })
-  //     .catch((e) => {
-  //       console.error(e);
-  //     });
-
-  //   //   mainChatData.push({ replaytext: TextMsgdata });
-  // }
   async function addMsg(
     TextMsgdata,
     assiUnavailableFromData,
@@ -229,42 +183,6 @@ export function LiveChatProvider({ children }) {
 
     // mainChatData.push({ replaytext: TextMsgdata });
   }
-
-  // add bot messages and common chats to Database
-  // async function addBotMsgs(TextMsgdata, assiMsgData, assiUnavailableFromData) {
-  //   socket.current.emit("sendMsg", {
-  //     to: Cookies.get("widget_user_id"),
-  //     from: Cookies.get("joinedAssistantId") || adminId,
-  //     message: TextMsgdata,
-  //     assiMsgData: assiMsgData ? assiMsgData : null,
-  //     assiUnavailableFromData: assiUnavailableFromData
-  //       ? assiUnavailableFromData
-  //       : null,
-  //   });
-
-  //   axios
-  //     .post(`${process.env.REACT_APP_API_URL}/live/addmsg`, {
-  //       to: Cookies.get("widget_user_id"),
-  //       from: Cookies.get("joinedAssistantId") || adminId,
-  //       message: TextMsgdata,
-  //       assiMsgData: assiMsgData ? JSON.stringify(assiMsgData) : null,
-  //       assiUnavailableFromData: assiUnavailableFromData
-  //         ? assiUnavailableFromData
-  //         : null,
-  //     })
-  //     .then((response) => {
-  //       if (response.data.status == "success") {
-  //         // toast.success(response.data.message);
-  //         console.log(response.data.message);
-  //       } else {
-  //         // toast.error(response.data.message);
-  //         console.log(response.data.message);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
 
   async function addBotMsgs(TextMsgdata, assiMsgData, assiUnavailableFromData) {
     const widgetUserId = Cookies.get("widget_user_id");
@@ -323,6 +241,31 @@ export function LiveChatProvider({ children }) {
     ]);
     myself ? addBotMsgs() : addMsg();
   };
+
+  //chat transcriptIcon functions
+  //chat transcriptIcon functions
+  function chatTranscriptFunc() {
+    fetch(`${process.env.REACT_APP_API_URL}/live/chat-transcript`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chatMessages,
+        userEmail: adminEmail,
+      }),
+    })
+      .then((res) => {
+        //console.log(res, "res");
+        return res.json();
+      })
+      .then((response) => {
+        console.log("chattranscript send to admin");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
   useEffect(() => {
     const timeout = setTimeout(() => {
       socket.current.on(
@@ -338,7 +281,7 @@ export function LiveChatProvider({ children }) {
           Cookies.remove("joinedAssistantId");
           Cookies.remove("joinedAssistantEmail");
           setChatMode("botChat");
-          // chatTranscriptFunc();
+          chatTranscriptFunc();
         },
         5000
       );
