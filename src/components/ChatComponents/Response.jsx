@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import React, { useEffect, useState } from "react";
 import { useTriggersContextData } from "../../context/TriggersDataContext";
 import { useAdminCredentials } from "../../context/AdminCredentialsContext";
+import SliderTriggerComponent from "./SliderTriggerComponent";
 
 const Response = ({ response, index }) => {
   const [isLoading, setIsLoading] = useState(false);

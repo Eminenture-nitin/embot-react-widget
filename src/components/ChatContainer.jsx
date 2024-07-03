@@ -5,6 +5,7 @@ import CountdownTimer from "./CountdownTimer";
 import { useSocket } from "../context/SocketContext";
 import { useLiveChatContext } from "../context/LiveChatContext";
 import { useGlobalStatesContext } from "../context/GlobalStatesContext";
+import SliderTriggerComponent from "./ChatComponents/SliderTriggerComponent";
 
 const ChatContainer = () => {
   const { assitWaitingTimerData } = useGlobalStatesContext();
@@ -75,8 +76,12 @@ const ChatContainer = () => {
           ) : (
             <UserTrigger userTrigger={msgData} index={index} />
           )}
+          {msgData?.format == "slider" && (
+            <SliderTriggerComponent data={msgData} />
+          )}
         </div>
       ))}
+
       {assitWaitingTimerData?.status && (
         <CountdownTimer
           initialMinutes={assitWaitingTimerData?.time?.min}

@@ -10,6 +10,7 @@ import { useLiveChatContext } from "./LiveChatContext";
 import { useGlobalStatesContext } from "./GlobalStatesContext";
 import { useSocket } from "./SocketContext";
 import Cookies from "js-cookie";
+import { STConvertDataFormat } from "../utils/DataFormatConversionLogic";
 // TriggersContext context
 const TriggersContext = createContext();
 
@@ -133,6 +134,9 @@ export function TriggersContextProvider({ children }) {
         break;
       case "Chat with Assistant":
         hadleChatWithAssistantTrigger(node, nodes, edges);
+        break;
+      case "Card Slider":
+        handleCardSliderTrigger(node, nodes, edges);
         break;
       // Add more cases for different trigger names
       default:
@@ -268,7 +272,7 @@ export function TriggersContextProvider({ children }) {
     }
   };
 
-  //hadle Chat With Assistant Trigger Logic
+  //handle Chat With Assistant Trigger Logic
   const hadleChatWithAssistantTrigger = (node, nodes, edges) => {
     setAssitWaitingTimerData((prevAWTD) => ({
       ...prevAWTD,
@@ -282,6 +286,13 @@ export function TriggersContextProvider({ children }) {
       //this function is initiate live chat process like get user location and check user is already there or not and then continue chat
       getLocation(userEmailId);
     }
+  };
+
+  // handle Card Slider trigger
+  const handleCardSliderTrigger = (node, nodes, edges) => {
+    const response = STConvertDataFormat(node?.data?.message);
+    console.log(response);
+    setChatMessages((prevMsgs) => [...prevMsgs, response]);
   };
 
   // handle User
