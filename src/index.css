@@ -45,3 +45,10 @@ body #EMChatBotRoot {
   background-size: cover !important;
   background-repeat: no-repeat !important;
 }
+
+.splide__arrow--prev {
+  left: -16px !important;
+}
+.splide__arrow--next {
+  right: -16px !important;
+}

@@ -245,6 +245,7 @@ export function TriggersContextProvider({ children }) {
       setChatMessages((prevMessages) => [...prevMessages, questionableMessage]);
     }
   };
+
   const questionableTUserInteraction = (value) => {
     if (inputTagConfig.validationType == "Email" && isValidEmail(value)) {
       console.log("email is verify");
@@ -292,7 +293,23 @@ export function TriggersContextProvider({ children }) {
   const handleCardSliderTrigger = (node, nodes, edges) => {
     const response = STConvertDataFormat(node?.data?.message);
     console.log(response);
-    setChatMessages((prevMsgs) => [...prevMsgs, response]);
+    setChatMessages((prevMsgs) => [
+      ...prevMsgs,
+      { ...response, nodeId: node?.id },
+    ]);
+  };
+
+  //handle for find connected node to subtrigger
+  const findSubtriggerConnectedNode = (parentNodeId, triggerValue) => {
+    const matchingEdge = edges.find(
+      (edge) => edge.source == parentNodeId && edge.label == triggerValue
+    );
+    console.log("matchingEdge", matchingEdge);
+    if (matchingEdge) {
+      return matchingEdge.target;
+    }
+
+    return null;
   };
 
   // handle User
@@ -353,6 +370,7 @@ export function TriggersContextProvider({ children }) {
         edges,
         questionableTUserInteraction,
         handleCloseForm,
+        findSubtriggerConnectedNode,
       }}
     >
       {children}

@@ -29,3 +29,24 @@ export function isValueInCookies(key) {
     return false;
   }
 }
+
+export function isImageFileName(filename) {
+  // List of common image file extensions
+  const imageExtensions = [
+    "jpg",
+    "jpeg",
+    "png",
+    "gif",
+    "bmp",
+    "svg",
+    "webp",
+    "avif",
+  ];
+
+  // Extract the file extension from the filename
+  const parts = filename.split(".");
+  const extension = parts[parts.length - 1].toLowerCase();
+
+  // Check if the extension is in the list of image extensions
+  return imageExtensions.includes(extension);
+}

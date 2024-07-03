@@ -3,43 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useTriggersContextData } from "../../context/TriggersDataContext";
 import { useAdminCredentials } from "../../context/AdminCredentialsContext";
 import SliderTriggerComponent from "./SliderTriggerComponent";
+import { isImageFileName } from "../../utils/validations";
 
 const Response = ({ response, index }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { handleUserDecision, edges } = useTriggersContextData();
+  const { handleUserDecision, findSubtriggerConnectedNode } =
+    useTriggersContextData();
   const { theme } = useAdminCredentials();
-
-  function isImageFileName(filename) {
-    // List of common image file extensions
-    const imageExtensions = [
-      "jpg",
-      "jpeg",
-      "png",
-      "gif",
-      "bmp",
-      "svg",
-      "webp",
-      "avif",
-    ];
-
-    // Extract the file extension from the filename
-    const parts = filename.split(".");
-    const extension = parts[parts.length - 1].toLowerCase();
-
-    // Check if the extension is in the list of image extensions
-    return imageExtensions.includes(extension);
-  }
-  const findSubtriggerNode = (parentNodeId, triggerValue) => {
-    const matchingEdge = edges.find(
-      (edge) => edge.source == parentNodeId && edge.label == triggerValue
-    );
-    console.log("matchingEdge", matchingEdge);
-    if (matchingEdge) {
-      return matchingEdge.target;
-    }
-
-    return null;
-  };
 
   const renderContent = () => {
     if (response.responseText) {
@@ -99,7 +69,7 @@ const Response = ({ response, index }) => {
                 <button
                   key={index}
                   onClick={() => {
-                    const targetNodeId = findSubtriggerNode(
+                    const targetNodeId = findSubtriggerConnectedNode(
                       response.nodeId,
                       item.value
                     );
