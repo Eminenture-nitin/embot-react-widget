@@ -2,16 +2,15 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import React, { useState } from "react";
 import { useTriggersContextData } from "../../context/TriggersDataContext";
 import { useAdminCredentials } from "../../context/AdminCredentialsContext";
-import { useGlobalStatesContext } from "../../context/GlobalStatesContext";
 import { useLiveChatContext } from "../../context/LiveChatContext";
-
+import Cookies from "js-cookie";
 const FVAssistantWaitingForm = () => {
   const { handleCloseForm } = useTriggersContextData();
   const { theme } = useAdminCredentials();
   const { setChatMessages, addBotMsgs, addMsg } = useLiveChatContext();
   const [errorMsg, setErrorMsg] = useState("");
   const [formData, setFormData] = useState({
-    email: "",
+    email: "" || Cookies.get("widget_user_email"),
     phone: "",
     message: "",
   });
