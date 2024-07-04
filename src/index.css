@@ -9,7 +9,7 @@ body * {
 }
 body #EMChatBotRoot {
   z-index: 99999999;
-  position:relative;
+  position: relative;
 }
 .EMBOT-chat-container {
   scrollbar-width: thin; /* For Firefox */
