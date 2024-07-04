@@ -29,12 +29,10 @@ export const AdminCredentialsProvided = ({ children }) => {
   useEffect(() => {
     // Function to check for EMChatBotAdminId
     const checkForAdminId = () => {
-      if (window.EMChatBotData && window.EMChatBotData.EMChatBotAdminId) {
-        const dehashId = customDehash(
-          window.EMChatBotData.EMChatBotAdminId,
-          "EMReact"
-        );
-        setAdminId(dehashId);
+      const dehashId = localStorage.getItem("EMChatBotAdminId");
+      if (dehashId) {
+        const processedId = customDehash(dehashId, "EMReact");
+        setAdminId(processedId);
         return true;
       }
       return false;
@@ -62,8 +60,11 @@ export const AdminCredentialsProvided = ({ children }) => {
     }
   }, []);
   useEffect(() => {
-    getAdminData();
-  }, []);
+    if (adminId) {
+      getAdminData();
+    }
+  }, [adminId]);
+
   return (
     <AdminCredentialsContext.Provider value={{ theme, adminId, adminEmail }}>
       {children}

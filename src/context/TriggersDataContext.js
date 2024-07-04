@@ -356,8 +356,10 @@ export function TriggersContextProvider({ children }) {
   };
 
   useEffect(() => {
-    getTriggersData(adminId);
-  }, []);
+    if (adminId) {
+      getTriggersData(adminId);
+    }
+  }, [adminId]);
 
   // useEffect(() => {
   //   console.log("chatMessages", chatMessages);

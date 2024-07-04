@@ -44,7 +44,7 @@ export function LiveChatProvider({ children }) {
             },
             visitedPage: window.location.href,
           };
-        //  console.log("payload", payload);
+          //  console.log("payload", payload);
           registerUser(payload);
         }
       })
@@ -63,7 +63,7 @@ export function LiveChatProvider({ children }) {
       .then((res) => {
         const data = res.data;
         getParticularUser(data?.user?._id);
-     //   console.log("res", data);
+        //   console.log("res", data);
         // saving Register user Id and Email to the Cookies
 
         Cookies.set("widget_user_id", data?.user?._id, { expires: 3 });
@@ -112,7 +112,7 @@ export function LiveChatProvider({ children }) {
       //console.log(data);
       setTimeout(() => {
         if (data.data.joinedExecutive.status == false) {
-      //    console.log("not joined");
+          //    console.log("not joined");
           socket.current.emit("updateUserAssistantStatus", userId);
         } else {
           setChatMessages((prevMsgs) => [
@@ -140,7 +140,7 @@ export function LiveChatProvider({ children }) {
     const widgetUserId = Cookies.get("widget_user_id");
 
     if (!widgetUserId) {
-    //  console.log("user id not available");
+      //  console.log("user id not available");
       return; //
     }
 
@@ -176,7 +176,7 @@ export function LiveChatProvider({ children }) {
         }),
         headers: { "Content-Type": "application/json" },
       });
-   //   console.log(response.data);
+      //   console.log(response.data);
     } catch (error) {
       console.error("Error adding message:", error);
     }
@@ -267,47 +267,50 @@ export function LiveChatProvider({ children }) {
       });
   }
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      socket.current.on(
-        "AssistantLogoutSuccessfully",
-        (data) => {
+    let timeout;
+    if (adminId) {
+      timeout = setTimeout(() => {
+        socket.current.on(
+          "AssistantLogoutSuccessfully",
+          (data) => {
+            setChatMessages((prevMsgs) => [
+              ...prevMsgs,
+              {
+                responseText: `${data?.Assi_userName} is left live chat`,
+                myself: true,
+              },
+            ]);
+            Cookies.remove("joinedAssistantId");
+            Cookies.remove("joinedAssistantEmail");
+            setChatMode("botChat");
+            chatTranscriptFunc();
+          },
+          5000
+        );
+        //checking if asssistant is joine directly or not
+        socket.current.on("AssistantJoined", (data) => {
+          setChatMode("liveChat");
           setChatMessages((prevMsgs) => [
             ...prevMsgs,
             {
-              responseText: `${data?.Assi_userName} is left live chat`,
+              responseText: `${data?.Assi_userName} is joined`,
+              assiMsgData: data,
               myself: true,
             },
           ]);
-          Cookies.remove("joinedAssistantId");
-          Cookies.remove("joinedAssistantEmail");
-          setChatMode("botChat");
-          chatTranscriptFunc();
-        },
-        5000
-      );
-      //checking if asssistant is joine directly or not
-      socket.current.on("AssistantJoined", (data) => {
-        setChatMode("liveChat");
-        setChatMessages((prevMsgs) => [
-          ...prevMsgs,
-          {
-            responseText: `${data?.Assi_userName} is joined`,
-            assiMsgData: data,
-            myself: true,
-          },
-        ]);
-        Cookies.set("joinedAssistantId", data?.Assi__id, { expires: 1 });
-        Cookies.set("joinedAssistantEmail", data?.Assi_userEmail, {
-          expires: 1,
+          Cookies.set("joinedAssistantId", data?.Assi__id, { expires: 1 });
+          Cookies.set("joinedAssistantEmail", data?.Assi_userEmail, {
+            expires: 1,
+          });
+          socket.current.emit("addUser", Cookies.get("widget_user_id"));
+          setAssitWaitingTimerData({ time: {}, status: false });
         });
-        socket.current.emit("addUser", Cookies.get("widget_user_id"));
-        setAssitWaitingTimerData({ time: {}, status: false });
       });
-    });
+    }
     return () => {
       clearTimeout(timeout);
     };
-  }, [socket]);
+  }, [socket, adminId]);
 
   return (
     <LiveChatContext.Provider
