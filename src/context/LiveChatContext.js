@@ -44,7 +44,7 @@ export function LiveChatProvider({ children }) {
             },
             visitedPage: window.location.href,
           };
-          console.log("payload", payload);
+        //  console.log("payload", payload);
           registerUser(payload);
         }
       })
@@ -63,7 +63,7 @@ export function LiveChatProvider({ children }) {
       .then((res) => {
         const data = res.data;
         getParticularUser(data?.user?._id);
-        console.log("res", data);
+     //   console.log("res", data);
         // saving Register user Id and Email to the Cookies
 
         Cookies.set("widget_user_id", data?.user?._id, { expires: 3 });
@@ -112,7 +112,7 @@ export function LiveChatProvider({ children }) {
       //console.log(data);
       setTimeout(() => {
         if (data.data.joinedExecutive.status == false) {
-          console.log("not joined");
+      //    console.log("not joined");
           socket.current.emit("updateUserAssistantStatus", userId);
         } else {
           setChatMessages((prevMsgs) => [
@@ -140,7 +140,7 @@ export function LiveChatProvider({ children }) {
     const widgetUserId = Cookies.get("widget_user_id");
 
     if (!widgetUserId) {
-      console.log("user id not available");
+    //  console.log("user id not available");
       return; //
     }
 
@@ -176,7 +176,7 @@ export function LiveChatProvider({ children }) {
         }),
         headers: { "Content-Type": "application/json" },
       });
-      console.log(response.data);
+   //   console.log(response.data);
     } catch (error) {
       console.error("Error adding message:", error);
     }

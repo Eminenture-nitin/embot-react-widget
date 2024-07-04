@@ -50,3 +50,20 @@ export function isImageFileName(filename) {
   // Check if the extension is in the list of image extensions
   return imageExtensions.includes(extension);
 }
+
+//custome dehash function for UserID deshash or decode
+export function customDehash(hash, secret) {
+  const key = new TextEncoder().encode(secret);
+  const hashArray = new Uint8Array(
+    atob(hash)
+      .split("")
+      .map((char) => char.charCodeAt(0))
+  );
+  const result = [];
+
+  for (let i = 0; i < hashArray.length; i++) {
+    result.push(hashArray[i] ^ key[i % key.length]);
+  }
+
+  return new TextDecoder().decode(new Uint8Array(result));
+}

@@ -8,11 +8,7 @@ function App() {
   const [showWidget, setShowWidget] = useState(false);
   const { theme } = useAdminCredentials();
 
-  useEffect(() => {
-    // Initialize chatbot with the adminId
-    console.log(`Initializing chatbot for admin: 12345`);
-    // Fetch and setup chatbot data based on adminId (if necessary)
-  }, []);
+ 
 
   return (
     <div>
