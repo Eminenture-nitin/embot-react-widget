@@ -49,7 +49,7 @@ export function TriggersContextProvider({ children }) {
         `${process.env.REACT_APP_API_URL}/auth/getNodeAndEdgesWidget/${adminId}`
       )
       .then((res) => {
-       // console.log(res.data);
+        // console.log(res.data);
         setNodes(res.data.nodes);
         setEdges(res.data.edges);
         startChatbot(res.data.nodes, res.data.edges);
@@ -209,14 +209,14 @@ export function TriggersContextProvider({ children }) {
       console.error(`Node with ID "${nextNodeId}" not found in nodes.`);
       return;
     }
-   // console.log(connectedNode);
+    // console.log(connectedNode);
     // Activate the connected node
     activateNode(connectedNode, nodes, edges, new Set());
   };
 
   // Function to handle "Questionable Trigger"
   const handleQuestionableTrigger = (node, nodes, edges) => {
-   // console.log(node.data.message.validationType);
+    // console.log(node.data.message.validationType);
     if (
       node.data.message.validationType == "Email" &&
       isValueInCookies("widget_user_email")
@@ -242,18 +242,18 @@ export function TriggersContextProvider({ children }) {
         nodeId: node.id,
       };
 
-     // console.log("questionableMessage", questionableMessage);
+      // console.log("questionableMessage", questionableMessage);
       setChatMessages((prevMessages) => [...prevMessages, questionableMessage]);
     }
   };
 
   const questionableTUserInteraction = (value) => {
     if (inputTagConfig.validationType == "Email" && isValidEmail(value)) {
-     // console.log("email is verify");
+      // console.log("email is verify");
       Cookies.set("widget_user_email", value, { expires: 3 });
       handleUserDecision(inputTagConfig.nextNodeId, value);
     } else if (inputTagConfig.validationType == "Name" && isValidName(value)) {
-     // console.log("Name is correct");
+      // console.log("Name is correct");
       handleUserDecision(inputTagConfig.nextNodeId, value);
     } else if (
       inputTagConfig.validationType == "Phone Number" &&
