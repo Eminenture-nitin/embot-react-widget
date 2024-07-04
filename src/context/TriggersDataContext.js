@@ -11,6 +11,7 @@ import { useGlobalStatesContext } from "./GlobalStatesContext";
 import { useSocket } from "./SocketContext";
 import Cookies from "js-cookie";
 import { STConvertDataFormat } from "../utils/DataFormatConversionLogic";
+import { useAdminCredentials } from "./AdminCredentialsContext";
 // TriggersContext context
 const TriggersContext = createContext();
 
@@ -23,7 +24,7 @@ export function useTriggersContextData() {
 export function TriggersContextProvider({ children }) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
-
+  const { adminId } = useAdminCredentials();
   const { socket } = useSocket();
   const [validationFailedAttempt, setValidationFailedAttempt] = useState(0);
   const {
@@ -355,7 +356,7 @@ export function TriggersContextProvider({ children }) {
   };
 
   useEffect(() => {
-    getTriggersData("650d432aa0570859518c23a1");
+    getTriggersData(adminId);
   }, []);
 
   // useEffect(() => {
