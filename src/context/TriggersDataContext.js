@@ -32,6 +32,7 @@ export function TriggersContextProvider({ children }) {
     setAssitWaitingTimerData,
     inputTagConfig,
     setFullViewActiveEntity,
+    setEnableTextInput,
   } = useGlobalStatesContext();
 
   const {
@@ -139,6 +140,15 @@ export function TriggersContextProvider({ children }) {
       case "Card Slider":
         handleCardSliderTrigger(node, nodes, edges);
         break;
+      case "Custom Forms":
+        handleCustomFormsTrigger(node, nodes, edges);
+        break;
+      case "Disable text input":
+        handleDisableTextInputTrigger(node, nodes, edges);
+        break;
+      case "Enable text input":
+        handleEnableTextInputTrigger(node, nodes, edges);
+        break;
       // Add more cases for different trigger names
       default:
         console.log(`Unknown trigger: ${node.data.trigger_Name}`);
@@ -146,7 +156,8 @@ export function TriggersContextProvider({ children }) {
 
     if (
       node.data.trigger_Name !== "Decision (Buttons)" &&
-      node.data.trigger_Name !== "Questionable Trigger"
+      node.data.trigger_Name !== "Questionable Trigger" &&
+      node.data.trigger_Name !== "Card Slider"
     ) {
       const connectedNode = findConnectedNode(node, edges, nodes);
       if (connectedNode && checkActivationCondition(connectedNode)) {
@@ -298,6 +309,21 @@ export function TriggersContextProvider({ children }) {
       ...prevMsgs,
       { ...response, nodeId: node?.id },
     ]);
+  };
+
+  //handle custom form trigger
+  const handleCustomFormsTrigger = (node, nodes, edges) => {
+    console.log("forms trigger activate");
+  };
+
+  //handle disable text input
+  const handleDisableTextInputTrigger = (node, nodes, edges) => {
+    setEnableTextInput(false);
+  };
+
+  //handle enable text input
+  const handleEnableTextInputTrigger = (node, nodes, edges) => {
+    setEnableTextInput(true);
   };
 
   //handle for find connected node to subtrigger

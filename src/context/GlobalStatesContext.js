@@ -13,6 +13,7 @@ export function GlobalStatesProvider({ children }) {
   //chatsAndForm
   //assistantWaitingForm
   //validationForm
+  const [enableTextInput, setEnableTextInput] = useState(true);
 
   const [assitWaitingTimerData, setAssitWaitingTimerData] = useState({
     time: {},
@@ -36,6 +37,8 @@ export function GlobalStatesProvider({ children }) {
         setInputTagConfig,
         fullViewActiveEntity,
         setFullViewActiveEntity,
+        enableTextInput,
+        setEnableTextInput,
       }}
     >
       {children}

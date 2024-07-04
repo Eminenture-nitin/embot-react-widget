@@ -7,7 +7,7 @@ import FVAssistantWaitingForm from "./fullViewForms/FVAssistantWaitingForm";
 import FVValidationForm from "./fullViewForms/FVValidationForm";
 
 const ChatBotWidget = () => {
-  const { fullViewActiveEntity } = useGlobalStatesContext();
+  const { fullViewActiveEntity, enableTextInput } = useGlobalStatesContext();
 
   return (
     <div
@@ -30,7 +30,7 @@ const ChatBotWidget = () => {
         ) : (
           <>
             <ChatContainer />
-            <ChatForm />
+            {enableTextInput && <ChatForm />}
           </>
         )}
       </div>
