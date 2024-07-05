@@ -25,7 +25,7 @@ export const AdminCredentialsProvided = ({ children }) => {
 
     const handleAdminIdCheck = () => {
       const tempId = checkForAdminId();
-      //console.log(tempId, "tempId");
+      console.log(tempId, "tempId");
       if (tempId) {
         const processedId = customDehash(tempId, "EMReact");
         setAdminId(processedId);
