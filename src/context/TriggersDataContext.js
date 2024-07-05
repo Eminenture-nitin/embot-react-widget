@@ -50,7 +50,7 @@ export function TriggersContextProvider({ children }) {
         `${process.env.REACT_APP_API_URL}/auth/getNodeAndEdgesWidget/${adminId}`
       )
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setNodes(res.data.nodes);
         setEdges(res.data.edges);
         startChatbot(res.data.nodes, res.data.edges);
@@ -274,7 +274,7 @@ export function TriggersContextProvider({ children }) {
       handleUserDecision(inputTagConfig.nextNodeId, value);
     } else {
       if (validationFailedAttempt == inputTagConfig?.retryAttempts - 1) {
-        setFullViewActiveEntity("validationForm");
+        setFullViewActiveEntity({ active: "validationForm", data: {} });
       }
       setValidationFailedAttempt((prevVFA) => prevVFA + 1);
       setChatMessages((prevMsgs) => [
@@ -313,7 +313,10 @@ export function TriggersContextProvider({ children }) {
 
   //handle custom form trigger
   const handleCustomFormsTrigger = (node, nodes, edges) => {
-    console.log("forms trigger activate");
+    setFullViewActiveEntity({
+      active: "customForms",
+      data: node?.data?.message,
+    });
   };
 
   //handle disable text input
@@ -356,7 +359,7 @@ export function TriggersContextProvider({ children }) {
       validationType: "",
     }));
     setValidationFailedAttempt(0);
-    setFullViewActiveEntity("chatsAndForm");
+    setFullViewActiveEntity({ active: "chatsAndForm", data: {} });
     setChatMode("botChat");
     if (closeBtn) {
       setChatMessages((prevMessages) => [

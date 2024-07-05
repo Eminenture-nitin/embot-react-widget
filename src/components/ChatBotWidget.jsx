@@ -5,6 +5,7 @@ import ChatForm from "./ChatForm";
 import { useGlobalStatesContext } from "../context/GlobalStatesContext";
 import FVAssistantWaitingForm from "./fullViewForms/FVAssistantWaitingForm";
 import FVValidationForm from "./fullViewForms/FVValidationForm";
+import FVCustomeForm from "./fullViewForms/FVCustomeForm";
 
 const ChatBotWidget = () => {
   const { fullViewActiveEntity, enableTextInput } = useGlobalStatesContext();
@@ -23,10 +24,12 @@ const ChatBotWidget = () => {
       >
         <Header />
 
-        {fullViewActiveEntity == "assistantWaitingForm" ? (
+        {fullViewActiveEntity?.active == "assistantWaitingForm" ? (
           <FVAssistantWaitingForm />
-        ) : fullViewActiveEntity == "validationForm" ? (
+        ) : fullViewActiveEntity?.active == "validationForm" ? (
           <FVValidationForm />
+        ) : fullViewActiveEntity?.active == "customForms" ? (
+          <FVCustomeForm data={fullViewActiveEntity?.data} />
         ) : (
           <>
             <ChatContainer />

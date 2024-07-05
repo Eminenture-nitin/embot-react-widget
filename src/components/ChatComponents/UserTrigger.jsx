@@ -20,7 +20,7 @@ const UserTrigger = (props) => {
           {props.userTrigger.userTrigger}
         </p>
       )}
-      {props.userTrigger.assiUnavailableFromData && (
+      {props?.userTrigger?.assiUnavailableFromData && (
         <div className="EMBOT-flex EMBOT-flex-col EMBOT-items-start EMBOT-border EMBOT-rounded-s-xl EMBOT-rounded-ee-xl EMBOT-w-[75%] EMBOT-p-2">
           <h3 className="EMBOT-font-semibold EMBOT-mb-2">
             Assistant Unavailable – Contact Details
@@ -35,6 +35,26 @@ const UserTrigger = (props) => {
           </h3>
           <hr className="EMBOT-w-full EMBOT-border-t EMBOT-border-gray-300 EMBOT-mb-2" />
           <p>{props?.userTrigger?.assiUnavailableFromData?.message}</p>
+        </div>
+      )}
+      {props?.userTrigger?.customFormsData && (
+        <div className="EMBOT-flex EMBOT-flex-col EMBOT-items-start EMBOT-border EMBOT-rounded-s-xl EMBOT-rounded-ee-xl EMBOT-w-[75%] EMBOT-p-2">
+          {Object.entries(props?.userTrigger?.customFormsData).map(
+            ([key, value]) => (
+              <div key={key} className="EMBOT-w-full">
+                {key !== "Long Text" ? (
+                  <>
+                    <h3 className="EMBOT-font-semibold EMBOT-mb-2">{value}</h3>
+                    <hr className="EMBOT-w-full EMBOT-border-t EMBOT-border-gray-300 EMBOT-mb-2" />
+                  </>
+                ) : (
+                  <>
+                    <p>{value}</p>
+                  </>
+                )}
+              </div>
+            )
+          )}
         </div>
       )}
     </div>

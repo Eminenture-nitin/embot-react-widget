@@ -24,7 +24,7 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
         clearInterval(countdown);
       } else {
         socket.current.off("checkAssitJoinedStatus");
-        setFullViewActiveEntity("assistantWaitingForm");
+        setFullViewActiveEntity({ active: "assistantWaitingForm", data: {} });
         clearInterval(countdown);
         setAssitWaitingTimerData({ time: {}, status: false });
       }

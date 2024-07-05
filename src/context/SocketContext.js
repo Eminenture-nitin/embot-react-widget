@@ -26,17 +26,17 @@ export function SocketProvider({ children }) {
         randomizationFactor: 0.5, // Randomization factor for reconnection delay
       });
       socket.current.on("connect", () => {
-        console.log("Socket connected", socket.current);
+        // console.log("Socket connected", socket.current);
       });
 
       // Listen for reconnection attempts
       socket.current.on("reconnect_attempt", () => {
-        console.log("Reconnecting...");
+        // console.log("Reconnecting...");
       });
 
       // Listen for successful reconnection
       socket.current.on("reconnect", (attemptNumber) => {
-        console.log("Reconnected successfully on attempt", attemptNumber);
+        //console.log("Reconnected successfully on attempt", attemptNumber);
       });
 
       // Listen for reconnection errors

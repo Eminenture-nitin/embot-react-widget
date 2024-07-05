@@ -132,11 +132,7 @@ export function LiveChatProvider({ children }) {
     }
   }
 
-  async function addMsg(
-    TextMsgdata,
-    assiUnavailableFromData,
-    quickInquiryFromData
-  ) {
+  async function addMsg(TextMsgdata, assiUnavailableFromData, customFormsData) {
     const widgetUserId = Cookies.get("widget_user_id");
 
     if (!widgetUserId) {
@@ -152,9 +148,7 @@ export function LiveChatProvider({ children }) {
         assiUnavailableFromData: assiUnavailableFromData
           ? assiUnavailableFromData
           : null,
-        quickInquiryFromData: quickInquiryFromData
-          ? quickInquiryFromData
-          : null,
+        customFormsData: customFormsData ? customFormsData : null,
       });
     }, 1000);
 
@@ -170,9 +164,7 @@ export function LiveChatProvider({ children }) {
           assiUnavailableFromData: assiUnavailableFromData
             ? assiUnavailableFromData
             : null,
-          quickInquiryFromData: quickInquiryFromData
-            ? quickInquiryFromData
-            : null,
+          customFormsData: customFormsData ? customFormsData : null,
         }),
         headers: { "Content-Type": "application/json" },
       });

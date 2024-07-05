@@ -8,11 +8,14 @@ export function useGlobalStatesContext() {
 
 // GlobalStatesContext component
 export function GlobalStatesProvider({ children }) {
-  const [fullViewActiveEntity, setFullViewActiveEntity] =
-    useState("chatsAndForm");
+  const [fullViewActiveEntity, setFullViewActiveEntity] = useState({
+    active: "chatsAndForm",
+    data: {},
+  });
   //chatsAndForm
   //assistantWaitingForm
   //validationForm
+  //customForms
   const [enableTextInput, setEnableTextInput] = useState(true);
 
   const [assitWaitingTimerData, setAssitWaitingTimerData] = useState({
