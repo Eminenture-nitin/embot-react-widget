@@ -18,9 +18,12 @@ export const AdminCredentialsProvided = ({ children }) => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/read-cookie", {
-        withCredentials: true, // Include cookies in the request
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/read-cookie`,
+        {
+          withCredentials: true, // Include cookies in the request
+        }
+      );
 
       return response;
     } catch (error) {
