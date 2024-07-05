@@ -15,22 +15,34 @@ export const AdminCredentialsProvided = ({ children }) => {
   const [adminId, setAdminId] = useState(null);
 
   // Function to check for admin ID in cookies
-  const checkForAdminId = () => {
-    const id = Cookies.get("EMChatBotAdminId");
-    return id || false; // Return the id or false if not found
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/read-cookie", {
+        withCredentials: true, // Include cookies in the request
+      });
+
+      return response;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error; // Ensure errors are propagated for proper debugging
+    }
   };
 
   useEffect(() => {
     let intervalId;
 
     const handleAdminIdCheck = () => {
-      const tempId = checkForAdminId();
-      console.log(tempId, "tempId");
-      if (tempId) {
-        const processedId = customDehash(tempId, "EMReact");
-        setAdminId(processedId);
-        clearInterval(intervalId); // Stop checking once admin ID is found
-      }
+      const tempId = fetchData()
+        .then((res) => {
+          const tempId = res.data.EMChatBotAdminId;
+          if (tempId) {
+            const processedId = customDehash(tempId, "EMReact");
+            setAdminId(processedId);
+            clearInterval(intervalId); // Stop checking once admin ID is found
+          }
+        })
+        .catch((err) => console.log(err));
     };
 
     // Start interval to check for admin ID
@@ -41,7 +53,6 @@ export const AdminCredentialsProvided = ({ children }) => {
       clearInterval(intervalId);
     };
   }, []); // Empty dependency array ensures this runs only once on mount
-
   const getAdminData = () => {
     axios
       .get(
@@ -57,11 +68,6 @@ export const AdminCredentialsProvided = ({ children }) => {
     if (adminId) {
       getAdminData();
     }
-
-    // Cleanup function on adminId change (optional)
-    return () => {
-      // Optional cleanup if needed
-    };
   }, [adminId]);
 
   return (

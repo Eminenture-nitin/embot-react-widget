@@ -50,7 +50,7 @@ export function TriggersContextProvider({ children }) {
         `${process.env.REACT_APP_API_URL}/auth/getNodeAndEdgesWidget/${adminId}`
       )
       .then((res) => {
-      //  console.log(res.data);
+        //  console.log(res.data);
         setNodes(res.data.nodes);
         setEdges(res.data.edges);
         startChatbot(res.data.nodes, res.data.edges);
@@ -213,7 +213,7 @@ export function TriggersContextProvider({ children }) {
     // setTimeout(() => {
     //   addMsg(userInputValue);
     // }, 500);
-    console.log("nextNodeIdActivated", nextNodeId);
+    //console.log("nextNodeIdActivated", nextNodeId);
     // Find the connected node using the source ID
     const connectedNode = nodes.find((n) => n.id === nextNodeId);
     if (!connectedNode) {
@@ -304,7 +304,7 @@ export function TriggersContextProvider({ children }) {
   // handle Card Slider trigger
   const handleCardSliderTrigger = (node, nodes, edges) => {
     const response = STConvertDataFormat(node?.data?.message);
-   // console.log(response);
+    // console.log(response);
     setChatMessages((prevMsgs) => [
       ...prevMsgs,
       { ...response, nodeId: node?.id },
@@ -388,6 +388,7 @@ export function TriggersContextProvider({ children }) {
     if (adminId) {
       getTriggersData(adminId);
     }
+   
   }, [adminId]);
 
   // useEffect(() => {
