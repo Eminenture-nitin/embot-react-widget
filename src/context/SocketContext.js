@@ -47,7 +47,9 @@ export function SocketProvider({ children }) {
 
     // Clean up on component unmount
     return () => {
-      socket.current.disconnect();
+      setTimeout(() => {
+        socket.current.disconnect();
+      }, 5000);
     };
   }, [adminId]);
 

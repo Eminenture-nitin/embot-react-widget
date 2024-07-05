@@ -180,7 +180,7 @@ export function LiveChatProvider({ children }) {
     const widgetUserId = Cookies.get("widget_user_id");
 
     if (!widgetUserId) {
-      console.log("widget_user_id cookie is not available.");
+    //  console.log("widget_user_id cookie is not available.");
       return; // Exit early if widget_user_id cookie is not available
     }
 
@@ -212,7 +212,7 @@ export function LiveChatProvider({ children }) {
 
       if (response.data.status === "success") {
         // toast.success(response.data.message);
-        console.log(response.data.message);
+       // console.log(response.data.message);
       } else {
         // toast.error(response.data.message);
         console.log(response.data.message);
