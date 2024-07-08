@@ -14,48 +14,12 @@ export const AdminCredentialsProvided = ({ children }) => {
   const [adminEmail, setAdminEmail] = useState("");
   const [adminId, setAdminId] = useState(null);
 
-  // Function to check for admin ID in cookies
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/read-cookie`,
-        {
-          withCredentials: true, // Include cookies in the request
-        }
-      );
-
-      return response;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      throw error; // Ensure errors are propagated for proper debugging
-    }
-  };
-
   useEffect(() => {
-    let intervalId;
-
-    const handleAdminIdCheck = () => {
-      const tempId = fetchData()
-        .then((res) => {
-          const tempId = res.data.EMChatBotAdminId;
-          if (tempId) {
-            const processedId = customDehash(tempId, "EMReact");
-            setAdminId(processedId);
-            clearInterval(intervalId); // Stop checking once admin ID is found
-          }
-        })
-        .catch((err) => console.log(err));
-    };
-
-    // Start interval to check for admin ID
-    intervalId = setInterval(handleAdminIdCheck, 1000);
-
-    // Cleanup function to clear interval on unmount or when adminId is found
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []); // Empty dependency array ensures this runs only once on mount
+    var rootElement = document.getElementById("EMChatBotRoot");
+    var adminId = rootElement.getAttribute("data-admin-id");
+    const processedId = customDehash(adminId, "EMReact");
+    setAdminId(processedId);
+  }, []);
   const getAdminData = () => {
     axios
       .get(
