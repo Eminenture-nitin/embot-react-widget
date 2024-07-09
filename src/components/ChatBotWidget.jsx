@@ -18,10 +18,7 @@ const ChatBotWidget = () => {
       }}
       className="EMBOT-fixed EMBOT-bottom-[calc(4rem+1.5rem)] EMBOT-right-0 EMBOT-mr-4 EMBOT-bg-white EMBOT-rounded-lg EMBOT-w-[400px] EMBOT-overflow-hidden"
     >
-      <div
-        className="flex EMBOT-h-full flex-col EMBOT-justify-between"
-        style={{ height: "100%" }}
-      >
+      <div className="EMBOT-h-full" style={{ height: "100%" }}>
         <Header />
 
         {fullViewActiveEntity?.active == "assistantWaitingForm" ? (
