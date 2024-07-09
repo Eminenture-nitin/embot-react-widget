@@ -26,12 +26,12 @@ export function SocketProvider({ children }) {
         randomizationFactor: 0.5, // Randomization factor for reconnection delay
       });
       socket.current.on("connect", () => {
-        // console.log("Socket connected", socket.current);
+        console.log("Socket connected", socket.current);
       });
 
       // Listen for reconnection attempts
       socket.current.on("reconnect_attempt", () => {
-        // console.log("Reconnecting...");
+      //  console.log("Reconnecting...");
       });
 
       // Listen for successful reconnection
@@ -46,11 +46,11 @@ export function SocketProvider({ children }) {
     }
 
     // Clean up on component unmount
-    return () => {
-      setTimeout(() => {
-        socket.current.disconnect();
-      }, 5000);
-    };
+    // return () => {
+    //   setTimeout(() => {
+    //     socket.current.disconnect();
+    //   }, 5000);
+    // };
   }, [adminId]);
 
   return (
