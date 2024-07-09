@@ -47,9 +47,9 @@ body #EMChatBotRoot {
   background-repeat: no-repeat !important;
 }
 
-.splide__arrow--prev {
+.EMBOT-chat-container .splide__arrow--prev {
   left: -16px !important;
 }
-.splide__arrow--next {
+.EMBOT-chat-container .splide__arrow--next {
   right: -16px !important;
 }
