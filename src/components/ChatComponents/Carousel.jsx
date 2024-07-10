@@ -1,4 +1,3 @@
-// export default Carousel;
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState, useEffect } from "react";
 
@@ -19,14 +18,19 @@ export default function Carousel({
     if (!autoSlide) return;
     const slideInterval = setInterval(next, autoSlideInterval);
     return () => clearInterval(slideInterval);
-  }, []);
+  }, [autoSlide, autoSlideInterval]);
+
   return (
     <div className="overflow-hidden relative flex w-full h-auto">
       <div
-        className="flex w-full h-auto gap-5 justify-start transition-transform ease-out duration-500"
+        className="flex w-full h-auto transition-transform ease-out duration-500"
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
-        {slides}
+        {slides.map((slide, index) => (
+          <div key={index} className="w-full flex-shrink-0">
+            {slide}
+          </div>
+        ))}
       </div>
       <div className="absolute inset-0 flex items-center justify-between p-0">
         <button
@@ -48,6 +52,7 @@ export default function Carousel({
           <div className="flex items-center justify-center gap-2">
             {slides.map((_, i) => (
               <div
+                key={i}
                 className={`
               transition-all w-3 h-3 bg-white rounded-full
               ${curr === i ? "p-2" : "bg-opacity-50"}

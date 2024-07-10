@@ -1,4 +1,3 @@
-// App.jsx
 import React, { useEffect, useRef } from "react";
 import { twind, cssom, observe } from "@twind/core";
 import "construct-style-sheets-polyfill";
@@ -26,10 +25,10 @@ const App = () => {
     // Link the sheet target to the shadow root
     shadowRoot.adoptedStyleSheets = [sheet.target];
 
-    // Finally, observe using the tw function
+    // Apply styles with observe function
     observe(tw, shadowRoot);
 
-    // Use ReactDOM.createPortal to render ChatBotWidget inside shadow DOM
+    // Render components inside shadow DOM
     const div = document.createElement("div");
     shadowRoot.appendChild(div);
 

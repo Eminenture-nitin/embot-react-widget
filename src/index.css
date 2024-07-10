@@ -11,6 +11,10 @@ body #EMChatBotRoot {
   z-index: 99999999;
   position: relative;
 }
+html {
+  font-size: 16px !important;
+}
+
 .chat-container {
   scrollbar-width: thin; /* For Firefox */
   scrollbar-color: transparent transparent; /* For Firefox */
@@ -45,11 +49,4 @@ body #EMChatBotRoot {
   background-position: center !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
-}
-
-.chat-container .splide__arrow--prev {
-  left: -16px !important;
-}
-.chat-container .splide__arrow--next {
-  right: -16px !important;
 }
