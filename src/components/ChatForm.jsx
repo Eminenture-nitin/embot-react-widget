@@ -54,10 +54,10 @@ const ChatForm = () => {
     }
   };
   return (
-    <div className="EMBOT-p-6 EMBOT-absolute EMBOT-bottom-0 EMBOT-w-full EMBOT-bg-white EMBOT-pt-5 EMBOT-border EMBOT-border-t-gray-500">
+    <div className="p-6 absolute bottom-0 w-full bg-white pt-5 border border-t-gray-500">
       <form
         onSubmit={handleSubmit}
-        className="EMBOT-flex EMBOT-items-center EMBOT-justify-center EMBOT-w-full EMBOT-space-x-2 "
+        className="flex items-center justify-center w-full space-x-2 "
       >
         <input
           onChange={(e) => setValue(e.target.value)}
@@ -66,7 +66,7 @@ const ChatForm = () => {
           value={value}
           placeholder={inputTagConfig?.placeholder}
           name="userInput"
-          className="EMBOT-flex focus:EMBOT-border focus:EMBOT-border-blue-500 EMBOT-outline-none EMBOT-h-10 EMBOT-w-full EMBOT-rounded-md EMBOT-border EMBOT-border-[#e5e7eb] EMBOT-px-3 EMBOT-py-2 EMBOT-text-sm EMBOT-placeholder-[#6b7280] EMBOT-focus:outline-none EMBOT-focus:ring-2 EMBOT-focus:ring-[#9ca3af] EMBOT-disabled:cursor-not-allowed EMBOT-disabled:opacity-50 EMBOT-text-[#030712] EMBOT-focus-visible:ring-offset-2"
+          className="flex focus:border focus:border-blue-500 outline-none h-10 w-full rounded-md border border-[#e5e7eb] px-3 py-2 text-sm placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#9ca3af] disabled:cursor-not-allowed disabled:opacity-50 text-[#030712] focus-visible:ring-offset-2"
         />
         <button
           style={{
@@ -74,7 +74,7 @@ const ChatForm = () => {
               ? theme
               : "linear-gradient(135deg, rgb(42, 39, 218) 0%, rgb(0, 204, 255) 100%)",
           }}
-          className="EMBOT-inline-flex EMBOT-items-center EMBOT-justify-center EMBOT-rounded-md EMBOT-text-sm EMBOT-font-medium EMBOT-text-[#f9fafb] EMBOT-disabled:pointer-events-none EMBOT-disabled:opacity-50 EMBOT-bg-black EMBOT-hover:bg-[#111827E6] EMBOT-h-10 EMBOT-px-4 EMBOT-py-2"
+          className="inline-flex items-center justify-center rounded-md text-sm font-medium text-[#f9fafb] disabled:pointer-events-none disabled:opacity-50 bg-black hover:bg-[#111827E6] h-10 px-4 py-2"
         >
           Send
         </button>

@@ -14,7 +14,7 @@ const Response = ({ response, index }) => {
   const renderContent = () => {
     if (response.responseText) {
       return (
-        <div className="EMBOT-mb-1 EMBOT-flex EMBOT-w-full EMBOT-gap-2">
+        <div className="mb-1 flex w-full gap-2">
           <div className="">
             <button
               style={{
@@ -25,11 +25,11 @@ const Response = ({ response, index }) => {
                   ? theme
                   : "linear-gradient(135deg, rgb(42, 39, 218) 0%, rgb(0, 204, 255) 100%)",
               }}
-              className="EMBOT-mainForImageProperty EMBOT-inline-flex EMBOT-items-center EMBOT-justify-center EMBOT-bg-center EMBOT-bg-cover EMBOT-bg-no-repeat EMBOT-text-sm EMBOT-font-medium EMBOT-disabled:pointer-events-none EMBOT-disabled:opacity-50 EMBOT-border EMBOT-rounded-full EMBOT-w-10 EMBOT-h-10 EMBOT-bg-black EMBOT-hover:bg-gray-700 EMBOT-m-0 EMBOT-cursor-pointer EMBOT-border-gray-200 EMBOT-bg-none EMBOT-p-0 EMBOT-normal-case EMBOT-leading-5 EMBOT-hover:text-gray-900"
+              className="mainForImageProperty inline-flex items-center justify-center bg-center bg-cover bg-no-repeat text-sm font-medium disabled:pointer-events-none disabled:opacity-50 border rounded-full w-10 h-10 bg-black hover:bg-gray-700 m-0 cursor-pointer border-gray-200 bg-none p-0 normal-case leading-5 hover:text-gray-900"
             >
               {!response?.assiMsgData?.assistantImage && (
                 <svg
-                  className="EMBOT-w-7 EMBOT-h-7 EMBOT-text-white EMBOT-block EMBOT-border-gray-200 EMBOT-align-middle"
+                  className="w-7 h-7 text-white block border-gray-200 align-middle"
                   xmlns="http://www.w3.org/2000/svg"
                   version="1.1"
                   width="512"
@@ -56,10 +56,10 @@ const Response = ({ response, index }) => {
               )}
             </button>
           </div>
-          <div className="EMBOT-mb-1 EMBOT-w-full">
+          <div className="mb-1 w-full">
             <p
               style={{ backgroundColor: "rgb(240, 242, 247)" }}
-              className="EMBOT-text-sm EMBOT-font-normal EMBOT-py-2.5 EMBOT-px-2 EMBOT-text-gray-900 EMBOT-dark:text-white EMBOT-border-gray-200 EMBOT-rounded-e-xl EMBOT-rounded-es-xl"
+              className="text-sm font-normal py-2.5 px-2 text-gray-900 dark:text-white border-gray-200 rounded-e-xl rounded-es-xl"
             >
               {response.responseText}
             </p>
@@ -76,7 +76,7 @@ const Response = ({ response, index }) => {
                     handleUserDecision(targetNodeId, item.value);
                   }}
                   style={{ boxShadow: "0 2px 6px rgba(0,0,0,.12)" }}
-                  className="EMBOT-border EMBOT-text-[#006ae1] hover:EMBOT-bg-[#006ae1] hover:EMBOT-text-white EMBOT-w-full EMBOT-mt-2 EMBOT-border-[#006ae1] EMBOT-outline-none EMBOT-px-3 EMBOT-group EMBOT-py-2 EMBOT-rounded-md EMBOT-cursor-pointer EMBOT-leading-5 EMBOT-text-sm"
+                  className="border text-[#006ae1] hover:bg-[#006ae1] hover:text-white w-full mt-2 border-[#006ae1] outline-none px-3 group py-2 rounded-md cursor-pointer leading-5 text-sm"
                 >
                   {item.value}
                 </button>
@@ -86,9 +86,9 @@ const Response = ({ response, index }) => {
                   title={item.url}
                   onClick={() => window.open(item.url, "_blank")}
                   style={{ boxShadow: "0 2px 6px rgba(0,0,0,.12)" }}
-                  className="EMBOT-border EMBOT-w-full EMBOT-mt-2 EMBOT-border-[#006ae1] EMBOT-outline-none EMBOT-px-3 EMBOT-group EMBOT-py-2 EMBOT-rounded-md EMBOT-cursor-pointer EMBOT-leading-5 EMBOT-text-sm"
+                  className="border w-full mt-2 border-[#006ae1] outline-none px-3 group py-2 rounded-md cursor-pointer leading-5 text-sm"
                 >
-                  <span className="EMBOT-text-[#006ae1] EMBOT-bg-[#ffffff] EMBOT-border-[#006ae1] group-hover:EMBOT-underline">
+                  <span className="text-[#006ae1] bg-[#ffffff] border-[#006ae1] group-hover:underline">
                     {item.label}
                   </span>
                 </button>
@@ -101,7 +101,7 @@ const Response = ({ response, index }) => {
       if (isImageFileName(response.imageURL)) {
         return (
           <img
-            className="EMBOT-w-[80%] EMBOT-grid EMBOT-justify-end EMBOT-h-auto EMBOT-border-gray-200 EMBOT-rounded-e-xl EMBOT-rounded-es-xl"
+            className="w-[80%] grid justify-end h-auto border-gray-200 rounded-e-xl rounded-es-xl"
             src={response.imageURL}
             alt={response.imageId}
           />
@@ -110,7 +110,7 @@ const Response = ({ response, index }) => {
         return (
           <iframe
             src={response.imageURL}
-            className="EMBOT-w-[80%] EMBOT-h-auto"
+            className="w-[80%] h-auto"
             width="125px"
             height="125px"
             style={{ overflow: "hidden" }}
@@ -123,9 +123,9 @@ const Response = ({ response, index }) => {
           title={response.url}
           onClick={() => window.open(response.url, "_blank")}
           style={{ boxShadow: "0 2px 6px rgba(0,0,0,.12)" }}
-          className="EMBOT-border EMBOT-w-[80%] EMBOT-items-end EMBOT-mb-2  EMBOT-border-[#006ae1] EMBOT-outline-none EMBOT-px-3 EMBOT-group EMBOT-py-2 EMBOT-rounded-md EMBOT-cursor-pointer EMBOT-leading-5 EMBOT-text-sm"
+          className="border w-[80%] items-end mb-2  border-[#006ae1] outline-none px-3 group py-2 rounded-md cursor-pointer leading-5 text-sm"
         >
-          <span className="EMBOT-text-[#006ae1] EMBOT-bg-[#ffffff] EMBOT-border-[#006ae1] group-hover:EMBOT-underline">
+          <span className="text-[#006ae1] bg-[#ffffff] border-[#006ae1] group-hover:underline">
             {response.label}
           </span>
         </button>
@@ -136,17 +136,17 @@ const Response = ({ response, index }) => {
   };
 
   return (
-    <div className="EMBOT-flex EMBOT-items-start EMBOT-gap-2.5 EMBOT-mb-1">
-      <div className="EMBOT-flex EMBOT-flex-col EMBOT-items-end EMBOT-w-full EMBOT-max-w-[70%] EMBOT-leading-1.5  EMBOT-dark:bg-gray-700">
+    <div className="flex items-start gap-2.5 mb-1">
+      <div className="flex flex-col items-end w-full max-w-[70%] leading-1.5  dark:bg-gray-700">
         {isLoading ? "loading..." : renderContent()}
       </div>
 
       {response.imageURL && (
         <button
-          id="EMBOT-dropdownMenuIconButton"
-          data-dropdown-toggle="EMBOT-dropdownDots"
-          data-dropdown-placement="EMBOT-bottom-start"
-          className="EMBOT-inline-flex EMBOT-self-center EMBOT-items-center EMBOT-p-2 EMBOT-text-sm EMBOT-font-medium EMBOT-text-center EMBOT-text-gray-900 EMBOT-bg-white EMBOT-rounded-lg hover:EMBOT-bg-gray-100 EMBOT-focus:ring-4 EMBOT-focus:outline-none EMBOT-dark:text-white EMBOT-focus:ring-gray-50 EMBOT-dark:bg-gray-900 EMBOT-dark:hover:bg-gray-800 EMBOT-dark:focus:ring-gray-600"
+          id="dropdownMenuIconButton"
+          data-dropdown-toggle="dropdownDots"
+          data-dropdown-placement="bottom-start"
+          className="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600"
           type="button"
           onClick={() => {
             window.open(response.imageURL, "_blank", "noopener noreferrer");
@@ -154,7 +154,7 @@ const Response = ({ response, index }) => {
         >
           <Icon
             icon="tabler:external-link"
-            className="EMBOT-w-5 EMBOT-h-5 EMBOT-text-gray-500 EMBOT-dark:text-gray-400"
+            className="w-5 h-5 text-gray-500 dark:text-gray-400"
           />
         </button>
       )}

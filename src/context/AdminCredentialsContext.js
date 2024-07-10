@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { customDehash } from "../utils/validations";
-import Cookies from "js-cookie";
 
 const AdminCredentialsContext = createContext();
 
@@ -10,7 +9,9 @@ export function useAdminCredentials() {
 }
 
 export const AdminCredentialsProvided = ({ children }) => {
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useState(
+    "linear-gradient(135deg, rgb(42, 39, 218) 0%, rgb(0, 204, 255) 100%)"
+  );
   const [adminEmail, setAdminEmail] = useState("");
   const [adminId, setAdminId] = useState(null);
 
@@ -18,7 +19,8 @@ export const AdminCredentialsProvided = ({ children }) => {
     var rootElement = document.getElementById("EMChatBotRoot");
     var adminId = rootElement.getAttribute("data-admin-id");
     const processedId = customDehash(adminId, "EMReact");
-    setAdminId(processedId);
+    // const adminId = "650d432aa0570859518c23a1";
+    setAdminId("650d432aa0570859518c23a1");
   }, []);
   const getAdminData = () => {
     axios

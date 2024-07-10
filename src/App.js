@@ -1,38 +1,60 @@
-// src/App.js
-import { useEffect, useState } from "react";
-import ChatBotWidget from "./components/ChatBotWidget";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { useAdminCredentials } from "./context/AdminCredentialsContext";
+// App.jsx
+import React, { useEffect, useRef } from "react";
+import { twind, cssom, observe } from "@twind/core";
+import "construct-style-sheets-polyfill";
+import config from "./twind.config"; // Ensure correct path
+import ReactDOM from "react-dom";
+import BOTParentComponent from "./components/BOTParentComponent";
+import { AdminCredentialsProvided } from "./context/AdminCredentialsContext";
+import { GlobalStatesProvider } from "./context/GlobalStatesContext";
+import { SocketProvider } from "./context/SocketContext";
+import { LiveChatProvider } from "./context/LiveChatContext";
+import { TriggersContextProvider } from "./context/TriggersDataContext";
 
-function App() {
-  const [showWidget, setShowWidget] = useState(false);
-  const { theme } = useAdminCredentials();
+const App = () => {
+  const shadowHostRef = useRef(null);
 
-  return (
-    <div>
-      <button
-        style={{
-          backgroundImage: theme
-            ? theme
-            : "linear-gradient(135deg, rgb(42, 39, 218) 0%, rgb(0, 204, 255) 100%)",
-          boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-        }}
-        onClick={() => setShowWidget(!showWidget)}
-        className="EMBOT-fixed EMBOT-bottom-4 EMBOT-right-4 EMBOT-inline-flex EMBOT-items-center EMBOT-justify-center EMBOT-text-sm EMBOT-font-medium EMBOT-disabled:pointer-events-none EMBOT-disabled:opacity-50 EMBOT-rounded-full EMBOT-w-16 EMBOT-h-16 EMBOT-bg-black EMBOT-hover:bg-gray-700 EMBOT-m-0 EMBOT-cursor-pointer EMBOT-border-gray-200 EMBOT-bg-none EMBOT-p-0 EMBOT-normal-case EMBOT-leading-5 EMBOT-hover:text-gray-900"
-        type="button"
-        aria-haspopup="dialog"
-        aria-expanded="false"
-        data-state="closed"
-      >
-        <Icon
-          icon="fluent:chat-empty-24-regular"
-          className="EMBOT-w-9 EMBOT-h-9 EMBOT-text-white EMBOT-block EMBOT-border-gray-200 EMBOT-align-middle"
-        />
-      </button>
+  useEffect(() => {
+    const shadowRoot = shadowHostRef.current.attachShadow({ mode: "open" });
 
-      {showWidget && <ChatBotWidget />}
-    </div>
-  );
-}
+    // Create a separate CSSStyleSheet
+    const sheet = cssom(new CSSStyleSheet());
+
+    // Use sheet and config to create a twind instance
+    const tw = twind(config, sheet);
+
+    // Link the sheet target to the shadow root
+    shadowRoot.adoptedStyleSheets = [sheet.target];
+
+    // Finally, observe using the tw function
+    observe(tw, shadowRoot);
+
+    // Use ReactDOM.createPortal to render ChatBotWidget inside shadow DOM
+    const div = document.createElement("div");
+    shadowRoot.appendChild(div);
+
+    ReactDOM.render(
+      <AdminCredentialsProvided>
+        <GlobalStatesProvider>
+          <SocketProvider>
+            <LiveChatProvider>
+              <TriggersContextProvider>
+                <BOTParentComponent />
+              </TriggersContextProvider>
+            </LiveChatProvider>
+          </SocketProvider>
+        </GlobalStatesProvider>
+      </AdminCredentialsProvided>,
+      div
+    );
+
+    // Cleanup on component unmount
+    return () => {
+      ReactDOM.unmountComponentAtNode(div);
+    };
+  }, []);
+
+  return <div ref={shadowHostRef}></div>;
+};
 
 export default App;

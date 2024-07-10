@@ -44,38 +44,38 @@ const FVValidationForm = () => {
   };
 
   return (
-    <div className="EMBOT-p-6 EMBOT-relative">
-      <form onSubmit={handleSubmit} className="EMBOT-w-full EMBOT-max-w-sm">
+    <div className="p-6 relative">
+      <form onSubmit={handleSubmit} className="w-full max-w-sm">
         <label
           htmlFor="email-address-icon"
-          className="EMBOT-block EMBOT-text-center EMBOT-mb-2 EMBOT-text-md EMBOT-font-medium EMBOT-text-gray-900 EMBOT-dark:text-white"
+          className="block text-center mb-2 text-md font-medium text-gray-900 dark:text-white"
         >
           Please introduce yourself by providing your{" "}
           {inputTagConfig?.validationType}
         </label>
-        <div className="EMBOT-w-full EMBOT-h-auto EMBOT-my-2">
+        <div className="w-full h-auto my-2">
           <img
             loading="lazy"
-            className="EMBOT-w-full EMBOT-h-auto EMBOT-rounded-sm"
+            className="w-full h-auto rounded-sm"
             src="https://img.freepik.com/premium-photo/closeup-successful-business-people-handshake-office-business-negotiations-concept_151013-20340.jpg?w=900"
           />
         </div>
-        <div className="EMBOT-flex EMBOT-relative EMBOT-py-4 EMBOT-items-center EMBOT-border-b EMBOT-border-blue-500">
-          <div className="EMBOT-absolute EMBOT-inset-y-0 EMBOT-start-0 EMBOT-flex EMBOT-items-center EMBOT-ps-3.5 EMBOT-pointer-events-none">
+        <div className="flex relative py-4 items-center border-b border-blue-500">
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
             {inputTagConfig?.validationType == "Email" ? (
               <Icon
                 icon="ic:baseline-email"
-                className="EMBOT-w-4 EMBOT-h-4 EMBOT-text-gray-500 EMBOT-dark:text-gray-400"
+                className="w-4 h-4 text-gray-500 dark:text-gray-400"
               />
             ) : inputTagConfig?.validationType == "Name" ? (
               <Icon
                 icon="ep:user-filled"
-                className="EMBOT-w-4 EMBOT-h-4 EMBOT-text-gray-500 EMBOT-dark:text-gray-400"
+                className="w-4 h-4 text-gray-500 dark:text-gray-400"
               />
             ) : (
               <Icon
                 icon="vaadin:phone"
-                className="EMBOT-w-4 EMBOT-h-4 EMBOT-text-gray-500 EMBOT-dark:text-gray-400"
+                className="w-4 h-4 text-gray-500 dark:text-gray-400"
               />
             )}
           </div>
@@ -84,7 +84,7 @@ const FVValidationForm = () => {
               setInputValue(e.target.value);
               setErrorMsg("");
             }}
-            className="EMBOT-appearance-none EMBOT-outline-none EMBOT-ml-8 EMBOT-bg-transparent EMBOT-border-none EMBOT-w-full EMBOT-text-gray-700 EMBOT-mr-3 EMBOT-py-1 EMBOT-px-2 EMBOT-leading-tight focus:EMBOT-outline-none"
+            className="appearance-none outline-none ml-8 bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
             type={inputTagConfig?.type}
             placeholder={inputTagConfig?.placeholder}
             name="userInput"
@@ -96,33 +96,30 @@ const FVValidationForm = () => {
                 : "linear-gradient(135deg, rgb(42, 39, 218) 0%, rgb(0, 204, 255) 100%)",
               color: "white",
             }}
-            className="EMBOT-flex-shrink-0 EMBOT-border-none EMBOT-text-sm EMBOT-border-4 EMBOT-text-white EMBOT-py-1 EMBOT-px-2 EMBOT-rounded"
+            className="flex-shrink-0 border-none text-sm border-4 text-white py-1 px-2 rounded"
             type="submit"
           >
             Submit
           </button>
         </div>
         {errorMsg.length > 0 && (
-          <p className="EMBOT-mt-2 EMBOT-text-sm EMBOT-text-red-600 dark:EMBOT-text-red-500">
-            <span className="EMBOT-font-medium">Oops!</span> {errorMsg}
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+            <span className="font-medium">Oops!</span> {errorMsg}
           </p>
         )}
       </form>
       <br />
-      <div
-        onClick={handleCloseForm}
-        className="EMBOT-w-full EMBOT-grid EMBOT-justify-center"
-      >
-        <span className="EMBOT-inline-flex EMBOT-items-center EMBOT-px-2 EMBOT-py-1 EMBOT-me-2 EMBOT-text-sm EMBOT-font-medium EMBOT-text-red-800 EMBOT-bg-red-100 EMBOT-rounded EMBOT-dark:bg-red-900 EMBOT-dark:text-red-300">
+      <div onClick={handleCloseForm} className="w-full grid justify-center">
+        <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-900 dark:text-red-300">
           Close Form
           <button
             type="button"
-            className="EMBOT-inline-flex EMBOT-items-center EMBOT-p-1 EMBOT-ms-2 EMBOT-text-sm EMBOT-text-red-400 EMBOT-bg-transparent EMBOT-rounded-sm hover:EMBOT-bg-red-200 hover:EMBOT-text-red-900 EMBOT-dark:hover:bg-red-800 EMBOT-dark:hover:text-red-300"
-            data-dismiss-target="#EMBOT-badge-dismiss-red"
+            className="inline-flex items-center p-1 ms-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-800 dark:hover:text-red-300"
+            data-dismiss-target="#badge-dismiss-red"
             aria-label="Remove"
           >
-            <Icon icon="ion:close" className="EMBOT-w-5 EMBOT-h-5" />
-            <span className="EMBOT-sr-only">Remove badge</span>
+            <Icon icon="ion:close" className="w-5 h-5" />
+            <span className="sr-only">Remove badge</span>
           </button>
         </span>
       </div>

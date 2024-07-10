@@ -81,15 +81,15 @@ const FVCustomeForm = () => {
 
   return (
     <div
-      className="EMBOT-max-w-lg EMBOT-mx-auto EMBOT-p-4 EMBOT-bg-white EMBOT-overflow-y-auto"
+      className="max-w-lg mx-auto p-4 bg-white overflow-y-auto"
       style={{ height: "calc(100% - 100px)" }}
     >
-      <h2 className="EMBOT-block EMBOT-text-center EMBOT-mb-2 EMBOT-text-md EMBOT-font-medium EMBOT-text-gray-900 EMBOT-dark:text-white">
+      <h2 className="block text-center mb-2 text-md font-medium text-gray-900 dark:text-white">
         {data?.titleText}
       </h2>
       <form onSubmit={handleSubmit}>
         {data?.inputTags.map((inputTag) => (
-          <div key={inputTag.id} className="EMBOT-mb-4">
+          <div key={inputTag.id} className="mb-4">
             {inputTag.inputTagType === "text" &&
             inputTag.inputType === "Long Text" ? (
               <textarea
@@ -97,7 +97,7 @@ const FVCustomeForm = () => {
                 placeholder={inputTag.placeholder}
                 required={inputTag.required}
                 onChange={handleChange}
-                className="EMBOT-bg-gray-50 EMBOT-border EMBOT-border-blue-500 EMBOT-text-gray-900 EMBOT-text-sm EMBOT-rounded-lg focus:EMBOT-ring-blue-500 focus:EMBOT-border-blue-500 EMBOT-block EMBOT-w-full EMBOT-p-2.5 dark:EMBOT-placeholder-gray-400 dark:EMBOT-text-white EMBOT-outline-none"
+                className="bg-gray-50 border border-blue-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white outline-none"
               />
             ) : (
               <input
@@ -106,7 +106,7 @@ const FVCustomeForm = () => {
                 placeholder={inputTag.placeholder}
                 required={inputTag.required}
                 onChange={handleChange}
-                className="EMBOT-bg-gray-50 EMBOT-border EMBOT-border-blue-500 EMBOT-text-gray-900 EMBOT-text-sm EMBOT-rounded-lg focus:EMBOT-ring-blue-500 focus:EMBOT-border-blue-500 EMBOT-block EMBOT-w-full EMBOT-p-2.5 dark:EMBOT-placeholder-gray-400 dark:EMBOT-text-white dark:focus:EMBOT-ring-blue-500 EMBOT-outline-none"
+                className="bg-gray-50 border border-blue-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 outline-none"
               />
             )}
           </div>
@@ -120,26 +120,23 @@ const FVCustomeForm = () => {
             color: "white",
           }}
           type="submit"
-          className="EMBOT-bg-blue-500 EMBOT-w-full EMBOT-text-white EMBOT-py-2 EMBOT-px-4 EMBOT-rounded"
+          className="bg-blue-500 w-full text-white py-2 px-4 rounded"
         >
           Submit
         </button>
       </form>
       <br />
-      <div
-        onClick={handleCloseForm}
-        className="EMBOT-w-full EMBOT-grid EMBOT-justify-center"
-      >
-        <span className="EMBOT-inline-flex EMBOT-items-center EMBOT-px-2 EMBOT-py-1 EMBOT-me-2 EMBOT-text-sm EMBOT-font-medium EMBOT-text-red-800 EMBOT-bg-red-100 EMBOT-rounded EMBOT-dark:bg-red-900 EMBOT-dark:text-red-300">
+      <div onClick={handleCloseForm} className="w-full grid justify-center">
+        <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-900 dark:text-red-300">
           Close Form
           <button
             type="button"
-            className="EMBOT-inline-flex EMBOT-items-center EMBOT-p-1 EMBOT-ms-2 EMBOT-text-sm EMBOT-text-red-400 EMBOT-bg-transparent EMBOT-rounded-sm hover:EMBOT-bg-red-200 hover:EMBOT-text-red-900 EMBOT-dark:hover:bg-red-800 EMBOT-dark:hover:text-red-300"
-            data-dismiss-target="#EMBOT-badge-dismiss-red"
+            className="inline-flex items-center p-1 ms-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-800 dark:hover:text-red-300"
+            data-dismiss-target="#badge-dismiss-red"
             aria-label="Remove"
           >
-            <Icon icon="ion:close" className="EMBOT-w-5 EMBOT-h-5" />
-            <span className="EMBOT-sr-only">Remove badge</span>
+            <Icon icon="ion:close" className="w-5 h-5" />
+            <span className="sr-only">Remove badge</span>
           </button>
         </span>
       </div>

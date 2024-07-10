@@ -5,7 +5,7 @@ const UserTrigger = (props) => {
   const { theme } = useAdminCredentials();
 
   return (
-    <div className="EMBOT-flex EMBOT-my-2 EMBOT-items-end EMBOT-just-end EMBOT-flex-col EMBOT-w-full EMBOT-leading-1.5">
+    <div className="flex my-2 items-end just-end flex-col w-full leading-1.5">
       {props.userTrigger.userTrigger && (
         <p
           style={{
@@ -15,37 +15,37 @@ const UserTrigger = (props) => {
             color: "white",
             boxShadow: "0 2px 6px rgba(0,0,0,.12)",
           }}
-          className="EMBOT-text-sm EMBOT-font-normal EMBOT-py-2.5 EMBOT-px-2 EMBOT-text-gray-900 EMBOT-rounded-s-xl EMBOT-rounded-ee-xl EMBOT-dark:text-white EMBOT-border-gray-200"
+          className="text-sm font-normal py-2.5 px-2 text-gray-900 rounded-s-xl rounded-ee-xl dark:text-white border-gray-200"
         >
           {props.userTrigger.userTrigger}
         </p>
       )}
       {props?.userTrigger?.assiUnavailableFromData && (
-        <div className="EMBOT-flex EMBOT-flex-col EMBOT-items-start EMBOT-border EMBOT-rounded-s-xl EMBOT-rounded-ee-xl EMBOT-w-[75%] EMBOT-p-2">
-          <h3 className="EMBOT-font-semibold EMBOT-mb-2">
+        <div className="flex flex-col items-start border rounded-s-xl rounded-ee-xl w-[75%] p-2">
+          <h3 className="font-semibold mb-2">
             Assistant Unavailable – Contact Details
           </h3>
-          <hr className="EMBOT-w-full EMBOT-border-t EMBOT-border-gray-300 EMBOT-mb-2" />
-          <h3 className="EMBOT-font-semibold EMBOT-mb-2">
+          <hr className="w-full border-t border-gray-300 mb-2" />
+          <h3 className="font-semibold mb-2">
             {props?.userTrigger?.assiUnavailableFromData?.email}
           </h3>
-          <hr className="EMBOT-w-full EMBOT-border-t EMBOT-border-gray-300 EMBOT-mb-2" />
-          <h3 className="EMBOT-font-semibold EMBOT-mb-2">
+          <hr className="w-full border-t border-gray-300 mb-2" />
+          <h3 className="font-semibold mb-2">
             {props?.userTrigger?.assiUnavailableFromData?.phone}
           </h3>
-          <hr className="EMBOT-w-full EMBOT-border-t EMBOT-border-gray-300 EMBOT-mb-2" />
+          <hr className="w-full border-t border-gray-300 mb-2" />
           <p>{props?.userTrigger?.assiUnavailableFromData?.message}</p>
         </div>
       )}
       {props?.userTrigger?.customFormsData && (
-        <div className="EMBOT-flex EMBOT-flex-col EMBOT-items-start EMBOT-border EMBOT-rounded-s-xl EMBOT-rounded-ee-xl EMBOT-w-[75%] EMBOT-p-2">
+        <div className="flex flex-col items-start border rounded-s-xl rounded-ee-xl w-[75%] p-2">
           {Object.entries(props?.userTrigger?.customFormsData).map(
             ([key, value]) => (
-              <div key={key} className="EMBOT-w-full">
+              <div key={key} className="w-full">
                 {key !== "Long Text" ? (
                   <>
-                    <h3 className="EMBOT-font-semibold EMBOT-mb-2">{value}</h3>
-                    <hr className="EMBOT-w-full EMBOT-border-t EMBOT-border-gray-300 EMBOT-mb-2" />
+                    <h3 className="font-semibold mb-2">{value}</h3>
+                    <hr className="w-full border-t border-gray-300 mb-2" />
                   </>
                 ) : (
                   <>

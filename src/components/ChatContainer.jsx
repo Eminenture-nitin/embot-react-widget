@@ -65,10 +65,10 @@ const ChatContainer = () => {
     <div
       ref={chatContainerRef}
       style={{ height: "calc(100% - 160px)", maxHeight: "calc(100% - 160px)" }}
-      className="EMBOT-chat-container EMBOT-pr-4 EMBOT-p-6 EMBOT-overflow-y-auto EMBOT-flex-1 EMBOT-min-h-[167px] scroll-smooth focus:scroll-auto"
+      className="chat-container pr-4 p-6 overflow-y-auto flex-1 min-h-[167px] scroll-smooth focus:scroll-auto"
     >
       {chatMessages?.map((msgData, index) => (
-        <div key={index} className="EMBOT-w-full EMBOT-min-h-fit">
+        <div key={index} className="w-full min-h-fit">
           {msgData?.myself != false ? (
             <>
               <Response response={msgData} index={index} />

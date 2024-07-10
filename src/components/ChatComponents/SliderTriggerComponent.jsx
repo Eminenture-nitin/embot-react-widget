@@ -11,7 +11,7 @@ const SliderTriggerComponent = ({ data }) => {
       style={{
         boxShadow: "rgb(182, 190, 252) 0px 0px 13px",
       }}
-      className="EMBOT-w-full EMBOT-h-auto EMBOT-text-center EMBOT-m-auto EMBOT-block EMBOT-max-w-[18rem] EMBOT-rounded-lg EMBOT-bg-white EMBOT-text-surface EMBOT-shadow-blue-1 dark:EMBOT-bg-surface-dark dark:EMBOT-text-white"
+      className="w-full h-auto text-center m-auto block max-w-[18rem] rounded-lg bg-white text-surface shadow-blue-1 dark:bg-surface-dark dark:text-white"
     >
       <Splide
         options={{
@@ -26,29 +26,27 @@ const SliderTriggerComponent = ({ data }) => {
             <SplideSlide>
               <div
                 key={index}
-                className="EMBOT-relative EMBOT-overflow-hidden EMBOT-bg-cover EMBOT-bg-no-repeat"
+                className="relative overflow-hidden bg-cover bg-no-repeat"
               >
                 <img
-                  className="EMBOT-rounded-t-lg"
+                  className="rounded-t-lg"
                   src={item?.imageURL}
                   alt={item?.imageId}
                 />
               </div>
-              <div className="EMBOT-p-6">
-                <h5 className="EMBOT-mb-2 EMBOT-text-[18px] EMBOT-font-medium EMBOT-leading-tight EMBOT-truncate">
+              <div className="p-6">
+                <h5 className="mb-2 text-[18px] font-medium leading-tight truncate">
                   {item?.title}
                 </h5>
-                <p className="EMBOT-text-base EMBOT-text-text">
-                  {item?.responseText}
-                </p>
+                <p className="text-base text-text">{item?.responseText}</p>
               </div>
-              <ul className="EMBOT-w-full EMBOT-cursor-pointer EMBOT-border-y-2 EMBOT-border-neutral-100">
+              <ul className="w-full cursor-pointer border-y-2 border-neutral-100">
                 {item?.subTriggers?.map((link, idx) => (
                   <li
                     key={idx}
                     onClick={() => window.open(link?.url, "_blank")}
                     title="button"
-                    className="EMBOT-w-full EMBOT-text-blue-600 hover:EMBOT-underline EMBOT-border-opacity-100 EMBOT-px-6 EMBOT-py-3 dark:EMBOT-border-white/10"
+                    className="w-full text-blue-600 hover:underline border-opacity-100 px-6 py-3 dark:border-white/10"
                   >
                     {link?.label}
                   </li>
@@ -58,7 +56,7 @@ const SliderTriggerComponent = ({ data }) => {
           </React.Fragment>
         ))}
       </Splide>
-      <ul className="EMBOT-w-full EMBOT-cursor-pointer EMBOT-border-y-2 EMBOT-border-neutral-100">
+      <ul className="w-full cursor-pointer border-y-2 border-neutral-100">
         {data?.subTriggers?.map((btn, index) => (
           <li
             key={index}
@@ -70,7 +68,7 @@ const SliderTriggerComponent = ({ data }) => {
               handleUserDecision(targetNodeId, btn.value);
             }}
             title="button"
-            className="EMBOT-w-full hover:EMBOT-text-blue-600 hover:EMBOT-bg-gray-100 focus:EMBOT-ring-4 focus:EMBOT-ring-gray-100 dark:EMBOT-focus:ring-gray-700 EMBOT-border-opacity-100 EMBOT-px-6 EMBOT-py-3 dark:EMBOT-border-white/10"
+            className="w-full hover:text-blue-600 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 border-opacity-100 px-6 py-3 dark:border-white/10"
           >
             {btn?.value}
           </li>
