@@ -59,7 +59,7 @@ const FVAssistantWaitingForm = () => {
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
         <label
           htmlFor="email-address-icon"
-          className="block text-center mb-2 text-md font-medium text-gray-900 dark:text-white"
+          className="block text-center mb-2 text-md font-medium text-gray-900"
         >
           Assistant Unavailable – Leave Your Details, We'll Connect Soon?
         </label>
@@ -67,14 +67,14 @@ const FVAssistantWaitingForm = () => {
           <div className="mb-5">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Your email
             </label>
             <input
               type="email"
               name="email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Enter your email"
               required
               value={formData.email}
@@ -84,14 +84,14 @@ const FVAssistantWaitingForm = () => {
           <div className="mb-5">
             <label
               htmlFor="phone"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Your phone
             </label>
             <input
               type="tel"
               name="phone"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Your phone number"
               required
               value={formData.phone}
@@ -101,13 +101,13 @@ const FVAssistantWaitingForm = () => {
           <div className="mb-5">
             <label
               htmlFor="message"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Your message
             </label>
             <textarea
               name="message"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Your message"
               required
               value={formData.message}
@@ -128,7 +128,7 @@ const FVAssistantWaitingForm = () => {
           </button>
         </div>
         {errorMsg.length > 0 && (
-          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+          <p className="mt-2 text-sm text-red-600">
             <span className="font-medium">Oops!</span> {errorMsg}
           </p>
         )}
@@ -138,11 +138,11 @@ const FVAssistantWaitingForm = () => {
         onClick={() => handleCloseForm(true)}
         className="w-full grid justify-center"
       >
-        <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-900 dark:text-red-300">
+        <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-red-800 bg-red-100 rounded">
           Close Form
           <button
             type="button"
-            className="inline-flex items-center p-1 ms-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-800 dark:hover:text-red-300"
+            className="inline-flex items-center p-1 ms-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900"
             data-dismiss-target="#badge-dismiss-red"
             aria-label="Remove"
           >

@@ -34,16 +34,16 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
   }, [minutes, seconds, assitWaitingTimerData]);
 
   return (
-    <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8">
       <div>
         <Icon />
       </div>
-      <p className="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
+      <p className="mb-5 text-base text-gray-500 sm:text-lg">
         Please wait, our assistant is joining the chat
       </p>
 
       <div className="flex items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">
-        <div className="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg grid items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+        <div className="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg grid items-center justify-center px-4 py-2.5">
           <div className="text-left rtl:text-right">
             <div className="font-sans text-sm font-semibold text-center">
               {minutes.toString().padStart(2, "0")}
@@ -54,7 +54,7 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
         <div className="flex items-center justify-center space-x-2 mb-5">
           <Icon icon="svg-spinners:clock" className="h-8 w-8 text-gray-500" />
         </div>
-        <div className="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg grid items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+        <div className="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg grid items-center justify-center px-4 py-2.5">
           <div className="text-left rtl:text-right">
             <div className="font-sans text-sm font-semibold text-center">
               {seconds.toString().padStart(2, "0")}

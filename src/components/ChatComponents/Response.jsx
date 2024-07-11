@@ -59,7 +59,7 @@ const Response = ({ response, index }) => {
           <div className="mb-1 w-full">
             <p
               style={{ backgroundColor: "rgb(240, 242, 247)" }}
-              className="text-sm font-normal py-2.5 px-2 text-gray-900 dark:text-white border-gray-200 rounded-e-xl rounded-es-xl"
+              className="text-sm font-normal py-2.5 px-2 text-gray-900 border-gray-200 rounded-e-xl rounded-es-xl"
             >
               {response.responseText}
             </p>
@@ -137,7 +137,7 @@ const Response = ({ response, index }) => {
 
   return (
     <div className="flex items-start gap-2.5 mb-1">
-      <div className="flex flex-col items-end w-full max-w-[70%] leading-1.5  dark:bg-gray-700">
+      <div className="flex flex-col items-end w-full max-w-[70%] leading-1.5">
         {isLoading ? "loading..." : renderContent()}
       </div>
 
@@ -146,7 +146,7 @@ const Response = ({ response, index }) => {
           id="dropdownMenuIconButton"
           data-dropdown-toggle="dropdownDots"
           data-dropdown-placement="bottom-start"
-          className="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600"
+          className="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50"
           type="button"
           onClick={() => {
             window.open(response.imageURL, "_blank", "noopener noreferrer");
@@ -154,7 +154,7 @@ const Response = ({ response, index }) => {
         >
           <Icon
             icon="tabler:external-link"
-            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+            className="w-5 h-5 text-gray-500"
           />
         </button>
       )}

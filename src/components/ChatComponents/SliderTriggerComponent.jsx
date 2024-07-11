@@ -7,7 +7,7 @@ const SliderTriggerComponent = ({ data }) => {
     useTriggersContextData();
   return (
     <div
-      className={`w-full h-auto text-center m-auto max-w-[18rem] rounded-lg bg-white text-surface dark:bg-surface-dark dark:text-white flex flex-col`}
+      className={`w-full h-auto text-center m-auto max-w-[18rem] rounded-lg bg-white text-surface flex flex-col`}
     >
       <div
         style={{
@@ -45,7 +45,7 @@ const SliderTriggerComponent = ({ data }) => {
                     key={idx}
                     onClick={() => window.open(link?.url, "_blank")}
                     title="button"
-                    className={`w-full text-blue-600 hover:text-blue-800 hover:underline hover:bg-gray-50 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 border-t border-gray-200 dark:border-gray-700 px-6 py-3 transition-all duration-300 ease-in-out`}
+                    className={`w-full text-blue-600 hover:text-blue-800 hover:underline hover:bg-gray-50 focus:ring-4 focus:ring-blue-200 border-t border-gray-200 px-6 py-3 transition-all duration-300 ease-in-out`}
                   >
                     {link?.label}
                   </li>

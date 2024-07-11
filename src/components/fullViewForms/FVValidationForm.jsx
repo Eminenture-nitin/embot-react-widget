@@ -48,7 +48,7 @@ const FVValidationForm = () => {
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
         <label
           htmlFor="email-address-icon"
-          className="block text-center mb-2 text-md font-medium text-gray-900 dark:text-white"
+          className="block text-center mb-2 text-md font-medium text-gray-900"
         >
           Please introduce yourself by providing your{" "}
           {inputTagConfig?.validationType}
@@ -65,18 +65,12 @@ const FVValidationForm = () => {
             {inputTagConfig?.validationType == "Email" ? (
               <Icon
                 icon="ic:baseline-email"
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                className="w-4 h-4 text-gray-500"
               />
             ) : inputTagConfig?.validationType == "Name" ? (
-              <Icon
-                icon="ep:user-filled"
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-              />
+              <Icon icon="ep:user-filled" className="w-4 h-4 text-gray-500" />
             ) : (
-              <Icon
-                icon="vaadin:phone"
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-              />
+              <Icon icon="vaadin:phone" className="w-4 h-4 text-gray-500" />
             )}
           </div>
           <input
@@ -103,18 +97,18 @@ const FVValidationForm = () => {
           </button>
         </div>
         {errorMsg.length > 0 && (
-          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+          <p className="mt-2 text-sm text-red-600">
             <span className="font-medium">Oops!</span> {errorMsg}
           </p>
         )}
       </form>
       <br />
       <div onClick={handleCloseForm} className="w-full grid justify-center">
-        <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-900 dark:text-red-300">
+        <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-red-800 bg-red-100 rounded">
           Close Form
           <button
             type="button"
-            className="inline-flex items-center p-1 ms-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-800 dark:hover:text-red-300"
+            className="inline-flex items-center p-1 ms-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900"
             data-dismiss-target="#badge-dismiss-red"
             aria-label="Remove"
           >

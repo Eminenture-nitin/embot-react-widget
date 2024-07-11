@@ -16,7 +16,7 @@ const UserTrigger = (props) => {
               color: "white",
               boxShadow: "0 2px 6px rgba(0,0,0,.12)",
             }}
-            className="text-sm font-normal py-2.5 px-2 text-gray-900 rounded-md rounded-s-xl rounded-ee-xl dark:text-white border-gray-200"
+            className="text-sm font-normal py-2.5 px-2 text-gray-900 rounded-md rounded-s-xl rounded-ee-xl border-gray-200"
           >
             {props.userTrigger.userTrigger}
           </p>

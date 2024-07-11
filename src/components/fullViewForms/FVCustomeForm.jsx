@@ -84,7 +84,7 @@ const FVCustomeForm = () => {
       className="max-w-lg mx-auto p-4 bg-white overflow-y-auto"
       style={{ height: "calc(100% - 100px)" }}
     >
-      <h2 className="block text-center mb-2 text-md font-medium text-gray-900 dark:text-white">
+      <h2 className="block text-center mb-2 text-md font-medium text-gray-900">
         {data?.titleText}
       </h2>
       <form onSubmit={handleSubmit}>
@@ -97,7 +97,7 @@ const FVCustomeForm = () => {
                 placeholder={inputTag.placeholder}
                 required={inputTag.required}
                 onChange={handleChange}
-                className="bg-gray-50 border border-blue-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white outline-none"
+                className="bg-gray-50 border border-blue-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 outline-none"
               />
             ) : (
               <input
@@ -106,7 +106,7 @@ const FVCustomeForm = () => {
                 placeholder={inputTag.placeholder}
                 required={inputTag.required}
                 onChange={handleChange}
-                className="bg-gray-50 border border-blue-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 outline-none"
+                className="bg-gray-50 border border-blue-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 outline-none"
               />
             )}
           </div>
@@ -127,11 +127,11 @@ const FVCustomeForm = () => {
       </form>
       <br />
       <div onClick={handleCloseForm} className="w-full grid justify-center">
-        <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-900 dark:text-red-300">
+        <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-red-800 bg-red-100 rounded">
           Close Form
           <button
             type="button"
-            className="inline-flex items-center p-1 ms-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-800 dark:hover:text-red-300"
+            className="inline-flex items-center p-1 ms-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900"
             data-dismiss-target="#badge-dismiss-red"
             aria-label="Remove"
           >
