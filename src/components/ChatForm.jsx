@@ -54,7 +54,7 @@ const ChatForm = () => {
     }
   };
   return (
-    <div className="p-6 absolute bottom-0 w-full bg-white pt-5 border border-t-gray-500">
+    <div className="p-6 pb-3 absolute bottom-0 w-full bg-white pt-5 border border-t-gray-500">
       <form
         onSubmit={handleSubmit}
         className="flex items-center justify-center w-full space-x-2 "
@@ -79,6 +79,10 @@ const ChatForm = () => {
           Send
         </button>
       </form>
+      <div className="flex items-center w-full justify-center mt-2 m-0 gap-2">
+        <span class="text-xs text-gray-500 dark:text-gray-400">Powered by</span>
+        <img src="images/EM-logo-black-full.png" width="70px" height="auto" />
+      </div>
     </div>
   );
 };
