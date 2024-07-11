@@ -1,0 +1,30 @@
+.customNavigationButtons {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.customButton {
+  padding: 0.25rem; /* 1 */
+  border-radius: 9999px; /* Full rounded */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Shadow */
+  background-color: #f3f4f6; /* bg-gray-100 */
+  color: #1f2937; /* text-gray-800 */
+  transition: background-color 0.2s;
+}
+
+.customButton:hover {
+  background-color: #e5e7eb; /* hover:bg-gray-200 */
+}
+
+.leftButton {
+  margin-right: 1.25rem; /* mr-5 for the left button */
+}
+
+.icon {
+  width: 1.5rem; /* w-6 */
+  height: 1.5rem; /* h-6 */
+}

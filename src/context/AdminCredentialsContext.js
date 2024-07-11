@@ -20,7 +20,7 @@ export const AdminCredentialsProvided = ({ children }) => {
     var adminId = rootElement.getAttribute("data-admin-id");
     const processedId = customDehash(adminId, "EMReact");
     // const adminId = "650d432aa0570859518c23a1";
-    setAdminId(processedId);
+    setAdminId("650d432aa0570859518c23a1");
   }, []);
   const getAdminData = () => {
     axios

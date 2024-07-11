@@ -23,27 +23,29 @@ export default function Carousel({
   return (
     <div className="overflow-hidden relative flex w-full h-auto">
       <div
-        className="flex w-full h-auto transition-transform ease-out duration-500"
+        className={`flex w-full h-auto transition-transform ease-out duration-500`}
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
         {slides.map((slide, index) => (
-          <div key={index} className="w-full flex-shrink-0">
+          <div key={index} className={`w-full flex-shrink-0`}>
             {slide}
           </div>
         ))}
       </div>
-      <div className="absolute inset-0 flex items-center justify-between p-0">
+      <div
+        className={`absolute inset-0 flex items-center justify-between p-0 z-10 pointer-events-none`}
+      >
         <button
           onClick={prev}
-          className="p-1 rounded-full shadow bg-gray-100 text-gray-800 hover:bg-gray-200 mr-5"
+          className={`p-1 rounded-full shadow bg-gray-100 text-gray-800 hover:bg-gray-200 mr-5 z-20 pointer-events-auto`}
         >
-          <Icon icon="mingcute:left-line" className="w-6 h-6" />
+          <Icon icon="mingcute:left-line" className={`w-6 h-6`} />
         </button>
         <button
           onClick={next}
-          className="p-1 rounded-full shadow bg-gray-100 text-gray-800 hover:bg-gray-200"
+          className={`p-1 rounded-full shadow bg-gray-100 text-gray-800 hover:bg-gray-200 z-20 pointer-events-auto`}
         >
-          <Icon icon="mingcute:right-line" className="w-6 h-6" />
+          <Icon icon="mingcute:right-line" className={`w-6 h-6`} />
         </button>
       </div>
 

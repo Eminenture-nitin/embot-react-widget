@@ -7,48 +7,54 @@ const SliderTriggerComponent = ({ data }) => {
     useTriggersContextData();
   return (
     <div
-      style={{
-        boxShadow: "rgb(182, 190, 252) 0px 0px 13px",
-      }}
-      className="w-full h-auto text-center m-auto block max-w-[18rem] rounded-lg bg-white text-surface shadow-blue-1 dark:bg-surface-dark dark:text-white"
+      className={`w-full h-auto text-center m-auto max-w-[18rem] rounded-lg bg-white text-surface dark:bg-surface-dark dark:text-white flex flex-col`}
     >
-      <Carousel pagination={false}>
-        {data?.slides?.map((item, index) => (
-          <div
-            className="w-full h-auto text-center grid place-items-center"
-            key={index}
-          >
+      <div
+        style={{
+          boxShadow: "rgb(182, 190, 252) 0px 0px 13px",
+        }}
+      >
+        <Carousel pagination={false} className={`flex-grow`}>
+          {data?.slides?.map((item, index) => (
             <div
+              className={`w-full h-full text-center flex flex-col justify-between`}
               key={index}
-              className="relative overflow-hidden bg-cover bg-no-repeat w-full h-auto"
             >
-              <img
-                className="rounded-t-lg w-full h-auto"
-                src={item?.imageURL}
-                alt={item?.imageId}
-              />
-            </div>
-            <div className="p-6">
-              <h5 className="mb-2 text-[18px] font-medium leading-tight truncate">
-                {item?.title}
-              </h5>
-              <p className="text-base text-text">{item?.responseText}</p>
-            </div>
-            <ul className="w-full cursor-pointer border-y-2 border-neutral-100">
-              {item?.subTriggers?.map((link, idx) => (
-                <li
-                  key={idx}
-                  onClick={() => window.open(link?.url, "_blank")}
-                  title="button"
-                  className="w-full text-blue-600 hover:underline border-opacity-100 px-6 py-3 dark:border-white/10"
+              <div
+                className={`relative overflow-hidden bg-cover bg-no-repeat w-full h-auto`}
+              >
+                <img
+                  className={`rounded-t-lg w-full h-auto`}
+                  src={item?.imageURL}
+                  alt={item?.imageId}
+                />
+              </div>
+              <div className={`p-6 flex-grow`}>
+                <h5
+                  className={`mb-2 text-[18px] font-medium leading-tight truncate`}
                 >
-                  {link?.label}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </Carousel>
+                  {item?.title}
+                </h5>
+                <p className={`text-base text-text`}>{item?.responseText}</p>
+              </div>
+              <ul
+                className={`w-full cursor-pointer border-t border-neutral-100`}
+              >
+                {item?.subTriggers?.map((link, idx) => (
+                  <li
+                    key={idx}
+                    onClick={() => window.open(link?.url, "_blank")}
+                    title="button"
+                    className={`w-full text-blue-600 hover:text-blue-800 hover:underline hover:bg-gray-50 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 border-t border-gray-200 dark:border-gray-700 px-6 py-3 transition-all duration-300 ease-in-out`}
+                  >
+                    {link?.label}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </Carousel>
+      </div>
 
       <ul className="w-full cursor-pointer border-y-2 border-neutral-100">
         {data?.subTriggers?.map((btn, index) => (
@@ -62,7 +68,8 @@ const SliderTriggerComponent = ({ data }) => {
               handleUserDecision(targetNodeId, btn.value);
             }}
             title="button"
-            className="w-full hover:text-blue-600 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 border-opacity-100 px-6 py-3 dark:border-white/10"
+            style={{ boxShadow: "0 2px 6px rgba(0,0,0,.12)" }}
+            className="border text-[#006ae1] hover:bg-[#006ae1] hover:text-white w-full mt-2 border-[#006ae1] outline-none px-3 group py-2 rounded-md cursor-pointer leading-5 text-sm"
           >
             {btn?.value}
           </li>
