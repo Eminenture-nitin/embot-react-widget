@@ -42,19 +42,19 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
         Please wait, our assistant is joining the chat
       </p>
 
-      <div className="flex items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">
-        <div className="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg grid items-center justify-center px-4 py-2.5">
+      <div className="flex items-center justify-center space-x-4 rtl:space-x-reverse">
+        <div className="bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg flex flex-col items-center justify-center px-4 py-2.5">
           <div className="text-left rtl:text-right">
             <div className="font-sans text-sm font-semibold text-center">
               {minutes.toString().padStart(2, "0")}
             </div>
-            <div className="text-xs text-center"> min</div>
+            <div className="text-xs text-center">min</div>
           </div>
         </div>
-        <div className="flex items-center justify-center space-x-2 mb-5">
+        <div className="flex items-center justify-center">
           <Icon icon="svg-spinners:clock" className="h-8 w-8 text-gray-500" />
         </div>
-        <div className="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg grid items-center justify-center px-4 py-2.5">
+        <div className="bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg flex flex-col items-center justify-center px-4 py-2.5">
           <div className="text-left rtl:text-right">
             <div className="font-sans text-sm font-semibold text-center">
               {seconds.toString().padStart(2, "0")}

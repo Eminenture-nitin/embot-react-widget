@@ -8,7 +8,7 @@ function BOTParentComponent() {
   const { theme } = useAdminCredentials();
 
   return (
-    <div style={{ fontSize: "16px;" }}>
+    <div>
       <button
         style={{
           backgroundImage: theme

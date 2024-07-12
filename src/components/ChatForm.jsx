@@ -80,7 +80,9 @@ const ChatForm = () => {
         </button>
       </form>
       <div className="flex items-center w-full justify-center mt-2 m-0 gap-2">
-        <span class="text-xs text-gray-500 dark:text-gray-400">Powered by</span>
+        <span className="text-xs text-gray-500 dark:text-gray-400">
+          Powered by
+        </span>
         <img
           src="https://embot-react-widget.vercel.app/images/EM-logo-black-full.png"
           width="70px"

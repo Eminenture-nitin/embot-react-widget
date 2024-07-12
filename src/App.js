@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { twind, cssom, observe } from "@twind/core";
 import "construct-style-sheets-polyfill";
 import config from "./twind.config"; // Ensure correct path
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import BOTParentComponent from "./components/BOTParentComponent";
 import { AdminCredentialsProvided } from "./context/AdminCredentialsContext";
 import { GlobalStatesProvider } from "./context/GlobalStatesContext";
@@ -32,7 +32,9 @@ const App = () => {
     const div = document.createElement("div");
     shadowRoot.appendChild(div);
 
-    ReactDOM.render(
+    // Use createRoot for rendering in React 18
+    const root = createRoot(div);
+    root.render(
       <AdminCredentialsProvided>
         <GlobalStatesProvider>
           <SocketProvider>
@@ -43,13 +45,12 @@ const App = () => {
             </LiveChatProvider>
           </SocketProvider>
         </GlobalStatesProvider>
-      </AdminCredentialsProvided>,
-      div
+      </AdminCredentialsProvided>
     );
 
     // Cleanup on component unmount
     return () => {
-      ReactDOM.unmountComponentAtNode(div);
+      root.unmount();
     };
   }, []);
 

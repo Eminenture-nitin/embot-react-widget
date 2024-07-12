@@ -15,8 +15,9 @@ const ChatBotWidget = () => {
       style={{
         boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
         height: "calc(100% - 100px)",
+        maxHeight: "980px",
       }}
-      className="fixed bottom-[calc(4rem+1.5rem)] right-0 mr-4 bg-white rounded-lg w-[400px] overflow-hidden"
+      className="fixed bottom-[calc(4rem+1.5rem)] right-0 mr-4 bg-white rounded-lg w-full max-w-xs sm:max-w-[400px] lg:max-w-[400px] overflow-hidden"
     >
       <div className="h-full" style={{ height: "100%" }}>
         <Header />
