@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { isValueInCookies } from "../utils/validations";
 
 const GlobalStatesContext = createContext();
 
@@ -17,6 +18,7 @@ export function GlobalStatesProvider({ children }) {
   //validationForm
   //customForms
   const [enableTextInput, setEnableTextInput] = useState(true);
+  const [takingEmailId, setTakingEmailId] = useState(false);
 
   const [assitWaitingTimerData, setAssitWaitingTimerData] = useState({
     time: {},
@@ -31,6 +33,14 @@ export function GlobalStatesProvider({ children }) {
     nextNodeId: "",
   });
 
+  const [userRegistered, setUserRegistered] = useState(false);
+
+  useEffect(() => {
+    if (isValueInCookies("widget_user_email")) {
+      setUserRegistered(true);
+    }
+  }, [userRegistered]);
+
   return (
     <GlobalStatesContext.Provider
       value={{
@@ -42,6 +52,10 @@ export function GlobalStatesProvider({ children }) {
         setFullViewActiveEntity,
         enableTextInput,
         setEnableTextInput,
+        userRegistered,
+        setUserRegistered,
+        takingEmailId,
+        setTakingEmailId,
       }}
     >
       {children}

@@ -12,14 +12,20 @@ const Response = ({ response, index }) => {
 
   const renderContent = () => {
     if (response.responseText) {
+      console.log(
+        response?.assiMsgData?.assistantImage,
+        "response?.assiMsgData?.assistantImage"
+      );
       return (
         <div className="mb-1 flex w-full gap-2">
           <div className="">
             <button
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
                 background: response?.assiMsgData?.assistantImage
-                  ? `url(https://res.cloudinary.com/ddi0whlck/image/upload/v1719482498/jcyokrr3fnu3xq69qig6.jpg)`
+                  ? `url(${response?.assiMsgData?.assistantImage})`
                   : theme
                   ? theme
                   : "linear-gradient(135deg, rgb(42, 39, 218) 0%, rgb(0, 204, 255) 100%)",

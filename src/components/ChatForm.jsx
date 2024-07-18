@@ -4,15 +4,35 @@ import { useTriggersContextData } from "../context/TriggersDataContext";
 import { useLiveChatContext } from "../context/LiveChatContext";
 import { useGlobalStatesContext } from "../context/GlobalStatesContext";
 import { handleNLPOutput } from "../utils/NLPLogic";
+import { isValidEmail, isValueInCookies } from "../utils/validations";
 
+import Cookies from "js-cookie";
 const ChatForm = () => {
   const { theme } = useAdminCredentials();
   const [value, setValue] = useState("");
-  const { questionableTUserInteraction, handleUserInput, outOfFlowData } =
-    useTriggersContextData();
-  const { inputTagConfig } = useGlobalStatesContext();
-  const { chatMode, addMsg, setChatMessages, addBotMsgs } =
-    useLiveChatContext();
+
+  const {
+    questionableTUserInteraction,
+    handleUserInput,
+    outOfFlowData,
+    setOutOfFlowData,
+  } = useTriggersContextData();
+  const {
+    inputTagConfig,
+    setAssitWaitingTimerData,
+    userRegistered,
+    takingEmailId,
+    setTakingEmailId,
+  } = useGlobalStatesContext();
+  const {
+    chatMode,
+    setChatMode,
+    addMsg,
+    getLocation,
+    setChatMessages,
+    chatMessages,
+    addBotMsgs,
+  } = useLiveChatContext();
 
   const handleMultipleActionsCall = async (input, output) => {
     try {
@@ -44,6 +64,35 @@ const ChatForm = () => {
           { userTrigger: value, myself: false },
         ]);
         addMsg(value);
+      } else if (takingEmailId) {
+        if (!isValidEmail(value)) {
+          setChatMessages((prevMsgs) => [
+            ...prevMsgs,
+            { userTrigger: value, myself: false },
+            {
+              responseText: "Please enter a valid email address.",
+              myself: true,
+            },
+          ]);
+        } else {
+          setTakingEmailId(false);
+          setChatMessages((prevMsgs) => [
+            ...prevMsgs,
+            { userTrigger: value, myself: false },
+            {
+              responseText: "Connecting you with our agent now. Please wait",
+              myself: true,
+            },
+          ]);
+          Cookies.set("widget_user_email", value, { expires: 3 });
+          setAssitWaitingTimerData((prevAWTD) => ({
+            ...prevAWTD,
+            time: {},
+            status: true,
+          }));
+          setChatMode("liveChat");
+          getLocation(value, "live");
+        }
       } else {
         const output = handleNLPOutput(value);
         setChatMessages((prevMsgs) => [
@@ -51,20 +100,39 @@ const ChatForm = () => {
           { userTrigger: value, myself: false },
         ]);
         if (output == false) {
-          console.log("outOfFlowData", outOfFlowData);
           if (isObjectNotEmpty(outOfFlowData)) {
             Object.values(outOfFlowData).map((msg) => {
               setChatMessages((prevMessages) => [...prevMessages, msg]);
             });
-          } else {
+            setOutOfFlowData({});
+          }
+          if (userRegistered && isValueInCookies("widget_user_email")) {
+            const userEmailId = Cookies.get("widget_user_email");
             setChatMessages((prevMsgs) => [
               ...prevMsgs,
               {
                 responseText:
-                  "I'm sorry, I didn't quite catch that. Could you please rephrase?",
+                  "📧 We have your email on file. Connecting you now. Please wait",
                 myself: true,
               },
+              { userTrigger: userEmailId, myself: false },
             ]);
+            setAssitWaitingTimerData((prevAWTD) => ({
+              ...prevAWTD,
+              time: {},
+              status: true,
+            }));
+            setChatMode("liveChat");
+            getLocation(userEmailId, "live");
+          } else {
+            setChatMessages((prevMsgs) =>
+              prevMsgs.some(
+                (msg) => msg.responseText === "What's your email address?"
+              )
+                ? prevMsgs
+                : [...prevMsgs, { responseText: "What's your email address?" }]
+            );
+            setTakingEmailId(true);
           }
         } else {
           setChatMessages((prevMsgs) => [
@@ -77,6 +145,7 @@ const ChatForm = () => {
       setValue("");
     }
   };
+
   return (
     <div className="p-6 pb-3 absolute bottom-0 w-full bg-white pt-5 border border-t-gray-500">
       <form

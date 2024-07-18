@@ -405,6 +405,7 @@ export function TriggersContextProvider({ children }) {
         handleCloseForm,
         findSubtriggerConnectedNode,
         outOfFlowData,
+        setOutOfFlowData,
       }}
     >
       {children}

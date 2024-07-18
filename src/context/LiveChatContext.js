@@ -19,7 +19,8 @@ export function LiveChatProvider({ children }) {
   const { socket } = useSocket();
   const [chatMessages, setChatMessages] = useState([]);
   const [chatMode, setChatMode] = useState("botChat");
-  const { setAssitWaitingTimerData } = useGlobalStatesContext();
+  const { setAssitWaitingTimerData, setTakingEmailId } =
+    useGlobalStatesContext();
   const { adminId, adminEmail } = useAdminCredentials();
 
   const getLocation = (email, mode) => {
@@ -321,6 +322,7 @@ export function LiveChatProvider({ children }) {
             Cookies.remove("joinedAssistantId");
             Cookies.remove("joinedAssistantEmail");
             setChatMode("botChat");
+            setTakingEmailId(false);
             chatTranscriptFunc();
           },
           5000
