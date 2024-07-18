@@ -22,13 +22,13 @@ const Response = ({ response, index }) => {
             <button
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
                 background: response?.assiMsgData?.assistantImage
                   ? `url(${response?.assiMsgData?.assistantImage})`
                   : theme
                   ? theme
                   : "linear-gradient(135deg, rgb(42, 39, 218) 0%, rgb(0, 204, 255) 100%)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
               className="mainForImageProperty inline-flex items-center justify-center bg-center bg-cover bg-no-repeat text-sm font-medium disabled:pointer-events-none disabled:opacity-50 border rounded-full w-10 h-10 bg-black hover:bg-gray-700 m-0 cursor-pointer border-gray-200 bg-none p-0 normal-case leading-5 hover:text-gray-900"
             >

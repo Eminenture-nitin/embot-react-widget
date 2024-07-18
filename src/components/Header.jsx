@@ -15,7 +15,10 @@ const Header = () => {
       className="flex space-y-1.5 px-6 py-4 rounded-t-md"
     >
       <div className="w-24 w-h-auto object-cover">
-        <img src="/images/embotLogo.webp" className="w-full h-full" />
+        <img
+          src="https://www.eminenture.tech/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FembotLogo.e7ce9467.png&w=128&q=75"
+          className="w-full h-full"
+        />
       </div>
     </div>
   );
