@@ -21,6 +21,6 @@ export const handleNLPOutput = (message) => {
   if (foundResponse) {
     return foundResponse.responseMsg;
   } else {
-    return "I'm sorry, I didn't quite catch that. Could you please rephrase?";
+    return false;
   }
 };

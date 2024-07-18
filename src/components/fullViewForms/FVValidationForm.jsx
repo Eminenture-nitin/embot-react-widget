@@ -36,7 +36,6 @@ const FVValidationForm = () => {
       isValidPhoneNumber(inputValue)
     ) {
       handleUserDecision(inputTagConfig.nextNodeId, inputValue);
-
       handleCloseForm();
     } else {
       setErrorMsg(inputTagConfig.errorMessage);
@@ -50,7 +49,7 @@ const FVValidationForm = () => {
           htmlFor="email-address-icon"
           className="block text-center mb-2 text-md font-medium text-gray-900"
         >
-          Please introduce yourself by providing your{" "}
+          Please introduce yourself by providing your
           {inputTagConfig?.validationType}
         </label>
         <div className="w-full h-auto my-2">

@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { useTriggersContextData } from "../../context/TriggersDataContext";
 import { useAdminCredentials } from "../../context/AdminCredentialsContext";
 import { useLiveChatContext } from "../../context/LiveChatContext";
-
+import Cookies from "js-cookie";
+import { useGlobalStatesContext } from "../../context/GlobalStatesContext";
 const FVCustomeForm = () => {
   const data = {
     titleText: "Service Inquiry Form",
@@ -41,7 +42,9 @@ const FVCustomeForm = () => {
   const [formValues, setFormValues] = useState({});
   const { handleCloseForm } = useTriggersContextData();
   const { theme } = useAdminCredentials();
-  const { setChatMessages, addBotMsgs, addMsg } = useLiveChatContext();
+  const { setChatMessages, addBotMsgs, addMsg, getLocation } =
+    useLiveChatContext();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
@@ -68,6 +71,9 @@ const FVCustomeForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // let userExists = Cookies.get("widget_user_email");
+    // console.log("userExists", userExists);
+
     setChatMessages((prevMsgs) => [
       ...prevMsgs,
       { customFormsData: formValues, myself: false },

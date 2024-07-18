@@ -2,7 +2,6 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import React, { useEffect, useState } from "react";
 import { useTriggersContextData } from "../../context/TriggersDataContext";
 import { useAdminCredentials } from "../../context/AdminCredentialsContext";
-import SliderTriggerComponent from "./SliderTriggerComponent";
 import { isImageFileName } from "../../utils/validations";
 
 const Response = ({ response, index }) => {
@@ -59,7 +58,7 @@ const Response = ({ response, index }) => {
           <div className="mb-1 w-full">
             <p
               style={{ backgroundColor: "rgb(240, 242, 247)" }}
-              className="text-sm font-normal py-2.5 px-2 text-gray-900 border-gray-200 rounded-e-xl rounded-es-xl"
+              className="text-sm font-normal py-2.5 px-2 text-gray-900 border-gray-200 rounded-md"
             >
               {response.responseText}
             </p>
@@ -101,7 +100,7 @@ const Response = ({ response, index }) => {
       if (isImageFileName(response.imageURL)) {
         return (
           <img
-            className="w-[80%] grid justify-end h-auto border-gray-200 rounded-e-xl rounded-es-xl"
+            className="w-[80%] grid mb-1 justify-end h-auto border-gray-200 rounded-md"
             src={response.imageURL}
             alt={response.imageId}
           />
@@ -137,7 +136,7 @@ const Response = ({ response, index }) => {
 
   return (
     <div className="flex items-start gap-2.5 mb-1">
-      <div className="flex flex-col items-end w-full max-w-[70%] leading-1.5">
+      <div className="flex flex-col items-end w-full max-w-[85%] leading-1.5">
         {isLoading ? "loading..." : renderContent()}
       </div>
 
@@ -152,10 +151,7 @@ const Response = ({ response, index }) => {
             window.open(response.imageURL, "_blank", "noopener noreferrer");
           }}
         >
-          <Icon
-            icon="tabler:external-link"
-            className="w-5 h-5 text-gray-500"
-          />
+          <Icon icon="tabler:external-link" className="w-5 h-5 text-gray-500" />
         </button>
       )}
     </div>

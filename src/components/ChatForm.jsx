@@ -8,7 +8,7 @@ import { handleNLPOutput } from "../utils/NLPLogic";
 const ChatForm = () => {
   const { theme } = useAdminCredentials();
   const [value, setValue] = useState("");
-  const { questionableTUserInteraction, handleUserInput } =
+  const { questionableTUserInteraction, handleUserInput, outOfFlowData } =
     useTriggersContextData();
   const { inputTagConfig } = useGlobalStatesContext();
   const { chatMode, addMsg, setChatMessages, addBotMsgs } =
@@ -27,6 +27,12 @@ const ChatForm = () => {
     }
   };
 
+  function isObjectNotEmpty(obj) {
+    if (obj === undefined || obj === null) {
+      return false;
+    }
+    return Object.keys(obj).length > 0;
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value?.length > 0) {
@@ -44,11 +50,29 @@ const ChatForm = () => {
           ...prevMsgs,
           { userTrigger: value, myself: false },
         ]);
-        setChatMessages((prevMsgs) => [
-          ...prevMsgs,
-          { responseText: output, myself: true },
-        ]);
-        handleMultipleActionsCall(value, output);
+        if (output == false) {
+          console.log("outOfFlowData", outOfFlowData);
+          if (isObjectNotEmpty(outOfFlowData)) {
+            Object.values(outOfFlowData).map((msg) => {
+              setChatMessages((prevMessages) => [...prevMessages, msg]);
+            });
+          } else {
+            setChatMessages((prevMsgs) => [
+              ...prevMsgs,
+              {
+                responseText:
+                  "I'm sorry, I didn't quite catch that. Could you please rephrase?",
+                myself: true,
+              },
+            ]);
+          }
+        } else {
+          setChatMessages((prevMsgs) => [
+            ...prevMsgs,
+            { responseText: output, myself: true },
+          ]);
+          //  handleMultipleActionsCall(value, output);
+        }
       }
       setValue("");
     }

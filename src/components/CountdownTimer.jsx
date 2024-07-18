@@ -34,11 +34,11 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
   }, [minutes, seconds, assitWaitingTimerData]);
 
   return (
-    <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8">
+    <div className="w-[80%] ml-12 p-2 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-4">
       <div>
         <Icon />
       </div>
-      <p className="mb-5 text-base text-gray-500 sm:text-lg">
+      <p className="mb-5 text-base text-gray-500 text-md">
         Please wait, our assistant is joining the chat
       </p>
 

@@ -22,7 +22,7 @@ export function LiveChatProvider({ children }) {
   const { setAssitWaitingTimerData } = useGlobalStatesContext();
   const { adminId, adminEmail } = useAdminCredentials();
 
-  const getLocation = (email) => {
+  const getLocation = (email, mode) => {
     axios
       .get(`https://ipapi.co/json`)
       .then((res) => {
@@ -45,7 +45,11 @@ export function LiveChatProvider({ children }) {
             visitedPage: window.location.href,
           };
           //  console.log("payload", payload);
-          registerUser(payload);
+          if (mode == "live") {
+            registerUser(payload);
+          } else {
+            onlyRegisterUser();
+          }
         }
       })
       .catch((err) => {
@@ -99,6 +103,45 @@ export function LiveChatProvider({ children }) {
             );
           }
         });
+        // adding user to map
+        socket.current.emit("addUser", data?.user?._id);
+      })
+      .catch((err) => console.log("err", err));
+  };
+
+  const onlyRegisterUser = (payload) => {
+    axios({
+      url: `${process.env.REACT_APP_API_URL}/live/create-user/${adminId}`,
+      method: "POST",
+      data: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
+        const data = res.data;
+        //   console.log("res", data);
+        // saving Register user Id and Email to the Cookies
+
+        Cookies.set("widget_user_id", data?.user?._id, { expires: 3 });
+        // adding user to map
+        socket.current.emit("addUser", data?.user?._id);
+
+        setTimeout(() => {
+          //sending notification to admin user is joined
+
+          // console.log("notification", adminId);
+          const NotifyData = {
+            userInfo: {
+              userName: data?.user?.userName,
+              userEmail: data?.user?.userEmail,
+              _id: data?.user?._id,
+              visitedPage: data?.user?.visitedPage,
+              type: "isRegistered",
+            },
+            adminId: adminId,
+          };
+          socket.current.emit("notifications", NotifyData);
+        }, 2000);
+
         // adding user to map
         socket.current.emit("addUser", data?.user?._id);
       })
@@ -307,6 +350,9 @@ export function LiveChatProvider({ children }) {
     };
   }, [socket, adminId]);
 
+  useEffect(() => {
+    console.log(chatMessages);
+  }, [chatMessages]);
   return (
     <LiveChatContext.Provider
       value={{

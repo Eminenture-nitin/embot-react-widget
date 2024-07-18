@@ -24,6 +24,7 @@ export function useTriggersContextData() {
 export function TriggersContextProvider({ children }) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
+  const [outOfFlowData, setOutOfFlowData] = useState({});
   const { adminId } = useAdminCredentials();
   const { socket } = useSocket();
   const [validationFailedAttempt, setValidationFailedAttempt] = useState(0);
@@ -53,6 +54,7 @@ export function TriggersContextProvider({ children }) {
         //  console.log(res.data);
         setNodes(res.data.nodes);
         setEdges(res.data.edges);
+        setOutOfFlowData(res.data.outOfFlowData);
         startChatbot(res.data.nodes, res.data.edges);
       })
       .catch((err) => {
@@ -241,11 +243,7 @@ export function TriggersContextProvider({ children }) {
           myself: true,
         },
       ]);
-      // setTimeout(() => {
-      //   addBotMsgs(
-      //     "📧 We have your email on file. Connecting you now. Please wait"
-      //   );
-      // }, 500);
+
       handleUserDecision(node?.data?.connections?.leftSource, email);
     } else {
       const questionableMessage = {
@@ -276,6 +274,7 @@ export function TriggersContextProvider({ children }) {
       if (validationFailedAttempt == inputTagConfig?.retryAttempts - 1) {
         setFullViewActiveEntity({ active: "validationForm", data: {} });
       }
+
       setValidationFailedAttempt((prevVFA) => prevVFA + 1);
       setChatMessages((prevMsgs) => [
         ...prevMsgs,
@@ -287,17 +286,19 @@ export function TriggersContextProvider({ children }) {
 
   //handle Chat With Assistant Trigger Logic
   const hadleChatWithAssistantTrigger = (node, nodes, edges) => {
+    // const userExists = Cookies.get("widget_user_email");
+    // console.log("userExists", userExists);
+
     setAssitWaitingTimerData((prevAWTD) => ({
       ...prevAWTD,
       time: node.data.message,
       status: true,
     }));
     setChatMode("liveChat");
-
     const userEmailId = Cookies.get("widget_user_email");
     if (userEmailId) {
       //this function is initiate live chat process like get user location and check user is already there or not and then continue chat
-      getLocation(userEmailId);
+      getLocation(userEmailId, "live");
     }
   };
 
@@ -388,7 +389,6 @@ export function TriggersContextProvider({ children }) {
     if (adminId) {
       getTriggersData(adminId);
     }
-   
   }, [adminId]);
 
   // useEffect(() => {
@@ -404,6 +404,7 @@ export function TriggersContextProvider({ children }) {
         questionableTUserInteraction,
         handleCloseForm,
         findSubtriggerConnectedNode,
+        outOfFlowData,
       }}
     >
       {children}
