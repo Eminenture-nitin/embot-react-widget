@@ -78,7 +78,7 @@ export function LiveChatProvider({ children }) {
         setTimeout(() => {
           //sending notification to admin user is joined
 
-          console.log("notification", adminId);
+         // console.log("notification", adminId);
           const NotifyData = {
             userInfo: {
               userName: data?.user?.userName,

@@ -12,10 +12,10 @@ const Response = ({ response, index }) => {
 
   const renderContent = () => {
     if (response.responseText) {
-      console.log(
-        response?.assiMsgData?.assistantImage,
-        "response?.assiMsgData?.assistantImage"
-      );
+      // console.log(
+      //   response?.assiMsgData?.assistantImage,
+      //   "response?.assiMsgData?.assistantImage"
+      // );
       return (
         <div className="mb-1 flex w-full gap-2">
           <div className="">

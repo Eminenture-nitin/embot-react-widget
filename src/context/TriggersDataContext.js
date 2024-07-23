@@ -110,7 +110,7 @@ export function TriggersContextProvider({ children }) {
       socket.current.off("checkAssitJoinedStatus");
     }
 
-    console.log(`Activating node: ${node.data.trigger_Name}`);
+   // console.log(`Activating node: ${node.data.trigger_Name}`);
     handleNodeTrigger(node, nodes, edges, visitedNodes);
   };
 
