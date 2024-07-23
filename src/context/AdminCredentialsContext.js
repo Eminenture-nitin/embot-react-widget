@@ -14,12 +14,14 @@ export const AdminCredentialsProvided = ({ children }) => {
   );
   const [adminEmail, setAdminEmail] = useState("");
   const [adminId, setAdminId] = useState(null);
+  const [companyName, setCompanyName] = useState("");
+  const [adminImageURL, setAdminImageURL] = useState("");
 
   useEffect(() => {
     var rootElement = document.getElementById("EMChatBotRoot");
     var adminId = rootElement.getAttribute("data-admin-id");
     const processedId = customDehash(adminId, "EMReact");
-    // const adminId = "650d432aa0570859518c23ao1";
+    //const adminIdDefualt = "650d432aa0570859518c23a1";
     setAdminId(processedId);
   }, []);
   const getAdminData = () => {
@@ -28,8 +30,10 @@ export const AdminCredentialsProvided = ({ children }) => {
         `${process.env.REACT_APP_API_URL}/auth/get-widegt-admin-data/${adminId}`
       )
       .then((res) => {
+        setCompanyName(res.data.data.companyName);
         setTheme(res.data.data.theme);
         setAdminEmail(res.data.data.email);
+        setAdminImageURL(res.data.data.userImage);
       })
       .catch((e) => console.log(e));
   };
@@ -40,7 +44,9 @@ export const AdminCredentialsProvided = ({ children }) => {
   }, [adminId]);
 
   return (
-    <AdminCredentialsContext.Provider value={{ theme, adminId, adminEmail }}>
+    <AdminCredentialsContext.Provider
+      value={{ theme, adminId, adminEmail, adminImageURL, companyName }}
+    >
       {children}
     </AdminCredentialsContext.Provider>
   );
