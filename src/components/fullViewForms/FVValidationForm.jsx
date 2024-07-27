@@ -10,10 +10,12 @@ import {
   isValidPhoneNumber,
 } from "../../utils/validations";
 import { useGlobalStatesContext } from "../../context/GlobalStatesContext";
+import { useLiveChatContext } from "../../context/LiveChatContext";
 
 const FVValidationForm = () => {
   const { handleCloseForm, handleUserDecision } = useTriggersContextData();
   const { inputTagConfig } = useGlobalStatesContext();
+  const { getLocation } = useLiveChatContext();
   const { theme } = useAdminCredentials();
   const [inputValue, setInputValue] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -24,6 +26,7 @@ const FVValidationForm = () => {
       Cookies.set("widget_user_email", inputValue, { expires: 3 });
       handleUserDecision(inputTagConfig.nextNodeId, inputValue);
       handleCloseForm();
+      getLocation(inputValue, "register");
     } else if (
       inputTagConfig.validationType == "Name" &&
       isValidName(inputValue)
