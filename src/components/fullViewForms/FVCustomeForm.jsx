@@ -6,50 +6,49 @@ import { useLiveChatContext } from "../../context/LiveChatContext";
 import Cookies from "js-cookie";
 import { useGlobalStatesContext } from "../../context/GlobalStatesContext";
 const FVCustomeForm = () => {
-  const data = {
-    titleText: "Service Inquiry Form",
-    inputTags: [
-      {
-        id: "fa325a58-f7b2-4e97-92e2-b22d3d507eed",
-        inputType: "Text",
-        inputTagType: "text",
-        required: true,
-        placeholder: "Enter Name",
-      },
-      {
-        id: "07d4c77f-4a58-4be0-b34b-f84645525599",
-        inputType: "Email",
-        inputTagType: "email",
-        required: true,
-        placeholder: "Enter Email...",
-      },
-      {
-        id: "01c7d079-ca39-432a-b1eb-dc650255a1a4",
-        inputType: "Number",
-        inputTagType: "number",
-        required: true,
-        placeholder: "Enter Number",
-      },
-      {
-        id: "229e79a8-5e46-46c2-ae28-e96a9d982d40",
-        inputType: "Long Text",
-        inputTagType: "text",
-        required: true,
-        placeholder: "Enter Service Inquiry Message",
-      },
-    ],
-  };
+  // const data = {
+  //   titleText: "Service Inquiry Form",
+  //   inputTags: [
+  //     {
+  //       id: "fa325a58-f7b2-4e97-92e2-b22d3d507eed",
+  //       inputType: "Text",
+  //       inputTagType: "text",
+  //       required: true,
+  //       placeholder: "Enter Name",
+  //     },
+  //     {
+  //       id: "07d4c77f-4a58-4be0-b34b-f84645525599",
+  //       inputType: "Email",
+  //       inputTagType: "email",
+  //       required: true,
+  //       placeholder: "Enter Email...",
+  //     },
+  //     {
+  //       id: "01c7d079-ca39-432a-b1eb-dc650255a1a4",
+  //       inputType: "Number",
+  //       inputTagType: "number",
+  //       required: true,
+  //       placeholder: "Enter Number",
+  //     },
+  //     {
+  //       id: "229e79a8-5e46-46c2-ae28-e96a9d982d40",
+  //       inputType: "Long Text",
+  //       inputTagType: "text",
+  //       required: true,
+  //       placeholder: "Enter Service Inquiry Message",
+  //     },
+  //   ],
+  // };
   const [formValues, setFormValues] = useState({});
   const { handleCloseForm } = useTriggersContextData();
   const { theme } = useAdminCredentials();
-  const { setChatMessages, addBotMsgs, addMsg, getLocation } =
-    useLiveChatContext();
-
+  const { setChatMessages, addBotMsgs, addMsg } = useLiveChatContext();
+  const { fullViewActiveEntity } = useGlobalStatesContext();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
       ...formValues,
-      formTitle: data?.titleText,
+      formTitle: fullViewActiveEntity?.data?.titleText,
       [name]: value,
     });
   };
@@ -73,7 +72,6 @@ const FVCustomeForm = () => {
     e.preventDefault();
     // let userExists = Cookies.get("widget_user_email");
     // console.log("userExists", userExists);
-
     setChatMessages((prevMsgs) => [
       ...prevMsgs,
       { customFormsData: formValues, myself: false },
@@ -91,10 +89,10 @@ const FVCustomeForm = () => {
       style={{ height: "calc(100% - 100px)" }}
     >
       <h2 className="block text-center mb-2 text-md font-medium text-gray-900">
-        {data?.titleText}
+        {fullViewActiveEntity?.data?.titleText}
       </h2>
       <form onSubmit={handleSubmit}>
-        {data?.inputTags.map((inputTag) => (
+        {fullViewActiveEntity?.data?.inputTags.map((inputTag) => (
           <div key={inputTag.id} className="mb-4">
             {inputTag.inputTagType === "text" &&
             inputTag.inputType === "Long Text" ? (

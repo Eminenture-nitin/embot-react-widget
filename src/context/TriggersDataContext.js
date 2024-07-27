@@ -323,6 +323,7 @@ export function TriggersContextProvider({ children }) {
 
   //handle custom form trigger
   const handleCustomFormsTrigger = (node, nodes, edges) => {
+    console.log("formdata", node?.data?.message);
     setFullViewActiveEntity({
       active: "customForms",
       data: node?.data?.message,
