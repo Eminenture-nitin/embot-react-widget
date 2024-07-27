@@ -273,10 +273,10 @@ export function TriggersContextProvider({ children }) {
       console.log("Phone number is valid");
       handleUserDecision(inputTagConfig.nextNodeId, value);
     } else {
-      console.log(
-        "inputTagConfig?.retryAttempts",
-        inputTagConfig?.retryAttempts
-      );
+      // console.log(
+      //   "inputTagConfig?.retryAttempts",
+      //   inputTagConfig?.retryAttempts
+      // );
       if (validationFailedAttempt == inputTagConfig?.retryAttempts - 1) {
         setFullViewActiveEntity({ active: "validationForm", data: {} });
       }
@@ -323,7 +323,7 @@ export function TriggersContextProvider({ children }) {
 
   //handle custom form trigger
   const handleCustomFormsTrigger = (node, nodes, edges) => {
-    console.log("formdata", node?.data?.message);
+   // console.log("formdata", node?.data?.message);
     setFullViewActiveEntity({
       active: "customForms",
       data: node?.data?.message,

@@ -352,9 +352,9 @@ export function LiveChatProvider({ children }) {
     };
   }, [socket, adminId]);
 
-  useEffect(() => {
-    console.log(chatMessages);
-  }, [chatMessages]);
+  // useEffect(() => {
+  //   console.log(chatMessages);
+  // }, [chatMessages]);
   return (
     <LiveChatContext.Provider
       value={{
