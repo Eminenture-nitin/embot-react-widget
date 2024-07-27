@@ -63,6 +63,7 @@ const ChatContainer = () => {
 
   return (
     <div
+      id="EmChatBotChatContainerId"
       ref={chatContainerRef}
       style={{ height: "calc(100% - 160px)", maxHeight: "calc(100% - 160px)" }}
       className="chat-container pr-4 p-6 overflow-y-auto flex-1 min-h-[167px] scroll-smooth focus:scroll-auto"

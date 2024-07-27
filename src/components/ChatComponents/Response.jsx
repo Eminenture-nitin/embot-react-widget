@@ -67,7 +67,7 @@ const Response = ({ response, index }) => {
           <div className="mb-1 w-full">
             <p
               style={{ backgroundColor: "rgb(240, 242, 247)" }}
-              className="text-sm font-normal py-2.5 px-2 text-gray-900 border-gray-200 rounded-md"
+              className="text-[15px] font-normal py-2.5 px-2 text-gray-900 border-gray-200 rounded-md"
             >
               {response.responseText}
             </p>

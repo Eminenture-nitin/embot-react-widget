@@ -21,7 +21,9 @@ export const AdminCredentialsProvided = ({ children }) => {
     var rootElement = document.getElementById("EMChatBotRoot");
     var adminId = rootElement.getAttribute("data-admin-id");
     const processedId = customDehash(adminId, "EMReact");
-    //const adminIdDefualt = "650d432aa0570859518c23a1";
+
+    const adminIdDefualtEminenture = "650d432aa0570859518c23a1";
+    const adminIdDefualtEmTech = "668d138c1913cfd07ed4ba41";
     setAdminId(processedId);
   }, []);
   const getAdminData = () => {

@@ -34,7 +34,7 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
   }, [minutes, seconds, assitWaitingTimerData]);
 
   return (
-    <div className="w-[80%] ml-12 p-2 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-4">
+    <div className="w-[80%] mb-2 ml-12 p-2 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-4">
       <div>
         <Icon />
       </div>

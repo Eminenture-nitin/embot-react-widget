@@ -18,34 +18,34 @@ html {
   font-size: 16px !important;
 }
 
-.chat-container {
+#EmChatBotChatContainerId {
   scrollbar-width: thin; /* For Firefox */
   scrollbar-color: transparent transparent; /* For Firefox */
 }
 
 /* Webkit browsers */
-.chat-container::-webkit-scrollbar {
+#EmChatBotChatContainerId::-webkit-scrollbar {
   width: 8px;
   height: 8px; /* Optional, if you want to control the horizontal scrollbar */
 }
 
-.chat-container::-webkit-scrollbar-track {
+#EmChatBotChatContainerId::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.chat-container::-webkit-scrollbar-thumb {
+#EmChatBotChatContainerId::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 10px;
   border: 2px solid #f1f1f1;
 }
 
 /* Hide scrollbar by default */
-.chat-container::-webkit-scrollbar {
+#EmChatBotChatContainerId::-webkit-scrollbar {
   display: none;
 }
 
 /* Show scrollbar on hover */
-.chat-container:hover::-webkit-scrollbar {
+#EmChatBotChatContainerId:hover::-webkit-scrollbar {
   display: block;
 }
 .mainForImageProperty {

@@ -56,7 +56,7 @@ const SliderTriggerComponent = ({ data }) => {
         </Carousel>
       </div>
 
-      <ul className="w-full cursor-pointer border-y-2 border-neutral-100">
+      <ul className="w-full cursor-pointer border-y-2 mb-2 border-neutral-100">
         {data?.subTriggers?.map((btn, index) => (
           <li
             key={index}

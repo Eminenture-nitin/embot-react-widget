@@ -87,6 +87,7 @@ export function TriggersContextProvider({ children }) {
     }
     if (node.data.trigger_Name == "Questionable Trigger") {
       const validationType = node.data.message.validationType;
+      console.log(node.data.message);
       setInputTagConfig((prevConfig) => ({
         ...prevConfig,
         status: false,
@@ -110,7 +111,7 @@ export function TriggersContextProvider({ children }) {
       socket.current.off("checkAssitJoinedStatus");
     }
 
-   // console.log(`Activating node: ${node.data.trigger_Name}`);
+    // console.log(`Activating node: ${node.data.trigger_Name}`);
     handleNodeTrigger(node, nodes, edges, visitedNodes);
   };
 
@@ -261,6 +262,7 @@ export function TriggersContextProvider({ children }) {
       // console.log("email is verify");
       Cookies.set("widget_user_email", value, { expires: 3 });
       handleUserDecision(inputTagConfig.nextNodeId, value);
+      getLocation(value, "register");
     } else if (inputTagConfig.validationType == "Name" && isValidName(value)) {
       // console.log("Name is correct");
       handleUserDecision(inputTagConfig.nextNodeId, value);
@@ -271,6 +273,10 @@ export function TriggersContextProvider({ children }) {
       console.log("Phone number is valid");
       handleUserDecision(inputTagConfig.nextNodeId, value);
     } else {
+      console.log(
+        "inputTagConfig?.retryAttempts",
+        inputTagConfig?.retryAttempts
+      );
       if (validationFailedAttempt == inputTagConfig?.retryAttempts - 1) {
         setFullViewActiveEntity({ active: "validationForm", data: {} });
       }
@@ -284,6 +290,9 @@ export function TriggersContextProvider({ children }) {
     }
   };
 
+  useEffect(() => {
+    console.log(validationFailedAttempt);
+  }, [validationFailedAttempt]);
   //handle Chat With Assistant Trigger Logic
   const hadleChatWithAssistantTrigger = (node, nodes, edges) => {
     // const userExists = Cookies.get("widget_user_email");
