@@ -85,8 +85,8 @@ const ChatContainer = () => {
 
       {assitWaitingTimerData?.status && (
         <CountdownTimer
-          initialMinutes={assitWaitingTimerData?.time?.min || 2}
-          initialSeconds={assitWaitingTimerData?.time?.sec || 1}
+          initialMinutes={assitWaitingTimerData?.time?.min || 1}
+          initialSeconds={assitWaitingTimerData?.time?.sec || 2}
           assitWaitingTimerData={assitWaitingTimerData}
         />
       )}
