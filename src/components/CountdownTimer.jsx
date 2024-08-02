@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useGlobalStatesContext } from "../context/GlobalStatesContext";
 import { useSocket } from "../context/SocketContext";
+import { useAdminCredentials } from "../context/AdminCredentialsContext";
 
 const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
   const [minutes, setMinutes] = useState(initialMinutes);
   const [seconds, setSeconds] = useState(initialSeconds);
+  const { adminId } = useAdminCredentials();
   const { socket } = useSocket();
   const {
     assitWaitingTimerData,
@@ -22,9 +24,11 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
         setSeconds(59);
       } else if (assitWaitingTimerData?.status == false) {
         clearInterval(countdown);
+        socket.current.emit("notificationsRingOffEvent", adminId);
       } else {
         socket.current.off("checkAssitJoinedStatus");
         setFullViewActiveEntity({ active: "assistantWaitingForm", data: {} });
+        socket.current.emit("notificationsRingOffEvent", adminId);
         clearInterval(countdown);
         setAssitWaitingTimerData({ time: {}, status: false });
       }

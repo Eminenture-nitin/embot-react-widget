@@ -110,11 +110,6 @@ const ChatForm = () => {
             const userEmailId = Cookies.get("widget_user_email");
             setChatMessages((prevMsgs) => [
               ...prevMsgs,
-              {
-                responseText:
-                  "📧 We have your email on file. Connecting you now. Please wait",
-                myself: true,
-              },
               { userTrigger: userEmailId, myself: false },
             ]);
             setAssitWaitingTimerData((prevAWTD) => ({
