@@ -19,7 +19,7 @@ export function GlobalStatesProvider({ children }) {
   //customForms
   const [enableTextInput, setEnableTextInput] = useState(true);
   const [takingEmailId, setTakingEmailId] = useState(false);
-
+  const [showWidget, setShowWidget] = useState(false);
   const [assitWaitingTimerData, setAssitWaitingTimerData] = useState({
     time: {},
     status: false,
@@ -55,6 +55,8 @@ export function GlobalStatesProvider({ children }) {
         userRegistered,
         setUserRegistered,
         takingEmailId,
+        showWidget,
+        setShowWidget,
         setTakingEmailId,
       }}
     >

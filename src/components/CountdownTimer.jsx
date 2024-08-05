@@ -43,7 +43,9 @@ const CountdownTimer = ({ initialMinutes, initialSeconds }) => {
         <Icon />
       </div>
       <p className="mb-5 text-base text-gray-500 text-md">
-        Please wait, our assistant is joining the chat
+        {assitWaitingTimerData?.time?.assistantWaitingMessage
+          ? assitWaitingTimerData?.time?.assistantWaitingMessage
+          : "Please wait, our assistant is joining the chat"}
       </p>
 
       <div className="flex items-center justify-center space-x-4 rtl:space-x-reverse">

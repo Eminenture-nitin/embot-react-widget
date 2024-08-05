@@ -61,7 +61,7 @@ const FVAssistantWaitingForm = () => {
           htmlFor="email-address-icon"
           className="block text-center mb-2 text-md font-medium text-gray-900"
         >
-          Assistant Unavailable – Leave Your Details, We'll Connect Soon?
+          Assistant Unavailable – Leave Your Details, We’ll Reach Out Soon.
         </label>
         <div className="relative py-4 border-b border-blue-500">
           <div className="mb-5">

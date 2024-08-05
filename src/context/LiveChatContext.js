@@ -281,30 +281,6 @@ export function LiveChatProvider({ children }) {
     myself ? addBotMsgs() : addMsg();
   };
 
-  //chat transcriptIcon functions
-  //chat transcriptIcon functions
-  function chatTranscriptFunc() {
-    fetch(`${process.env.REACT_APP_API_URL}/live/chat-transcript`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        chatMessages,
-        userEmail: adminEmail,
-      }),
-    })
-      .then((res) => {
-        //console.log(res, "res");
-        return res.json();
-      })
-      .then((response) => {
-        console.log("chattranscript send to admin");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
   useEffect(() => {
     let timeout;
     if (adminId) {
@@ -323,7 +299,6 @@ export function LiveChatProvider({ children }) {
             Cookies.remove("joinedAssistantEmail");
             setChatMode("botChat");
             setTakingEmailId(false);
-            chatTranscriptFunc();
           },
           5000
         );

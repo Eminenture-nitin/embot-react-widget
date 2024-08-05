@@ -79,15 +79,11 @@ const ChatForm = () => {
           setChatMessages((prevMsgs) => [
             ...prevMsgs,
             { userTrigger: value, myself: false },
-            {
-              responseText: "Connecting you with our agent now. Please wait",
-              myself: true,
-            },
           ]);
           Cookies.set("widget_user_email", value, { expires: 3 });
           setAssitWaitingTimerData((prevAWTD) => ({
             ...prevAWTD,
-            time: {},
+            time: outOfFlowData?.assiWaitingTimeAndMessage,
             status: true,
           }));
           setChatMode("liveChat");
@@ -114,7 +110,7 @@ const ChatForm = () => {
             ]);
             setAssitWaitingTimerData((prevAWTD) => ({
               ...prevAWTD,
-              time: {},
+              time: outOfFlowData?.assiWaitingTimeAndMessage,
               status: true,
             }));
             setChatMode("liveChat");
