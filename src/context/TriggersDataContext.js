@@ -240,7 +240,7 @@ export function TriggersContextProvider({ children }) {
         ...prevMsgs,
         {
           responseText:
-            "Your 📧 email is already registered. We’re moving to the next steps.",
+            "Your 📧 email is already registered.",
           myself: true,
         },
       ]);
