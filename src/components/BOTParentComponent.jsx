@@ -13,7 +13,7 @@ function BOTParentComponent() {
       {!showWidget && (
         <div>
           <span
-            className="fixed bottom-7 right-24 z-50 py-1 px-2 rounded-md text-nowrap whitespace-nowrap truncate text-[15px]"
+            className="fixed bg-white bottom-7 right-24 z-50 py-1 px-2 rounded-md text-nowrap whitespace-nowrap truncate text-[15px]"
             style={{
               color: "#3c4859",
               boxShadow: "rgb(182, 190, 252) 0px 0px 13px",
