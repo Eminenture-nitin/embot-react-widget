@@ -56,7 +56,7 @@ const ChatForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (value?.length > 0) {
+    if (value.trim()?.length > 0) {
       if (inputTagConfig.trigger_Name == "Questionable Trigger") {
         questionableTUserInteraction(value.trim());
       } else if (chatMode == "liveChat") {
