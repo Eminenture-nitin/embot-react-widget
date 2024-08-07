@@ -55,9 +55,10 @@ const ChatForm = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (value?.length > 0) {
       if (inputTagConfig.trigger_Name == "Questionable Trigger") {
-        questionableTUserInteraction(value);
+        questionableTUserInteraction(value.trim());
       } else if (chatMode == "liveChat") {
         setChatMessages((prevMsgs) => [
           ...prevMsgs,
@@ -65,7 +66,7 @@ const ChatForm = () => {
         ]);
         addMsg(value);
       } else if (takingEmailId) {
-        if (!isValidEmail(value)) {
+        if (!isValidEmail(value.trim())) {
           setChatMessages((prevMsgs) => [
             ...prevMsgs,
             { userTrigger: value, myself: false },
