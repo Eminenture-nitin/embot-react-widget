@@ -34,6 +34,7 @@ export function TriggersContextProvider({ children }) {
     inputTagConfig,
     setFullViewActiveEntity,
     setEnableTextInput,
+    setUserRegistered,
   } = useGlobalStatesContext();
 
   const {
@@ -239,8 +240,7 @@ export function TriggersContextProvider({ children }) {
       setChatMessages((prevMsgs) => [
         ...prevMsgs,
         {
-          responseText:
-            "Your 📧 email is already registered.",
+          responseText: "Your 📧 email is already registered.",
           myself: true,
         },
       ]);
@@ -261,6 +261,7 @@ export function TriggersContextProvider({ children }) {
     if (inputTagConfig.validationType == "Email" && isValidEmail(value)) {
       // console.log("email is verify");
       Cookies.set("widget_user_email", value, { expires: 3 });
+      setUserRegistered(true);
       handleUserDecision(inputTagConfig.nextNodeId, value);
       getLocation(value, "register");
     } else if (inputTagConfig.validationType == "Name" && isValidName(value)) {
@@ -323,7 +324,7 @@ export function TriggersContextProvider({ children }) {
 
   //handle custom form trigger
   const handleCustomFormsTrigger = (node, nodes, edges) => {
-   // console.log("formdata", node?.data?.message);
+    // console.log("formdata", node?.data?.message);
     setFullViewActiveEntity({
       active: "customForms",
       data: node?.data?.message,

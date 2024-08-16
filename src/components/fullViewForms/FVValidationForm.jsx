@@ -14,7 +14,7 @@ import { useLiveChatContext } from "../../context/LiveChatContext";
 
 const FVValidationForm = () => {
   const { handleCloseForm, handleUserDecision } = useTriggersContextData();
-  const { inputTagConfig } = useGlobalStatesContext();
+  const { inputTagConfig, setUserRegistered } = useGlobalStatesContext();
   const { getLocation } = useLiveChatContext();
   const { theme } = useAdminCredentials();
   const [inputValue, setInputValue] = useState("");
@@ -24,6 +24,7 @@ const FVValidationForm = () => {
     e.preventDefault();
     if (inputTagConfig.validationType == "Email" && isValidEmail(inputValue)) {
       Cookies.set("widget_user_email", inputValue, { expires: 3 });
+      setUserRegistered(true);
       handleUserDecision(inputTagConfig.nextNodeId, inputValue);
       handleCloseForm();
       getLocation(inputValue, "register");
