@@ -262,7 +262,7 @@ export function LiveChatProvider({ children }) {
         // console.log(response.data.message);
       } else {
         // toast.error(response.data.message);
-        console.log(response.data.message);
+      //  console.log(response.data.message);
       }
     } catch (error) {
       console.error("Error adding bot message:", error);
