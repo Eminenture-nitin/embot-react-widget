@@ -88,7 +88,7 @@ export function TriggersContextProvider({ children }) {
     }
     if (node.data.trigger_Name == "Questionable Trigger") {
       const validationType = node.data.message.validationType;
-      console.log(node.data.message);
+    //  console.log(node.data.message);
       setInputTagConfig((prevConfig) => ({
         ...prevConfig,
         status: false,
