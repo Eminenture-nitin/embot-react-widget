@@ -91,7 +91,7 @@ const ChatForm = () => {
           getLocation(value, "live");
         }
       } else {
-        const output = handleNLPOutput(value);
+        const output = handleNLPOutput(value.trim());
         setChatMessages((prevMsgs) => [
           ...prevMsgs,
           { userTrigger: value, myself: false },
