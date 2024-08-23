@@ -95,7 +95,7 @@ const ChatContainer = () => {
           />
         )}
       </div>
-      <style jsx>{`
+      <style>{`
         #EmChatBotChatContainerId::-webkit-scrollbar {
           width: 0px;
           height: 0px; 

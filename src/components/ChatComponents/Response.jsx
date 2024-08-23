@@ -1,15 +1,82 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useTriggersContextData } from "../../context/TriggersDataContext";
 import { useAdminCredentials } from "../../context/AdminCredentialsContext";
-import { isImageFileName } from "../../utils/validations";
-
+import { isImageFileName, isValueInCookies } from "../../utils/validations";
+import { useLiveChatContext } from "../../context/LiveChatContext";
+import { useGlobalStatesContext } from "../../context/GlobalStatesContext";
+import Cookies from "js-cookie";
 const Response = ({ response, index }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { handleUserDecision, findSubtriggerConnectedNode } =
-    useTriggersContextData();
+  const {
+    handleUserDecision,
+    outOfFlowData,
+    setOutOfFlowData,
+    findSubtriggerConnectedNode,
+  } = useTriggersContextData();
   const { theme, adminImageURL } = useAdminCredentials();
+  const { setChatMessages, setGoForLiveChatOFF, getLocation, setChatMode } =
+    useLiveChatContext();
+  const { setAssitWaitingTimerData, setTakingEmailId } =
+    useGlobalStatesContext();
 
+  const liveChatOFFInitiate = () => {
+    const userEmailId = Cookies.get("widget_user_email");
+
+    if (isValueInCookies("widget_user_email")) {
+      Object.values(outOfFlowData).map((msg) => {
+        setChatMessages((prevMessages) => [...prevMessages, msg]);
+      });
+      setOutOfFlowData({});
+      setAssitWaitingTimerData((prevAWTD) => ({
+        ...prevAWTD,
+        time: outOfFlowData?.assiWaitingTimeAndMessage,
+        status: true,
+      }));
+      setChatMode("liveChat");
+      getLocation(userEmailId, "live");
+    } else {
+      // setChatMessages((prevMsgs) =>
+      //   prevMsgs.some(
+      //     (msg) => msg.responseText === "What's your email address?"
+      //   )
+      //     ? prevMsgs
+      //     : [...prevMsgs, { responseText: "What's your email address?" }]
+      // );
+      setChatMessages((prevMsgs) => [
+        ...prevMsgs,
+        { responseText: "What's your email address?" },
+      ]);
+      setTakingEmailId(true);
+    }
+  };
+
+  const handleSubtriggerActionPlay = (item) => {
+    if (item?.role == "custom") {
+      if (item?.value == "Not yet") {
+        setChatMessages((prevMsgs) => [
+          ...prevMsgs,
+          { userTrigger: item?.value, myself: false },
+          { responseText: "Thanks for your time. Have a good day! 🙂" },
+        ]);
+        setTakingEmailId(false);
+      } else if (item?.value == "Yes, please connect") {
+        setChatMessages((prevMsgs) => [
+          ...prevMsgs,
+          { userTrigger: item?.value, myself: false },
+        ]);
+        setTimeout(() => {
+          liveChatOFFInitiate();
+        }, 100);
+      }
+    } else {
+      const targetNodeId = findSubtriggerConnectedNode(
+        response?.nodeId,
+        item?.value
+      );
+      handleUserDecision(targetNodeId, item?.value);
+    }
+  };
   const renderContent = () => {
     if (response.responseText) {
       // console.log(
@@ -77,11 +144,7 @@ const Response = ({ response, index }) => {
                 <button
                   key={index}
                   onClick={() => {
-                    const targetNodeId = findSubtriggerConnectedNode(
-                      response.nodeId,
-                      item.value
-                    );
-                    handleUserDecision(targetNodeId, item.value);
+                    handleSubtriggerActionPlay(item);
                   }}
                   style={{ boxShadow: "0 2px 6px rgba(0,0,0,.12)" }}
                   className="border text-[#006ae1] hover:bg-[#006ae1] hover:text-white w-full mt-2 border-[#006ae1] outline-none px-3 group py-2 rounded-md cursor-pointer leading-5 text-sm"

@@ -3,24 +3,46 @@ import ChatBotWidget from "../components/ChatBotWidget";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useAdminCredentials } from "../context/AdminCredentialsContext";
 import { useGlobalStatesContext } from "../context/GlobalStatesContext";
+import useSound from "use-sound";
+import notificationRing from "../rings/notification-beep.mp3";
 
 function BOTParentComponent() {
   const { showWidget, setShowWidget } = useGlobalStatesContext();
   const { theme } = useAdminCredentials();
+  const [showMessage, setShowMessage] = useState(false);
+
+  // Load and prepare the sound
+  const [play] = useSound(notificationRing, {
+    loop: false,
+  });
+
+  useEffect(() => {
+    // Show the message after 2 seconds
+    const showMessageTimeout = setTimeout(() => {
+      setShowMessage(true);
+      // Play audio after showing the message
+      play({ id: "beep" });
+    }, 2000);
+
+    // Cleanup timeout
+    return () => clearTimeout(showMessageTimeout);
+  }, [play]);
 
   return (
     <div>
       {!showWidget && (
         <div>
-          <span
-            className="fixed bg-white bottom-7 right-24 z-50 py-1 px-2 rounded-md text-nowrap whitespace-nowrap truncate text-[15px]"
-            style={{
-              color: "#3c4859",
-              boxShadow: "rgb(182, 190, 252) 0px 0px 13px",
-            }}
-          >
-            Hey there 👋
-          </span>
+          {showMessage && (
+            <span
+              className="animate-slide-up fixed bg-white bottom-7 right-24 z-50 py-1 px-2 rounded-md text-nowrap whitespace-nowrap truncate text-[15px]"
+              style={{
+                color: "#3c4859",
+                boxShadow: "rgb(182, 190, 252) 0px 0px 13px",
+              }}
+            >
+              Hey there 👋
+            </span>
+          )}
           <button
             style={{
               backgroundImage: theme
@@ -41,7 +63,7 @@ function BOTParentComponent() {
             />
           </button>
 
-          <style jsx>{`
+          <style>{`
             .EMBOT-ripple-effect {
               animation-name: ripple !important;
               animation-duration: 1.5s !important;
@@ -64,13 +86,26 @@ function BOTParentComponent() {
               0% {
                 box-shadow: 0 0 0 0 green, 0 0 0 0 #fff4;
               }
-
               80% {
                 box-shadow: 0 0 0 20px #fff0, 0 0 0 40px #fff0;
               }
-
               100% {
                 box-shadow: 0 0 0 0 #fff0, 0 0 0 0 #fff0;
+              }
+            }
+
+            .animate-slide-up {
+              animation: slide-up 0.5s ease-out forwards;
+            }
+
+            @keyframes slide-up {
+              from {
+                transform: translateY(100%);
+                opacity: 0;
+              }
+              to {
+                transform: translateY(0);
+                opacity: 1;
               }
             }
           `}</style>

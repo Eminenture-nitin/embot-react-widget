@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAdminCredentials } from "../context/AdminCredentialsContext";
 import { useTriggersContextData } from "../context/TriggersDataContext";
 import { useLiveChatContext } from "../context/LiveChatContext";
@@ -32,6 +32,8 @@ const ChatForm = () => {
     setChatMessages,
     chatMessages,
     addBotMsgs,
+    goForLiveChatOFF,
+    setGoForLiveChatOFF,
   } = useLiveChatContext();
 
   const handleMultipleActionsCall = async (input, output) => {
@@ -81,6 +83,10 @@ const ChatForm = () => {
             ...prevMsgs,
             { userTrigger: value, myself: false },
           ]);
+          Object.values(outOfFlowData).map((msg) => {
+            setChatMessages((prevMessages) => [...prevMessages, msg]);
+          });
+          setOutOfFlowData({});
           Cookies.set("widget_user_email", value, { expires: 3 });
           setAssitWaitingTimerData((prevAWTD) => ({
             ...prevAWTD,
@@ -97,35 +103,21 @@ const ChatForm = () => {
           { userTrigger: value, myself: false },
         ]);
         if (output == false) {
-          if (isObjectNotEmpty(outOfFlowData)) {
-            Object.values(outOfFlowData).map((msg) => {
-              setChatMessages((prevMessages) => [...prevMessages, msg]);
-            });
-            setOutOfFlowData({});
-          }
-          if (userRegistered && isValueInCookies("widget_user_email")) {
-            const userEmailId = Cookies.get("widget_user_email");
-            setChatMessages((prevMsgs) => [
-              ...prevMsgs,
-              { userTrigger: userEmailId, myself: false },
-            ]);
-            setAssitWaitingTimerData((prevAWTD) => ({
-              ...prevAWTD,
-              time: outOfFlowData?.assiWaitingTimeAndMessage,
-              status: true,
-            }));
-            setChatMode("liveChat");
-            getLocation(userEmailId, "live");
-          } else {
-            setChatMessages((prevMsgs) =>
-              prevMsgs.some(
-                (msg) => msg.responseText === "What's your email address?"
-              )
-                ? prevMsgs
-                : [...prevMsgs, { responseText: "What's your email address?" }]
-            );
-            setTakingEmailId(true);
-          }
+          setChatMessages((prevMsgs) => [
+            ...prevMsgs,
+            {
+              responseText: "Would you like to chat with our assistant?",
+              subTriggers: [
+                {
+                  type: "action",
+                  value: "Yes, please connect",
+                  role: "custom",
+                },
+                { type: "action", value: "Not yet", role: "custom" },
+              ],
+              myself: true,
+            },
+          ]);
         } else {
           setChatMessages((prevMsgs) => [
             ...prevMsgs,

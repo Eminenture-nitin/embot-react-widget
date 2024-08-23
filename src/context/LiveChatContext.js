@@ -18,6 +18,7 @@ export function useLiveChatContext() {
 export function LiveChatProvider({ children }) {
   const { socket } = useSocket();
   const [chatMessages, setChatMessages] = useState([]);
+  const [goForLiveChatOFF, setGoForLiveChatOFF] = useState(false);
   const [chatMode, setChatMode] = useState("botChat");
   const { setAssitWaitingTimerData, setTakingEmailId } =
     useGlobalStatesContext();
@@ -262,7 +263,7 @@ export function LiveChatProvider({ children }) {
         // console.log(response.data.message);
       } else {
         // toast.error(response.data.message);
-      //  console.log(response.data.message);
+        //  console.log(response.data.message);
       }
     } catch (error) {
       console.error("Error adding bot message:", error);
@@ -341,6 +342,8 @@ export function LiveChatProvider({ children }) {
         setChatMessages,
         addBotMsgs,
         performAction,
+        goForLiveChatOFF,
+        setGoForLiveChatOFF,
       }}
     >
       {children}
