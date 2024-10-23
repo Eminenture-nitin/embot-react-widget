@@ -25,6 +25,7 @@ const Header = () => {
           }
         >
           <img
+            style={{ borderRadius: "50%" }}
             src={adminImageURL?.length > 0 ? adminImageURL : defaultURL}
             className="w-full h-auto object-cover"
             alt="Admin"
