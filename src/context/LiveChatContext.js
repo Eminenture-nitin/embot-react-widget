@@ -49,7 +49,7 @@ export function LiveChatProvider({ children }) {
           //  console.log("payload", payload);
           if (mode == "live") {
             registerUser(payload);
-          } else {
+          } else if (mode == "register") {
             onlyRegisterUser(payload);
           }
         }
@@ -146,6 +146,10 @@ export function LiveChatProvider({ children }) {
 
         // adding user to map
         socket.current.emit("addUser", data?.user?._id);
+
+        setTimeout(() => {
+          processInitialMessages(chatMessages);
+        }, 1000);
       })
       .catch((err) => console.log("err", err));
   };
@@ -282,6 +286,18 @@ export function LiveChatProvider({ children }) {
     myself ? addBotMsgs() : addMsg();
   };
 
+  async function processInitialMessages(data) {
+    for (const message of data) {
+      if (message?.myself == false) {
+        // Call addMsg if myself is false and userTrigger exists
+        await addMsg(message.userTrigger);
+      } else {
+        // Call addBotMsgs if myself is true
+        await addBotMsgs(message.responseText);
+      }
+    }
+  }
+
   useEffect(() => {
     let timeout;
     if (adminId) {
@@ -328,9 +344,12 @@ export function LiveChatProvider({ children }) {
     };
   }, [socket, adminId]);
 
-  // useEffect(() => {
-  //   console.log(chatMessages);
-  // }, [chatMessages]);
+  useEffect(() => {
+    const widget_user_id = Cookies.get("widget_user_id");
+    if (widget_user_id) {
+      socket?.current?.emit("addUser", widget_user_id);
+    }
+  }, [socket]);
   return (
     <LiveChatContext.Provider
       value={{

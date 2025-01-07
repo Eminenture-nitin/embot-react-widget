@@ -11,12 +11,8 @@ const ChatForm = () => {
   const { theme } = useAdminCredentials();
   const [value, setValue] = useState("");
 
-  const {
-    questionableTUserInteraction,
-    handleUserInput,
-    outOfFlowData,
-    setOutOfFlowData,
-  } = useTriggersContextData();
+  const { questionableTUserInteraction, outOfFlowData, setOutOfFlowData } =
+    useTriggersContextData();
   const {
     inputTagConfig,
     setAssitWaitingTimerData,
@@ -36,17 +32,11 @@ const ChatForm = () => {
     setGoForLiveChatOFF,
   } = useLiveChatContext();
 
-  const handleMultipleActionsCall = async (input, output) => {
-    try {
-      await Promise.all([
-        // handleUserInput(input),
-        // addMsg(input),
-        // addBotMsgs(output),
-      ]);
-      console.log("All functions completed successfully");
-    } catch (error) {
-      console.error("Error in one of the functions:", error);
-    }
+  const handleMultipleActionsCall = (input, output) => {
+    setTimeout(() => {
+      addBotMsgs(output);
+      addMsg(input);
+    }, 100);
   };
 
   function isObjectNotEmpty(obj) {
@@ -118,12 +108,16 @@ const ChatForm = () => {
               myself: true,
             },
           ]);
+          handleMultipleActionsCall(
+            value,
+            "Out-of-flow query detected. If important, please connect! 💬🤝"
+          );
         } else {
           setChatMessages((prevMsgs) => [
             ...prevMsgs,
             { responseText: output, myself: true },
           ]);
-          //  handleMultipleActionsCall(value, output);
+          handleMultipleActionsCall(value, output);
         }
       }
       setValue("");
