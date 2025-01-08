@@ -7,6 +7,7 @@ import { handleNLPOutput } from "../utils/NLPLogic";
 import { isValidEmail, isValueInCookies } from "../utils/validations";
 
 import Cookies from "js-cookie";
+import { useSocket } from "../context/SocketContext";
 const ChatForm = () => {
   const { theme } = useAdminCredentials();
   const [value, setValue] = useState("");
@@ -34,9 +35,11 @@ const ChatForm = () => {
 
   const handleMultipleActionsCall = (input, output) => {
     setTimeout(() => {
-      addBotMsgs(output);
       addMsg(input);
     }, 100);
+    setTimeout(() => {
+      addBotMsgs(output);
+    }, 200);
   };
 
   function isObjectNotEmpty(obj) {

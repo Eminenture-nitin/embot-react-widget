@@ -345,9 +345,18 @@ export function LiveChatProvider({ children }) {
   }, [socket, adminId]);
 
   useEffect(() => {
-    const widget_user_id = Cookies.get("widget_user_id");
-    if (widget_user_id) {
-      socket?.current?.emit("addUser", widget_user_id);
+    if (socket?.current) {
+      socket.current.on("AssistantJoined", (data) => {
+        setChatMode("liveChat");
+        Cookies.set("joinedAssistantId", data?.Assi__id, { expires: 1 });
+        setChatMessages((prevMsgs) => [
+          ...prevMsgs,
+          {
+            myself: true,
+            responseText: `${data?.Assi_userName} is joined`,
+          },
+        ]);
+      });
     }
   }, [socket]);
   return (

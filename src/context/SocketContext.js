@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import { useAdminCredentials } from "./AdminCredentialsContext";
-
+import Cookies from "js-cookie";
 // Live Chat Socket context
 const SocketContext = createContext();
 
@@ -27,11 +27,15 @@ export function SocketProvider({ children }) {
       });
       socket.current.on("connect", () => {
         console.log("Socket connected", socket.current);
+        const widget_user_id = Cookies.get("widget_user_id");
+        if (widget_user_id) {
+          socket.current.emit("addUser", widget_user_id);
+        }
       });
 
       // Listen for reconnection attempts
       socket.current.on("reconnect_attempt", () => {
-      //  console.log("Reconnecting...");
+        //  console.log("Reconnecting...");
       });
 
       // Listen for successful reconnection
