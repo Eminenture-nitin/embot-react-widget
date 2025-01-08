@@ -26,7 +26,7 @@ export const AdminCredentialsProvided = ({ children }) => {
     const adminIdDefualtEmTech = "668d138c1913cfd07ed4ba41";
     const adminIdTest = "66bf4ee45b2c3f693aba77b8";
     const adminIdTestTwo = "66bf4ee45b2c3f693aba77b8";
-    setAdminId(adminIdTest);
+    setAdminId(processedId);
   }, []);
   const getAdminData = () => {
     axios
